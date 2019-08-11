@@ -15,7 +15,8 @@ set completeopt=longest,menu
 filetype on
 filetype plugin on
 syntax enable
-set background=dark
+" set background=dark
+set background=light
 colorscheme solarized
 
 " 进入上次退出的位置
@@ -66,10 +67,32 @@ map <leader>cfp :cd %:p:h<cr>:pwd<cr>
 " map <leader>ag :Ag! 
 " map <leader>af :AgFile! 
 
+" tagbar
+nnoremap <silent> <F9> :TagbarToggle<CR>
+
+" ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+	\ 'file': '\v\.(exe|so|dll)$',
+	\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+	\ }
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 source ~/.vim/nerdtree-git-plugin.cfg
-source ~/.vim/nerdtree.cfg
+source ~/.vim/nerdtree.cfg.vim
 source ~/.vim/markdown-preview.cfg
 " source ~/.vim/vim-go.cfg
 source ~/.vim/ale.cfg
-source ~/.vim/completor.cfg
 source ~/.vim/python.cfg
+
+let g:ycm_server_use_vim_stdout = 1
+let g:ycm_server_log_level = 'debug'
