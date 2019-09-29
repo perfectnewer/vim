@@ -87,12 +87,18 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-source ~/.vim/nerdtree-git-plugin.cfg
-source ~/.vim/nerdtree.cfg.vim
-source ~/.vim/markdown-preview.cfg
-" source ~/.vim/vim-go.cfg
-source ~/.vim/ale.cfg
-source ~/.vim/python.cfg
-
 let g:ycm_server_use_vim_stdout = 1
 let g:ycm_server_log_level = 'debug'
+
+" plugin config
+let s:path = expand('<sfile>:p:h')
+exec 'source ' .s:path. '/nerdtree-git-plugin.cfg.vim'
+exec 'source ' .s:path. '/nerdtree.cfg.vim'
+exec 'source ' .s:path. '/vim-javascript.cfg.vim'
+exec 'source ' .s:path. '/deoplete.cfg.vim'
+exec 'source ' .s:path. '/vim-go.cfg.vim'
+exec 'source ' .s:path. '/ale.cfg.vim'
+exec 'source ' .s:path. '/fzf.cfg.vim'
+exec 'source ' .s:path. '/python.cfg.vim'
+exec 'source ' .s:path. '/markdown-preview.cfg.vim'
+

@@ -5,7 +5,7 @@ colorscheme solarized
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
-autocmd BufRead *.js,*.html,*.rb
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
@@ -32,10 +32,12 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " plugin config
 let s:path = expand('<sfile>:p:h')
 exec 'source ' .s:path. '/nerdtree.cfg.vim'
-exec 'source ' .s:path. '/vim-javascript.vim'
+exec 'source ' .s:path. '/vim-javascript.cfg.vim'
 exec 'source ' .s:path. '/deoplete.cfg.vim'
 exec 'source ' .s:path. '/vim-go.cfg.vim'
 exec 'source ' .s:path. '/ale.cfg.vim'
 exec 'source ' .s:path. '/fzf.cfg.vim'
 exec 'source ' .s:path. '/python.cfg.vim'
+exec 'source ' .s:path. '/markdown-preview.cfg.vim'
+exec 'source ' .s:path. '/vim-markdown.cfg.vim'
 
