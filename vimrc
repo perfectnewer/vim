@@ -92,7 +92,6 @@ let g:ycm_server_log_level = 'debug'
 
 " plugin config
 let s:path = expand('<sfile>:p:h')
-exec 'source ' .s:path. '/nerdtree-git-plugin.cfg.vim'
 exec 'source ' .s:path. '/nerdtree.cfg.vim'
 exec 'source ' .s:path. '/vim-javascript.cfg.vim'
 exec 'source ' .s:path. '/deoplete.cfg.vim'
