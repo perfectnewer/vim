@@ -1,3 +1,4 @@
+set clipboard^=unnamed,unnamedplus
 set backspace=indent,eol,start
 set ruler
 set incsearch
@@ -15,8 +16,8 @@ set completeopt=longest,menu
 filetype on
 filetype plugin on
 syntax enable
-" set background=dark
-set background=light
+set background=dark
+" set background=light
 colorscheme solarized
 
 " 进入上次退出的位置

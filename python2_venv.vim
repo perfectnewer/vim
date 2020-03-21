@@ -1,0 +1,16 @@
+python << EOF
+#!/usr/bin/env python
+# coding: utf-8
+import os
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+
+    python_bin = os.path.join(project_base_dir, 'bin/python')
+    # vim.command(":call SetPythonBinaryPath('{}')".format(python_bin))
+    vim.command("let g:python_host_prog = '{}'".format(python_bin))
+
+EOF

@@ -8,7 +8,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 """"""""""" vim-nerdtree-tabs """""""""""""""""""
 " https://github.com/jistr/vim-nerdtree-tabs
-let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_console_startup=0
 map <Leader>nt :NERDTreeTabsToggle<CR>
 
 """"""""""" nerdtree-git-plugin """"""""""""""""""

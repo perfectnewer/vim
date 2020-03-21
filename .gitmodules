@@ -4,9 +4,6 @@
 [submodule "pack/plugins/start/nerdtree"]
 	path = pack/plugins/start/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-[submodule "pack/plugins/start/markdown-preview"]
-	path = pack/plugins/start/markdown-preview
-	url = https://github.com/iamcco/markdown-preview.vim
 [submodule "pack/plugins/start/vim-go"]
 	path = pack/plugins/start/vim-go
 	url = https://github.com/fatih/vim-go.git
@@ -37,9 +34,6 @@
 [submodule "pack/plugins/start/vim-javascript"]
 	path = pack/plugins/start/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule "pack/plugins/start/neosnippet-snippets"]
-	path = pack/plugins/start/neosnippet-snippets
-	url = https://github.com/Shougo/neosnippet-snippets.git
 [submodule "pack/plugins/start/deoplete"]
 	path = pack/plugins/start/deoplete
 	url = https://github.com/Shougo/deoplete.nvim.git
@@ -52,15 +46,12 @@
 [submodule "pack/plugins/start/deoplete-jedi"]
 	path = pack/plugins/start/deoplete-jedi
 	url = https://github.com/deoplete-plugins/deoplete-jedi
-[submodule "pack/plugins/start/vim-markdown"]
-	path = pack/plugins/start/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "pack/plugins/start/markdown-preview.nvim"]
-	path = pack/plugins/start/markdown-preview.nvim
-	url = https://github.com/iamcco/markdown-preview.nvim.git
-[submodule "pack/plugins/start/vim-nerdtree-tabs.git"]
-	path = pack/plugins/start/vim-nerdtree-tabs.git
-	url = https://github.com/jistr/vim-nerdtree-tabs.git
-[submodule "pack/plugins/start/nerdtree-git-plugin.git"]
-	path = pack/plugins/start/nerdtree-git-plugin.git
-	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
+[submodule "pack/plugins/start/jedi-vim"]
+	path = pack/plugins/start/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim.git
+[submodule "pack/plugins/start/indentLine.git"]
+	path = pack/plugins/start/indentLine.git
+	url = https://github.com/Yggdroot/indentLine.git
+[submodule "pack/plugins/start/vim-autopep8.git"]
+	path = pack/plugins/start/vim-autopep8.git
+	url = https://github.com/tell-k/vim-autopep8.git
