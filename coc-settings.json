@@ -1,0 +1,13 @@
+{
+   "languageserver": {
+    "pyls": {
+      "command": "/Users/simon/.pyenv/versions/neovim3/bin/pyls",
+      "args": [],
+      "filetypes": ["python"],
+      "initializationOptions": {
+      },
+      "settings": {
+      }
+    }
+  }
+}
