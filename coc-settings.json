@@ -1,5 +1,10 @@
 {
+  "suggest.noselect": true,
   "python.pythonPath": "/Users/simon/.pyenv/versions/neovim3/bin/python",
   "python.jediPath": "/Users/simon/.pyenv/versions/neovim3/lib/python3.7/site-packages/jedi",
+  "python.linting.flake8Path": "/Users/simon/.pyenv/versions/neovim3/bin/flake8",
+  "python.linting.pylintPath":  "/Users/simon/.pyenv/versions/neovim3/bin/pylint",
+  "suggest.snippetIndicator": "►",
   "tsserver.trace.server": "verbose"
 }
+

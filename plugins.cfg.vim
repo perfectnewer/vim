@@ -8,8 +8,8 @@ call plug#begin('~/.vim/plugged')
 
 " Any valid git URL is allowed
 Plug 'altercation/vim-colors-solarized'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'scrooloose/nerdtree'
@@ -21,11 +21,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'majutsushi/tagbar'
 Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 "  https://github.com/preservim/nerdcommenter
+Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdcommenter'
 Plug 'neomake/neomake',   {'for': 'disable'}
-Plug 'tpope/vim-fugitive'
 
 " https://github.com/neoclide/coc-python
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -43,4 +43,3 @@ Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular',        {'for': 'disable'}
 
 call plug#end()
-

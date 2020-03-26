@@ -20,7 +20,7 @@ let g:semshi#update_delay_factor=0.0002
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml, *.json
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
@@ -48,8 +48,3 @@ let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_map_keys = 0
 
 let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
-map <C-t> :set nosplitright<CR>:TagbarToggle<CR>:set splitright<CR>
-let g:semshi#filetypes=['python']
-" let g:neomake_python_enabled_makers = ['pylint']
-" call neomake#configure#automake('nrwi', 500)
-nmap <leader>c :Neomake<CR>
