@@ -12,20 +12,19 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
 
-" On-demand loading
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 Plug 'junegunn/fzf', { 'do': '{ -> fzf#install() }' }
 Plug 'junegunn/fzf.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'majutsushi/tagbar'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 "  https://github.com/preservim/nerdcommenter
 Plug 'preservim/nerdcommenter'
-Plug 'neomake/neomake'
+Plug 'neomake/neomake',   {'for': 'disable'}
 Plug 'tpope/vim-fugitive'
 
 " https://github.com/neoclide/coc-python

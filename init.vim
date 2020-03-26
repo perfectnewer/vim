@@ -10,6 +10,13 @@ exec 'source ' .s:path. '/python.cfg.vim'
 exec 'source ' .s:path. '/markdown-preview.cfg.vim'
 exec 'source ' .s:path. '/coc.cfg.vim'
 
+" exec 'source ' .s:path. '/neomake.cfg.vim'
+"
+" semshi
+let g:semshi#filetypes=['disable'] " python
+let g:semshi#excluded_hl_groups=['local']
+let g:semshi#update_delay_factor=0.0002
+
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
@@ -43,6 +50,6 @@ let g:gitgutter_map_keys = 0
 let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 map <C-t> :set nosplitright<CR>:TagbarToggle<CR>:set splitright<CR>
 let g:semshi#filetypes=['python']
-let g:neomake_python_enabled_makers = ['pylint']
-call neomake#configure#automake('nrwi', 500)
+" let g:neomake_python_enabled_makers = ['pylint']
+" call neomake#configure#automake('nrwi', 500)
 nmap <leader>c :Neomake<CR>

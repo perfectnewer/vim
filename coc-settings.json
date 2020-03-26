@@ -1,13 +1,5 @@
 {
-   "languageserver": {
-    "pyls": {
-      "command": "/Users/simon/.pyenv/versions/neovim3/bin/pyls",
-      "args": [],
-      "filetypes": ["python"],
-      "initializationOptions": {
-      },
-      "settings": {
-      }
-    }
-  }
+  "python.pythonPath": "/Users/simon/.pyenv/versions/neovim3/bin/python",
+  "python.jediPath": "/Users/simon/.pyenv/versions/neovim3/lib/python3.7/site-packages/jedi",
+  "tsserver.trace.server": "verbose"
 }
