@@ -1,8 +1,14 @@
 {
+  // open in new tab
+  "coc.preferences.jumpCommand": "tab drop",
   "suggest.noselect": true,
   "python.pythonPath": "/Users/simon/.pyenv/versions/neovim3/bin/python",
   "python.jediPath": "/Users/simon/.pyenv/versions/neovim3/lib/python3.7/site-packages/jedi",
+  "python.setLinter": "flake8",
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["max-line-length = 160", "ignore = E226,E302,E41"],
   "python.linting.flake8Path": "/Users/simon/.pyenv/versions/neovim3/bin/flake8",
+  "python.linting.pylintEnabled": false,
   "python.linting.pylintPath":  "/Users/simon/.pyenv/versions/neovim3/bin/pylint",
   "suggest.snippetIndicator": "►",
   "tsserver.trace.server": "verbose"

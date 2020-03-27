@@ -15,8 +15,8 @@ autocmd FileType python
     \ foldtext=lsp#ui#vim#folding#foldtext() |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
-let g:python_host_prog = '/Users/simon/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/simon/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = $HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = $HOME . '/.pyenv/versions/neovim3/bin/python'
 
 "python with virtualenv support
 if $PYENV_VIRTUAL_ENV != ""

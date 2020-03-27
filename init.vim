@@ -17,10 +17,16 @@ let g:semshi#filetypes=['disable'] " python
 let g:semshi#excluded_hl_groups=['local']
 let g:semshi#update_delay_factor=0.0002
 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+cnoreabbrev Ack Ack!
+
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml, *.json
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 

@@ -36,6 +36,7 @@ Plug 'plasticboy/vim-markdown'
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
+Plug 'mileszs/ack.vim'
 " disable plugin
 " ncm2
 " python语法代码高亮
