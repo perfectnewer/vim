@@ -42,14 +42,14 @@ nmap <C-j> <C-W>j
 nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
-nmap <space> za
+noremap <expr> <Space> (foldlevel(line('.'))>0) ? "za" : "}"
 
 vmap <silent> * :call VisualSelection('f')<CR>
 vmap <silent> # :call VisualSelection('b')<CR>
-map <leader>tn :tabnew
-map <leader>tb :tabnext <cr>
-map <leader>tp :tabprevious <cr>
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nmap <leader>tn :tabnew
+nmap <leader>tb :tabnext <cr>
+nmap <leader>tp :tabprevious <cr>
+nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " set background=light
 set background=dark
 colorscheme solarized
