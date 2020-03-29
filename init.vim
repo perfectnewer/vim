@@ -10,6 +10,11 @@ exec 'source ' .s:path. '/python.cfg.vim'
 exec 'source ' .s:path. '/markdown-preview.cfg.vim'
 exec 'source ' .s:path. '/coc.cfg.vim'
 
+command! -bang -nargs=* GGrep
+      \ call fzf#vim#grep(
+      \   'git grep --line-number '.shellescape(<q-args>), 0,
+      \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
 " exec 'source ' .s:path. '/neomake.cfg.vim'
 "
 " semshi
@@ -49,8 +54,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 set background=dark
 colorscheme solarized
 
-" vimgutter options
-let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_map_keys = 0
-
 let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+
+set laststatus=2
+set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
