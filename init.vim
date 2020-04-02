@@ -1,6 +1,7 @@
 " https://vimawesome.com/
 set nu
 set mouse=a
+set termguicolors
 
 let s:path = expand('<sfile>:p:h')
 exec 'source ' .s:path. '/plugins.cfg.vim'
