@@ -21,6 +21,27 @@ set signcolumn=yes
 
 let g:coc_global_extensions=['coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git']
 
+" config for coc-settings
+
+call coc#config('coc.preferences', {
+    \ 'python.pythonPath': $HOME . '/.pyenv/versions/neovim3/bin/python',
+    \ 'python.jediPath': $HOME . '/.pyenv/versions/neovim3/lib/python3.7/site-packages/jedi',
+    \ 'python.setLinter': 'flake8',
+    \ 'python.linting.flake8Enabled': v:true,
+    \ 'python.linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41'],
+    \ 'python.linting.flake8Path': $HOME . '/.pyenv/versions/neovim3/bin/flake8',
+    \ 'python.linting.pylintEnabled': v:false,
+    \ 'python.linting.pylintPath': $HOME . '/.pyenv/versions/neovim3/bin/pylint',
+    \})
+
+call coc#config('languageserver', {
+	\ 'ccls': {
+	\   "command": "ccls",
+	\   "trace.server": "verbose",
+	\   "filetypes": ["c", "cpp", "objc", "objcpp"]
+	\ }
+	\})
+
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1

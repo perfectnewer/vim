@@ -7,7 +7,8 @@ call plug#begin('~/.vim/plugged')
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 
 " Any valid git URL is allowed
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
