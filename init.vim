@@ -19,15 +19,13 @@ command! -bang -nargs=* GGrep
 " exec 'source ' .s:path. '/neomake.cfg.vim'
 "
 " semshi
-let g:semshi#filetypes=['disable'] " python
+let g:semshi#filetypes=['python'] " python
 let g:semshi#excluded_hl_groups=['local']
 let g:semshi#update_delay_factor=0.0002
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-cnoreabbrev Ack Ack!
 
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
