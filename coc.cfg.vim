@@ -166,5 +166,6 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-nnoremap <silent> <space>g :<C-u>CocList --normal gstatus<CR>
-
+nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<CR>
+nnoremap <space>r :<C-u>CocCommand python.execInTerminal<CR>
+" nnoremap <space>p :<C-u>tabnew term://zsh<CR>:<C-u>CocCommand python.startREPL<CR>
