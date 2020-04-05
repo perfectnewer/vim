@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
 " Any valid git URL is allowed
 " Plug 'altercation/vim-colors-solarized'
 Plug 'iCyMind/NeoSolarized'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
 
@@ -33,13 +33,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins', 'for': 'python'}
 Plug 'plasticboy/vim-markdown'
+Plug 'jiangmiao/auto-pairs'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
 " disable plugin
 " ncm2
-" python语法代码高亮
 Plug 'godlygeek/tabular',        {'for': 'disable'}
 
 call plug#end()
