@@ -9,8 +9,8 @@ call plug#begin('~/.vim/plugged')
 " Any valid git URL is allowed
 " Plug 'altercation/vim-colors-solarized'
 Plug 'iCyMind/NeoSolarized'
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'scrooloose/nerdtree'
