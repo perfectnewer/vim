@@ -19,28 +19,27 @@ set signcolumn=yes
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 
-let g:coc_global_extensions=['coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git']
+let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git']
 
 " config for coc-settings
 
-call coc#config('coc.preferences', {
-    \ 'python.pythonPath': $HOME . '/.pyenv/versions/neovim3/bin/python',
-    \ 'python.jediPath': $HOME . '/.pyenv/versions/neovim3/lib/python3.7/site-packages/jedi',
-    \ 'python.setLinter': 'flake8',
-    \ 'python.linting.flake8Enabled': v:true,
-    \ 'python.linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41'],
-    \ 'python.linting.flake8Path': $HOME . '/.pyenv/versions/neovim3/bin/flake8',
-    \ 'python.linting.pylintEnabled': v:false,
-    \ 'python.linting.pylintPath': $HOME . '/.pyenv/versions/neovim3/bin/pylint',
-    \})
+let s:v=system('python -c "import sys; print(sys.version_info.major)"')
 
-call coc#config('languageserver', {
-	\ 'ccls': {
-	\   "command": "ccls",
-	\   "trace.server": "verbose",
-	\   "filetypes": ["c", "cpp", "objc", "objcpp"]
-	\ }
-	\})
+let s:venv_python=$HOME.'/.pyenv/versions/neovim3'
+if s:v == 2
+    let s:venv_python=$HOME.'/.pyenv/versions/neovim2'
+endif
+
+"    \ 'pythonPath': $HOME . '/.pyenv/versions/neovim3/bin/python',
+call coc#config('python', {
+    \ 'jediPath': s:venv_python . '/lib/python3.7/site-packages/jedi',
+    \ 'setLinter': 'flake8',
+    \ 'linting.flake8Enabled': v:true,
+    \ 'linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41'],
+    \ 'linting.flake8Path': s:venv_python . '/bin/flake8',
+    \ 'linting.pylintEnabled': v:false,
+    \ 'linting.pylintPath':  s:venv_python . '/bin/pylint',
+    \})
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
