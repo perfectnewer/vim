@@ -19,9 +19,11 @@ command! -bang -nargs=* GGrep
 " exec 'source ' .s:path. '/neomake.cfg.vim'
 "
 " semshi
+" https://github.com/numirias/semshi/blob/master/README.md
 let g:semshi#filetypes=['python'] " python
 let g:semshi#excluded_hl_groups=['local']
 let g:semshi#update_delay_factor=0.0002
+let g:semshi#error_sign=v:false  " not support python2 which is for work
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
