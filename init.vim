@@ -74,3 +74,6 @@ let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
+
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
