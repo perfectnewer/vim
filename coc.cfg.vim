@@ -30,8 +30,8 @@ if s:v == 2
     let s:venv_python=$HOME.'/.pyenv/versions/neovim2'
 endif
 
-"    \ 'pythonPath': $HOME . '/.pyenv/versions/neovim3/bin/python',
 call coc#config('python', {
+    \ 'pythonPath': s:venv_python . '/bin/python',
     \ 'jediPath': s:venv_python . '/lib/python3.7/site-packages/jedi',
     \ 'setLinter': 'flake8',
     \ 'linting.flake8Enabled': v:true,
