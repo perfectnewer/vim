@@ -19,6 +19,10 @@ set signcolumn=yes
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
+
 let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git',
 	\ 'coc-lists']
 

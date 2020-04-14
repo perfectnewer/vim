@@ -11,6 +11,16 @@
   // "python.linting.pylintEnabled": false,
   // "python.linting.pylintPath":  "/Users/simon/.pyenv/versions/neovim3/bin/pylint",
   "suggest.snippetIndicator": "►",
-  "tsserver.trace.server": "verbose"
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/"],
+      "filetypes": ["go"]
+    }
+  },
+  "snippets.ultisnips.directories": [
+    "UltiSnips",
+    "gosnippets/UltiSnips"
+  ],
 }
 

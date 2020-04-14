@@ -32,9 +32,11 @@ endif
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
+
+autocmd BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -69,7 +71,6 @@ let g:neosolarized_visibility = "high"
 " solarized vertSplitBar style more, set this value to 0.
 let g:neosolarized_vertSplitBgTrans = 1
 
-
 let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 set laststatus=2
@@ -77,3 +78,4 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
+nnoremap <silent> <F9> :TagbarToggle<CR>

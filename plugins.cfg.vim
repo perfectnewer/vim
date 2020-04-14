@@ -29,8 +29,8 @@ Plug 'preservim/nerdcommenter'
 Plug 'neomake/neomake',   {'for': 'disable'}
 
 " https://github.com/neoclide/coc-python
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug 'fatih/vim-go'
 Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins', 'for': 'python'}
 Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
