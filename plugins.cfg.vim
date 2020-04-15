@@ -34,7 +34,8 @@ Plug 'fatih/vim-go'
 Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins', 'for': 'python'}
 Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
-Plug 'Yggdroot/indentLine',        {'for': 'python'}
+Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
+Plug 'tmhedberg/SimpylFold'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'

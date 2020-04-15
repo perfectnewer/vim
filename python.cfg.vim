@@ -10,9 +10,6 @@ autocmd FileType python
     \ setlocal softtabstop=4 | setlocal shiftwidth=4 |
     \ setlocal autoindent | setlocal fileformat=unix |
     \ setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
-    \ set foldmethod=expr
-    \ foldexpr=lsp#ui#vim#folding#foldexpr()
-    \ foldtext=lsp#ui#vim#folding#foldtext() |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
 let g:python_host_prog = $HOME . '/.pyenv/versions/neovim2/bin/python'

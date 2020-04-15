@@ -11,6 +11,11 @@ exec 'source ' .s:path. '/python.cfg.vim'
 exec 'source ' .s:path. '/markdown-preview.cfg.vim'
 exec 'source ' .s:path. '/coc.cfg.vim'
 
+set foldmethod=indent
+set foldmethod=syntax
+set foldlevelstart=3
+let g:SimpylFold_docstring_preview = 1
+
 command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number '.shellescape(<q-args>), 0,
@@ -36,7 +41,7 @@ autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
-autocmd BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -45,7 +50,7 @@ nmap <C-j> <C-W>j
 nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
-noremap <expr> <Space> (foldlevel(line('.'))>0) ? "za" : "}"
+" noremap <expr> <Space> (foldlevel(line('.'))>0) ? "za" : "}"
 
 vmap <silent> * :call VisualSelection('f')<CR>
 vmap <silent> # :call VisualSelection('b')<CR>
@@ -76,6 +81,9 @@ let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
 
+" set list lcs=tab:\|\ 
+
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_setColors = 0
 
 nnoremap <silent> <F9> :TagbarToggle<CR>
