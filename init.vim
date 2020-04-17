@@ -58,10 +58,16 @@ nmap <leader>tn :tabnew
 nmap <leader>tb :tabnext <cr>
 nmap <leader>tp :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-set background=light
-" set background=dark
+
+let s:hour=strftime('%H')
+if s:hour >= '07' && s:hour <= '20'
+	set background=light
+else
+	set background=dark
+endif
 " colorscheme solarized
 colorscheme NeoSolarized
+
 " Default value is "normal", Setting this option to "high" or "low" does use the
 " same Solarized palette but simply shifts some values up or down in order to
 " expand or compress the tonal range displayed.
