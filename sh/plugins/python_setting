@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ -d "${HOME}/.pyenv/bin" ]]; then
+    export PATH="${HOME}/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    zsh_completions="$(pyenv root)/completions/pyenv.zsh"
+    if [[ -f "${zsh_completions}" ]]; then
+	    source "${zsh_completions}"
+    fi
+    bash_completions="$(pyenv root)/completions/pyenv.bash"
+    if [[ -f "${bash_completions}" ]]; then
+	    source "${bash_completions}"
+    fi
+fi
+
+MY_PYTHON_USER_BASE=$(python -c 'import site; print(site.USER_BASE)')
+[[ -n ${MY_PYTHON_USER_BASE} ]] && export PATH=${MY_PYTHON_USER_BASE}/bin:${PATH}
+
+if [[ -r $(which virtualenvwrapper.sh) ]]; then
+    export WORKON_HOME=${HOME}/.virtualenvs
+    # export PROJECT_HOME=/srv/projects
+    export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+    export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    export PIP_RESPECT_VIRTUALENV=true
+    source $(which virtualenvwrapper.sh)
+fi
+
+unset MY_PYTHON_USER_BASE

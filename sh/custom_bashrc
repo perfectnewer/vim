@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# setdefault editor to vim
+if [[ -n $(which vim) ]]; then
+    export EDITOR=$(which vim)
+fi
+
+FILE_LOCATION=$(dirname ${0})
+export PATH=${PATH}:${FILE_LOCATION}/bin
+
+function source_plugin {
+    [[ -s ${FILE_LOCATION}/plugins/$1 ]] &&\
+        source ${FILE_LOCATION}/plugins/$1
+}
+
+# source_plugin prompt
+source_plugin python_setting
+source_plugin alias_setting
+source_plugin go_setting
+source_plugin autochdir
+source_plugin functions
+
+unset FILE_LOCATION
