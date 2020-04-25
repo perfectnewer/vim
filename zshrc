@@ -1,6 +1,10 @@
-export ZSH=${HOME}/Documents/mconfig/oh-my-zsh
-ZSH_CUSTOM=$ZSH
+export ZSH=${XDG_CONFIG_HOME}/zsh/oh-my-zsh
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
+# for compat with bash complete
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
 source ${HOME}/Documents/mconfig/sh/custom_bashrc
 
 ZSH_THEME="ys"
@@ -18,13 +22,9 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.aliyun.com/homebrew/homebrew-core.git"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
-
-alias typora="open -a typora"
-alias rmt=rmtrash.sh
 
 function cht() {
 	echo "change current window title to" $1;
@@ -46,12 +46,10 @@ function change_go_path() {
 # chpwd_functions=(${chpwd_functions[@]} "change_go_path")
 command -v vg >/dev/null 2>&1 && eval "$(vg eval --shell zsh)"
 
-# The next line enables shell command completion for gcloud.
-# if [ -f '/Users/simon/Desktop/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/simon/Desktop/google-cloud-sdk/completion.zsh.inc'; fi
 # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/simon/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/simon/google-cloud-sdk/path.zsh.inc'; fi
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/simon/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/simon/google-cloud-sdk/completion.zsh.inc'; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias typora="open -a typora"
+alias rmt=rmtrash.sh
+alias brewi="brew install -v --build-from-source"

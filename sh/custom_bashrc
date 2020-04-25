@@ -17,7 +17,6 @@ function source_plugin {
 source_plugin python_setting
 source_plugin alias_setting
 source_plugin go_setting
-source_plugin autochdir
 source_plugin functions
 
 unset FILE_LOCATION

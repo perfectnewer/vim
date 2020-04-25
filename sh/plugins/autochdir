@@ -1,9 +1,0 @@
-#!/bin/bash
-alias cdwp='cd ~/Desktop/work'
-alias cdgp='cd ~/Desktop/work/idiaoyan/'
-alias cdmp='cd ~/Documents/dev'
-
-
-if [ "${TERM_PROGRAM}" = "vscode" ]; then
-  return
-fi

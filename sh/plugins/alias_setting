@@ -39,10 +39,14 @@ alias pip3=_pip3
 alias clearvirtualenv='echo -e "clear:\
     ${VIRTUAL_ENV/#\/Users\/peter\/peter\/eleme\/srv\/virtualenvs\/}";\
     virtualenv --clear ${VIRTUAL_ENV/#\/Users\/peter\/peter\/eleme\/srv\/virtualenvs\/}'
-alias cdde='cd ~/Desktop'
 
 which nvim > /dev/null 2>&1
 if [ $? -eq 0 ] ; then
     alias vi=nvim
     alias vim=nvim
 fi
+
+alias cdde='cd ~/Desktop'
+alias cdwp='cd ~/Desktop/work'
+alias cdmp='cd ~/Documents/dev'
+
