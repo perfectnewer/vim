@@ -9,11 +9,15 @@ function drawin_zsh_env {
     sudo cat > /etc/zshenv << EOF
   export XDG_CONFIG_HOME="${HOME}/.config"
   export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+  export XDG_DATA_HOME="$HOME/.local/share"
+  export XDG_CACHE_HOME="$HOME/.cache"
 EOF
   else
     sudo cat > /etc/zshenv << EOF
   export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 EOF
+  [ ! -d "$HOME/.local/share" ] && mkdir -p "$HOME/.local/share"
+  [ ! -d "$HOME/.cache" ] && mkdir "$HOME/.cache"
   fi
 }
 
