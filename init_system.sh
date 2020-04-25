@@ -55,6 +55,7 @@ function install_brew {
   export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.aliyun.com/homebrew/homebrew-core.git"
   export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /usr/local/bin/brew install --build-from-source node npm
 }
 
 function install_config {
@@ -96,6 +97,26 @@ function install_search_tool {
   bash "${XDG_CONFIG_HOME}"/fzf/install --xdg
 }
 
+function install_pyenv_nvim {
+  export PYENV_ROOT=${HOME}/.config/pyenv/
+  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+  if [ ! -d $(PYENV_ROOT)/plugins/pyenv-virtualenv ] ; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $(PYENV_ROOT)/plugins/pyenv-virtualenv
+  fi
+
+  pyenv=$(PYENV_ROOT)/bin/pyenv
+  v=3.7.7 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P $(PYENV_ROOT)/cache/ && $(pyenv) install $v
+  v=2.7.17 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P $(PYENV_ROOT)/cache/ && $(pyenv) install $v
+
+  $(pyenv) virtualenv 2.7.17 neovim2
+  $(pyenv) virtualenv 3.7.7 neovim3
+  $(PYENV_ROOT)/versions/2.7.17/bin/pip install neovim flake8
+  $(PYENV_ROOT)/versions/3.7.7/bin/pip install neovim flake8
+  export NPM_CONFIG_USERCONFIG=${HOME}/.config/npm/config
+  export NPM_CONFIG_CACHE=${HOME}/.config/npm
+  /usr/local/bin/npm install -g neovim
+}
+
 function my_install {
     INSTALL_SOFT=install_$1
     ${INSTALL_SOFT} $([[ $# -gt 1 ]] && echo $@ | cut -d' ' -f 2-)
@@ -103,7 +124,7 @@ function my_install {
 }
 
 function install_all {
-  for component in config commandline brew pip zsh zsh_env search_tool ; do
+  for component in config commandline brew pip zsh zsh_env search_tool pyenv_nvim; do
     my_install ${component}
   done
 }

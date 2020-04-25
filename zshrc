@@ -1,3 +1,4 @@
+[ -z "${XDG_CONFIG_HOME}" ] && export XDG_CONFIG_HOME=${HOME}/.config
 export ZSH=${XDG_CONFIG_HOME}/zsh/oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -25,6 +26,8 @@ source $ZSH/oh-my-zsh.sh
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.aliyun.com/homebrew/homebrew-core.git"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
+export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/config
+export NPM_CONFIG_CACHE=${XDG_CACHE_HOME}/npm
 
 function cht() {
 	echo "change current window title to" $1;
