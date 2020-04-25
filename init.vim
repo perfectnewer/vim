@@ -67,6 +67,7 @@ else
 endif
 " colorscheme solarized
 colorscheme NeoSolarized
+colorscheme violet
 
 " Default value is "normal", Setting this option to "high" or "low" does use the
 " same Solarized palette but simply shifts some values up or down in order to

@@ -36,6 +36,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 Plug 'tmhedberg/SimpylFold'
+Plug 'ashfinal/vim-colors-violet'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
