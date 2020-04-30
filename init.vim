@@ -1,4 +1,4 @@
-" https://vimawesome.com/
+ https://vimawesome.com/
 set nu
 set mouse=a
 set termguicolors
@@ -67,7 +67,7 @@ else
 	set background=dark
 endif
 " colorscheme solarized
-" colorscheme NeoSolarized
+colorscheme NeoSolarized
 colorscheme violet
 
 " Default value is "normal", Setting this option to "high" or "low" does use the
