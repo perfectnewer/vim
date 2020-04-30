@@ -58,6 +58,7 @@ nmap <leader>tn :tabnew
 nmap <leader>tb :tabnext <cr>
 nmap <leader>tp :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nmap <leader>tt :tabnew term://zsh <cr> i
 
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '20'
@@ -66,7 +67,8 @@ else
 	set background=dark
 endif
 " colorscheme solarized
-colorscheme NeoSolarized
+" colorscheme NeoSolarized
+colorscheme violet
 
 " Default value is "normal", Setting this option to "high" or "low" does use the
 " same Solarized palette but simply shifts some values up or down in order to
@@ -90,6 +92,5 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 " set list lcs=tab:\|\ 
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-let g:indentLine_setColors = 0
 
 nnoremap <silent> <F9> :TagbarToggle<CR>

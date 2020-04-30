@@ -1,3 +1,5 @@
+" https://vimawesome.com/   vim plugins site
+"
 " support plugin version(tagm branch...), post hook, args etc
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -19,7 +21,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'junegunn/fzf', { 'do': '{ -> fzf#install() }' }
 Plug 'junegunn/fzf.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+" https://github.com/iamcco/markdown-preview.nvim
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'majutsushi/tagbar'
 Plug 'Vimjas/vim-python-pep8-indent'
 " Plug 'airblade/vim-gitgutter'
@@ -32,10 +35,11 @@ Plug 'neomake/neomake',   {'for': 'disable'}
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
 Plug 'fatih/vim-go'
 Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins', 'for': 'python'}
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 Plug 'tmhedberg/SimpylFold'
+Plug 'ashfinal/vim-colors-violet'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'

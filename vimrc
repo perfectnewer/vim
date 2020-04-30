@@ -61,7 +61,8 @@ nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " set background=light
 set background=dark
 " colorscheme solarized
-colorscheme NeoSolarized
+" colorscheme NeoSolarized
+colorscheme violet
 " Default value is "normal", Setting this option to "high" or "low" does use the
 " same Solarized palette but simply shifts some values up or down in order to
 " expand or compress the tonal range displayed.
@@ -87,3 +88,5 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_setColors = 0
 
 nnoremap <silent> <F9> :TagbarToggle<CR>
+
+" https://github.com/junegunn/fzf
