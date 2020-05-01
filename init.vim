@@ -1,7 +1,10 @@
- https://vimawesome.com/
+" https://vimawesome.com/
 set nu
 set mouse=a
 set termguicolors
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 let s:path = expand('<sfile>:p:h')
 exec 'source ' .s:path. '/plugins.cfg.vim'
@@ -69,6 +72,7 @@ endif
 " colorscheme solarized
 colorscheme NeoSolarized
 colorscheme violet
+colorscheme 256-grayvim
 
 " Default value is "normal", Setting this option to "high" or "low" does use the
 " same Solarized palette but simply shifts some values up or down in order to
