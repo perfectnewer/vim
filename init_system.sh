@@ -2,44 +2,6 @@
 
 export OS=$(uname)
 
-function drawin_zsh_env {
-  brew install --build-from-source zsh
-  if [ ! -d /etc/zshenv ]; then
-    if [ -z "${XDG_CONFIG_HOME}" ]; then
-    sudo cat > /etc/zshenv << EOF
-  export XDG_CONFIG_HOME="${HOME}/.config"
-  export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-  export XDG_DATA_HOME="$HOME/.local/share"
-  export XDG_CACHE_HOME="$HOME/.cache"
-EOF
-  else
-    sudo cat > /etc/zshenv << EOF
-  export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-EOF
-  [ ! -d "$HOME/.local/share" ] && mkdir -p "$HOME/.local/share"
-  [ ! -d "$HOME/.cache" ] && mkdir "$HOME/.cache"
-  fi
-}
-
-function linux_zsh_env {
-  sudo apt install zsh -y
-  [ ! -d "/etc/zsh" ] && sudo mkdir /etc/zsh
-  echo 'export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"' >> /etc/zsh/zshenv
-}
-
-function install_zsh {
-  if [ "$OS"y == "Drawin"y ]; then
-    drawin_zsh_env
-  elif [ "$OS"y == "Linux"y ]; then
-    linux_zsh_env
-  fi
-  [ -z "${XDG_CONFIG_HOME}" ] && export  XDG_CONFIG_HOME="${HOME}/.config"
-  [ ! -d ${XDG_CONFIG_HOME}/.config/zsh ] && mkdir ${XDG_CONFIG_HOME}/.config/zsh
-  # TODO zsh config
-  export ZSH=${XDG_CONFIG_HOME}/zsh/oh-my-zsh
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-}
-
 function install_pip {
     if [ -z $(which pip) ]; then
     if [ -n "$*" ]; then easy_install $@ pip
@@ -53,14 +15,6 @@ function install_pip {
 }
 
 # git clone git://github.com/altercation/solarized.git
-
-function install_brew {
-  export HOMEBREW_NO_AUTO_UPDATE=1
-  export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.aliyun.com/homebrew/homebrew-core.git"
-  export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  /usr/local/bin/brew install --build-from-source node npm
-}
 
 function install_config {
     mkdir -p ${HOME}/.config/
@@ -84,47 +38,39 @@ function install_config {
     set -x
 }
 
-function install_commandline {
-  if [ "$OS"y == "Drawin"y ]; then
-    xcode-select --install
-  fi
-}
-
-function install_search_tool {
-  if [ "$OS"y == "Drawin" ]; then
-    brew install --build-from-source the_silver_searcher
-  else
-    sudo apt install silversearcher-ag -y
-  fi
-  [ -z "${XDG_CONFIG_HOME}" ] && export XDG_CONFIG_HOME="${HOME}/.config"
-  git clone --depth 1 https://github.com/junegunn/fzf.git "${XDG_CONFIG_HOME}"/fzf
-  bash "${XDG_CONFIG_HOME}"/fzf/install --xdg
-}
-
 function install_pyenv_nvim {
-  export PYENV_ROOT=${HOME}/.config/pyenv/
-  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-  if [ ! -d $(PYENV_ROOT)/plugins/pyenv-virtualenv ] ; then
-    git clone https://github.com/pyenv/pyenv-virtualenv.git $(PYENV_ROOT)/plugins/pyenv-virtualenv
+  export PYENV_ROOT=${HOME}/.config/pyenv
+  wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer -O - | bash
+  if [ ! -d ${PYENV_ROOT}/plugins/pyenv-virtualenv ] ; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
   fi
 
-  pyenv=$(PYENV_ROOT)/bin/pyenv
-  v=3.7.7 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P $(PYENV_ROOT)/cache/ && $(pyenv) install $v
-  v=2.7.17 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P $(PYENV_ROOT)/cache/ && $(pyenv) install $v
+  pyenv=${PYENV_ROOT}/bin/pyenv
+  v=3.7.7 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
+  v=2.7.17 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
 
-  $(pyenv) virtualenv 2.7.17 neovim2
-  $(pyenv) virtualenv 3.7.7 neovim3
-  $(PYENV_ROOT)/versions/2.7.17/bin/pip install neovim flake8
-  $(PYENV_ROOT)/versions/3.7.7/bin/pip install neovim flake8
+  eval ${pyenv} virtualenv 2.7.17 neovim2
+  eval ${pyenv} virtualenv 3.7.7 neovim3
+  ${PYENV_ROOT}/versions/neovim2/bin/pip install neovim flake8 jedi
+  ${PYENV_ROOT}/versions/neovim3/bin/pip install neovim flake8 jedi
   export NPM_CONFIG_USERCONFIG=${HOME}/.config/npm/config
   export NPM_CONFIG_CACHE=${HOME}/.config/npm
-  /usr/local/bin/npm install -g neovim
+  sudo npm install -g neovim
 }
 
+if [ "$OS"y == "Drawin"y ]; then
+  source init_mac.sh
+elif [ "$OS"y == "Linux"y ]; then
+  source init_ubuntu.sh
+fi
+
 function my_install {
-    INSTALL_SOFT=install_$1
-    ${INSTALL_SOFT} $([[ $# -gt 1 ]] && echo $@ | cut -d' ' -f 2-)
-    unset INSTALL_SOFT
+  echo 'init first'
+  init
+  echo 'start install'
+  INSTALL_SOFT=install_$1
+  ${INSTALL_SOFT} $([[ $# -gt 1 ]] && echo $@ | cut -d' ' -f 2-)
+  unset INSTALL_SOFT
 }
 
 function install_all {

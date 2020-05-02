@@ -1,7 +1,8 @@
 #!/bin/bash
 
-if [[ -d "${HOME}/.pyenv/bin" ]]; then
-    export PATH="${HOME}/.pyenv/bin:$PATH"
+if [[ -d "${XDG_CONFIG_HOME}/pyenv/bin" ]]; then
+    export PYENV_ROOT=${XDG_CONFIG_HOME}/pyenv
+    export PATH="${XDG_CONFIG_HOME}/pyenv/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     zsh_completions="$(pyenv root)/completions/pyenv.zsh"
@@ -18,7 +19,7 @@ MY_PYTHON_USER_BASE=$(python -c 'import site; print(site.USER_BASE)')
 [[ -n ${MY_PYTHON_USER_BASE} ]] && export PATH=${MY_PYTHON_USER_BASE}/bin:${PATH}
 
 if [[ -r $(which virtualenvwrapper.sh) ]]; then
-    export WORKON_HOME=${HOME}/.virtualenvs
+    export WORKON_HOME=${XDG_CONFIG_HOME}/virtualenvs
     # export PROJECT_HOME=/srv/projects
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
@@ -26,4 +27,5 @@ if [[ -r $(which virtualenvwrapper.sh) ]]; then
     source $(which virtualenvwrapper.sh)
 fi
 
+export IPYTHONDIR="${XDG_CONFIG_HOME}"
 unset MY_PYTHON_USER_BASE
