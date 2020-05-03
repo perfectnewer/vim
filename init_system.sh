@@ -17,7 +17,9 @@ function install_pip {
 # git clone git://github.com/altercation/solarized.git
 
 function install_config {
-    mkdir -p ${HOME}/.config/
+    mkdir -p ${HOME}/.config/pip ${HOME}/.config/git/ ${HOME}/.config/nvim/ ${HOME}/.config/zsh/ \
+        ${HOME}/.config/tmux/ 
+
     LINK_CFG=(git .config/git pip .config/pip  ssh .ssh zshrc .config/zsh/.zshrc vim .vim vim .config/nvim)
     LINK_LEN=$[${#LINK_CFG[@]}-1]
     set +x
@@ -40,7 +42,11 @@ function install_config {
 
 function install_pyenv_nvim {
   export PYENV_ROOT=${HOME}/.config/pyenv
-  wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer -O - | bash
+  if command -v curl > /dev/null ; then
+    wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer -O - | bash
+  else
+    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+  fi
   if [ ! -d ${PYENV_ROOT}/plugins/pyenv-virtualenv ] ; then
     git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
   fi
