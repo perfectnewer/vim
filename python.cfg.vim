@@ -12,8 +12,8 @@ autocmd FileType python
     \ setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
-let g:python_host_prog = $HOME . '/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = $HOME . '/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = $XDG_CONFIG_HOME . '/pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = $XDG_CONFIG_HOME . '/pyenv/versions/neovim3/bin/python'
 
 "python with virtualenv support
 if $PYENV_VIRTUAL_ENV != ""

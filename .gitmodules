@@ -1,24 +1,9 @@
-[submodule "pack/plugins/start/solarized"]
-	path = pack/plugins/start/solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "pack/plugins/start/nerdtree"]
-	path = pack/plugins/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree
-[submodule "pack/plugins/start/vim-go"]
-	path = pack/plugins/start/vim-go
-	url = https://github.com/fatih/vim-go.git
 [submodule "pack/plugins/start/ale"]
 	path = pack/plugins/start/ale
 	url = https://github.com/w0rp/ale.git
 [submodule "pack/plugins/start/completor.vim"]
 	path = pack/plugins/start/completor.vim
 	url = https://github.com/maralla/completor.vim
-[submodule "pack/plugins/start/tagbar"]
-	path = pack/plugins/start/tagbar
-	url = git://github.com/majutsushi/tagbar
-[submodule "pack/plugins/start/ctrlp.vim"]
-	path = pack/plugins/start/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim
 [submodule "pack/plugins/start/nerdcommenter"]
 	path = pack/plugins/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
@@ -40,21 +25,9 @@
 [submodule "pack/plugins/start/deoplete-go"]
 	path = pack/plugins/start/deoplete-go
 	url = https://github.com/deoplete-plugins/deoplete-go.git
-[submodule "pack/plugins/start/fzf.vim"]
-	path = pack/plugins/start/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
 [submodule "pack/plugins/start/deoplete-jedi"]
 	path = pack/plugins/start/deoplete-jedi
 	url = https://github.com/deoplete-plugins/deoplete-jedi
-[submodule "pack/plugins/start/jedi-vim"]
-	path = pack/plugins/start/jedi-vim
-	url = https://github.com/davidhalter/jedi-vim.git
 [submodule "pack/plugins/start/indentLine.git"]
 	path = pack/plugins/start/indentLine.git
 	url = https://github.com/Yggdroot/indentLine.git
-[submodule "pack/plugins/start/vim-autopep8.git"]
-	path = pack/plugins/start/vim-autopep8.git
-	url = https://github.com/tell-k/vim-autopep8.git
-[submodule "colorschemes"]
-	path = colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git

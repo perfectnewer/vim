@@ -14,7 +14,6 @@ Plug 'iCyMind/NeoSolarized'
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
-''
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -36,7 +35,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-loc
 Plug 'fatih/vim-go'
 Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins', 'for': 'python'}
 " Plug 'plasticboy/vim-markdown'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 Plug 'tmhedberg/SimpylFold'
 Plug 'ashfinal/vim-colors-violet'
