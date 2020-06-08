@@ -1,3 +1,5 @@
+" python
+
 autocmd BufNewFile
     \ *.py
     \ setlocal expandtab | setlocal tabstop=4 |
@@ -6,10 +8,8 @@ autocmd BufNewFile
     \ call append(1, "# coding: utf-8")
 
 autocmd FileType python
-    \ setlocal expandtab | setlocal tabstop=4 |
-    \ setlocal softtabstop=4 | setlocal shiftwidth=4 |
-    \ setlocal autoindent | setlocal fileformat=unix |
-    \ setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
+    \ setlocal expandtab | setlocal tabstop=4 | setlocal softtabstop=4 | setlocal shiftwidth=4 |
+    \ setlocal fileformat=unix | setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
 let g:python_host_prog = $XDG_CONFIG_HOME . '/pyenv/versions/neovim2/bin/python'

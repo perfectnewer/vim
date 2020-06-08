@@ -2,9 +2,6 @@
 set nu
 set mouse=a
 set termguicolors
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
 
 let s:path = expand('<sfile>:p:h')
 exec 'source ' .s:path. '/plugins.cfg.vim'

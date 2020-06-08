@@ -8,6 +8,10 @@ noremap <expr> <Space> (foldlevel(line('.'))>0) ? "za" : "}"
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
@@ -34,8 +38,8 @@ set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
 
 " colorscheme solarized
-colorscheme NeoSolarized
-colorscheme violet
+" colorscheme NeoSolarized
+" colorscheme violet
 colorscheme Atelier_EstuaryDark
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '20'

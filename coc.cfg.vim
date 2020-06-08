@@ -30,9 +30,9 @@ let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-python', 'coc-viml
 
 let s:v=system('python -c "import sys; print(sys.version_info.major)"')
 
-let s:venv_python=$HOME.'/.pyenv/versions/neovim3'
+let s:venv_python=$XDG_CONFIG_HOME.'/pyenv/versions/neovim3'
 if s:v == 2
-    let s:venv_python=$HOME.'/.pyenv/versions/neovim2'
+    let s:venv_python=$XDG_CONFIG_HOME.'/pyenv/versions/neovim2'
 endif
 
 call coc#config('python', {
