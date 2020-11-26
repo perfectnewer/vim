@@ -1,9 +1,9 @@
 """ basic
 
 set foldmethod=indent
-set foldmethod=syntax
-set foldlevelstart=3
-noremap <expr> <Space> (foldlevel(line('.'))>0) ? "za" : "}"
+" set foldmethod=syntax
+" set foldlevelstart=3
+noremap <expr> <space><space> (foldlevel(line('.'))>0) ? "za" : "}"
 
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
@@ -42,7 +42,7 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 " colorscheme violet
 colorscheme Atelier_EstuaryDark
 let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '20'
+if s:hour >= '07' && s:hour <= '19'
 	set background=light
 else
 	set background=dark

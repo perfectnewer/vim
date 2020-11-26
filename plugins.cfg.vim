@@ -10,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 
 " Any valid git URL is allowed
 " Plug 'altercation/vim-colors-solarized'
-" Plug 'iCyMind/NeoSolarized'
+Plug 'iCyMind/NeoSolarized'
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
@@ -30,7 +30,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdcommenter'
 
 " https://github.com/neoclide/coc-python
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 " Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins'}
 " Plug 'plasticboy/vim-markdown'
@@ -44,7 +44,7 @@ Plug 'ashfinal/vim-colors-violet'
 
 " disable plugin
 " ncm2
-Plug 'godlygeek/tabular',        {'for': 'disable'}
+Plug 'godlygeek/tabular'
 Plug 'vim-scripts/DrawIt'
 
 call plug#end()

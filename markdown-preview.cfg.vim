@@ -1,8 +1,10 @@
-"https://github.com/iamcco/markdown-preview.nvim
+" https://github.com/iamcco/markdown-preview.nvim
 "
 let g:vim_markdown_preview_github = 1
 let g:mkdp_refresh_slow = 1
 let g:mkdp_open_to_the_world = 1
+let g:mkdp_echo_preview_url = 1
+
 " options for markdown render
 " mkit: markdown-it options for render
 " katex: katex options for math

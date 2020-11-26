@@ -24,7 +24,7 @@ set signcolumn=yes
 let g:go_def_mapping_enabled = 0
 
 let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git',
-	\ 'coc-lists']
+	\ 'coc-lists', 'coc-explorer']
 
 " config for coc-settings
 
@@ -35,14 +35,15 @@ if s:v == 2
     let s:venv_python=$XDG_CONFIG_HOME.'/pyenv/versions/neovim2'
 endif
 
+    " \ 'jediPath': s:venv_python . '/lib/python3.7/site-packages/jedi',
 call coc#config('python', {
     \ 'pythonPath': s:venv_python . '/bin/python',
-    \ 'jediPath': s:venv_python . '/lib/python3.7/site-packages/jedi',
+    \ 'python.venvFolders': $XDG_CONFIG_HOME.'/pyenv/versions/',
     \ 'setLinter': 'flake8',
     \ 'linting.flake8Enabled': v:true,
-    \ 'linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41'],
+    \ 'linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41,W391'],
     \ 'linting.flake8Path': s:venv_python . '/bin/flake8',
-    \ 'linting.pylintEnabled': v:false,
+    \ 'linting.pylintEnabled': v:true,
     \ 'linting.pylintPath':  s:venv_python . '/bin/pylint',
     \})
 
@@ -91,6 +92,9 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt :call CocAction('jumpDefinition', 'tab drop')<CR>
+nmap <silent> ge :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -157,6 +161,8 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Mappings using CoCList:
+" Explorer
+nnoremap <silent> <space>e  :CocCommand explorer<CR>
 " Show all diagnostics.
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Show commands.
@@ -173,4 +179,4 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<CR>
 nnoremap <space>r :<C-u>CocCommand python.execInTerminal<CR>
-" nnoremap <space>p :<C-u>tabnew term://zsh<CR>:<C-u>CocCommand python.startREPL<CR>
+nnoremap <space>rp :<C-u>tabnew term://zsh<CR>:<C-u>CocCommand python.startREPL<CR>
