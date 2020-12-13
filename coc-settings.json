@@ -21,5 +21,6 @@
   "snippets.ultisnips.directories": [
     "UltiSnips",
     "gosnippets/UltiSnips"
-  ]
+  ],
+  "list.source.grep.command": "rg"
 }
