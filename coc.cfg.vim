@@ -23,8 +23,8 @@ set signcolumn=yes
 " this is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
 
-let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-python', 'coc-vimlsp', 'coc-git',
-	\ 'coc-lists', 'coc-explorer']
+let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-vimlsp', 'coc-git',
+	\ 'coc-lists', 'coc-explorer', 'coc-pyright', 'coc-bookmark']  "  'coc-jedi',
 
 " config for coc-settings
 
@@ -46,6 +46,7 @@ call coc#config('python', {
     \ 'linting.pylintEnabled': v:true,
     \ 'linting.pylintPath':  s:venv_python . '/bin/pylint',
     \})
+call coc#config('languageserver.python.command', s:venv_python . '/bin/python')
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -180,3 +181,9 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<CR>
 nnoremap <space>r :<C-u>CocCommand python.execInTerminal<CR>
 nnoremap <space>rp :<C-u>tabnew term://zsh<CR>:<C-u>CocCommand python.startREPL<CR>
+
+" coc bookmark
+nmap <Leader>bj <Plug>(coc-bookmark-next)
+nmap <Leader>bk <Plug>(coc-bookmark-prev)
+nmap <Leader>bt <Plug>(coc-bookmark-toggle)
+nmap <Leader>ba <Plug>(coc-bookmark-annotate)

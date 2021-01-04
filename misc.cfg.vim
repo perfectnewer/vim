@@ -1,5 +1,6 @@
 """ basic
 
+set mouse=nvih
 set foldmethod=indent
 " set foldmethod=syntax
 " set foldlevelstart=3
@@ -42,7 +43,7 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 " colorscheme violet
 colorscheme Atelier_EstuaryDark
 let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '19'
+if s:hour >= '07' && s:hour <= '18'
 	set background=light
 else
 	set background=dark

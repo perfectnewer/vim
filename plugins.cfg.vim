@@ -38,6 +38,8 @@ Plug 'fatih/vim-go'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 Plug 'tmhedberg/SimpylFold'
 Plug 'ashfinal/vim-colors-violet'
+" need 5.0 +
+" Plug 'neovim/nvim-lspconfig'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'

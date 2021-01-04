@@ -1,7 +1,6 @@
 " https://vimawesome.com/
 
 set nu
-set mouse=a
 set termguicolors
 
 let $NVIM_COC_LOG_LEVEL = 'debug'
