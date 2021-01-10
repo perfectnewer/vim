@@ -24,7 +24,7 @@ set signcolumn=yes
 let g:go_def_mapping_enabled = 0
 
 let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-vimlsp', 'coc-git',
-	\ 'coc-lists', 'coc-explorer', 'coc-pyright', 'coc-bookmark']  "  'coc-jedi',
+	\ 'coc-lists', 'coc-explorer', 'coc-pairs', 'coc-pyright', 'coc-bookmark']  "  'coc-jedi',
 
 " config for coc-settings
 
@@ -167,7 +167,7 @@ nnoremap <silent> <space>e  :CocCommand explorer<CR>
 " Show all diagnostics.
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <space>c  :CocList 
 " Find symbol of current document.
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.

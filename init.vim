@@ -4,12 +4,12 @@ set nu
 set termguicolors
 
 let $NVIM_COC_LOG_LEVEL = 'debug'
+let s:curdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
-let s:path = expand('<sfile>:p:h')
-exec 'source ' .s:path. '/plugins.cfg.vim'
-exec 'source ' .s:path. '/misc.cfg.vim'
-exec 'source ' .s:path. '/nerdtree.cfg.vim'
-exec 'source ' .s:path. '/fzf.cfg.vim'
-exec 'source ' .s:path. '/python.cfg.vim'
-exec 'source ' .s:path. '/markdown-preview.cfg.vim'
-exec 'source ' .s:path. '/coc.cfg.vim'
+" let s:path = expand('<sfile>:p:h')
+" exec 'source ' .s:path. '/plugins.cfg.vim'
+" load config
+exec 'source ' .s:curdir. '/plugins.cfg.vim'
+for fpath in split(globpath(expand(s:curdir.'/conf'), '*.vim'), '\n')
+  exe 'source' fpath
+endfor

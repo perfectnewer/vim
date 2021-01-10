@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'iCyMind/NeoSolarized'
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -36,7 +36,7 @@ Plug 'fatih/vim-go'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
-Plug 'tmhedberg/SimpylFold'
+" Plug 'tmhedberg/SimpylFold'
 Plug 'ashfinal/vim-colors-violet'
 " need 5.0 +
 " Plug 'neovim/nvim-lspconfig'
@@ -48,5 +48,6 @@ Plug 'ashfinal/vim-colors-violet'
 " ncm2
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/DrawIt'
+Plug 'luochen1990/rainbow'
 
 call plug#end()

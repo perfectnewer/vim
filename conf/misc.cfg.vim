@@ -1,9 +1,9 @@
 """ basic
 
 set mouse=nvih
-set foldmethod=indent
 " set foldmethod=syntax
-" set foldlevelstart=3
+set foldmethod=indent
+set foldlevelstart=1
 noremap <expr> <space><space> (foldlevel(line('.'))>0) ? "za" : "}"
 
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
@@ -13,7 +13,7 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh,*.md
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
@@ -30,9 +30,10 @@ nmap <C-l> <C-W>l
 vmap <silent> * :call VisualSelection('f')<CR>
 vmap <silent> # :call VisualSelection('b')<CR>
 nmap <leader>tn :tabnew
-nmap <leader>tb :tabnext <cr>
-nmap <leader>tp :tabprevious <cr>
+nmap <leader>tj :tabnext <cr>
+nmap <leader>tk :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nmap <leader>tc :tabclose <cr>
 nmap <leader>tt :tabnew term://zsh <cr> i
 
 set laststatus=2
