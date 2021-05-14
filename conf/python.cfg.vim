@@ -20,8 +20,8 @@ if $PYENV_VIRTUAL_ENV != ""
 	let s:path = expand('<sfile>:p:h')
 	let s:v=system('python -c "import sys; print(sys.version_info.major)"')
 	if s:v == 2 && has('python')
-		exec 'source ' .s:path. '/python2_venv.vim'
+		exec 'source ' .s:path. '/python2_venv'
 	elseif s:v == 3 && has('python3')
-		exec 'source ' .s:path. '/python3_venv.vim'
+		exec 'source ' .s:path. '/python3_venv'
 	endif
 endif
