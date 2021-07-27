@@ -12,9 +12,17 @@ autocmd FileType python
     \ setlocal fileformat=unix | setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
-let g:python_host_prog = $XDG_CONFIG_HOME . '/pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = $XDG_CONFIG_HOME . '/pyenv/versions/neovim3/bin/python'
+let s:pyenv_py2_prefix = system('pyenv prefix neovim2')
+if s:pyenv_py2_prefix[-1:] == "\n"
+	let s:pyenv_py2_prefix = s:pyenv_py2_prefix[:-2]
+endif
 
+let s:pyenv_py3_prefix = system('pyenv prefix neovim3')
+if s:pyenv_py3_prefix[-1:] == "\n"
+	let s:pyenv_py3_prefix = s:pyenv_py3_prefix[:-2]
+endif
+let g:python_host_prog = s:pyenv_py2_prefix . '/bin/python'
+let g:python3_host_prog = s:pyenv_py3_prefix . '/bin/python'
 "python with virtualenv support
 if $PYENV_VIRTUAL_ENV != ""
 	let s:path = expand('<sfile>:p:h')
