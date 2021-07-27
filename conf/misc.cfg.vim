@@ -42,7 +42,7 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 " colorscheme solarized
 " colorscheme NeoSolarized
 " colorscheme violet
-colorscheme Atelier_EstuaryDark
+colorscheme monokai_pro
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '18'
 	set background=light
