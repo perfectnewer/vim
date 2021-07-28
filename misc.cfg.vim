@@ -37,10 +37,10 @@ nmap <leader>tt :tabnew term://zsh <cr> i
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
 
+" colorscheme monokai_pro
 " colorscheme solarized
-" colorscheme NeoSolarized
 " colorscheme violet
-colorscheme monokai_pro
+colorscheme NeoSolarized
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '18'
 	set background=light
