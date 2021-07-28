@@ -17,8 +17,6 @@ autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh,*.md
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
-autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
-
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
 imap jk <ESC>
@@ -88,11 +86,6 @@ let g:neosolarized_vertSplitBgTrans = 1
 " set list lcs=tab:\|\ 
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
-""" vim-go
-let g:go_highlight_structs = 0
-let g:go_highlight_interfaces = 0
-let g:go_highlight_operators = 0
 
 """ tagbar
 nnoremap <silent> <F9> :TagbarToggle<CR>

@@ -13,6 +13,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'iCyMind/NeoSolarized'
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" Plugin 'Shougo/neosnippet.vim'
+" Plugin 'Shougo/neosnippet-snippets'
+
 " Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
