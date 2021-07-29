@@ -1,26 +1,41 @@
 #!/bin/bash
 
-if [[ -d "${XDG_CONFIG_HOME}/pyenv/bin" ]]; then
-    export PYENV_ROOT=${XDG_CONFIG_HOME}/pyenv
-    export PATH="${XDG_CONFIG_HOME}/pyenv/bin:$PATH"
-    eval "$(pyenv init -)"
+if [[ $(which pyenv)y != "y" ]]; then
+    if [[ -r ${XDG_CONFIG_HOME} ]]; then
+        export PYENV_ROOT=${XDG_CONFIG_HOME}/pyenv
+    else
+	export PYENV_ROOT=$(pyenv root)
+    fi
+
+    export PATH="${PYENV_ROOT}/bin:$PATH"
+    eval "$(pyenv init --path)"
     eval "$(pyenv virtualenv-init -)"
-    zsh_completions="$(pyenv root)/completions/pyenv.zsh"
+    if [[ "$(which pyenv)" =~ ".*brew" ]]; then
+	pyenv_install_dir=$(brew --prefix pyenv)
+    else
+	pyenv_install_dir=$(pyenv root)
+    fi
+
+    zsh_completions="${pyenv_install_dir}/completions/pyenv.zsh"
     if [[ -f "${zsh_completions}" ]]; then
 	    source "${zsh_completions}"
     fi
-    bash_completions="$(pyenv root)/completions/pyenv.bash"
+    bash_completions="${pyenv_install_dir}/completions/pyenv.bash"
     if [[ -f "${bash_completions}" ]]; then
 	    source "${bash_completions}"
     fi
 fi
 
-MY_PYTHON_USER_BASE=$(python -c 'import site; print(site.USER_BASE)')
+if python -c "import sys" 2>/dev/null ; then
+    MY_PYTHON_USER_BASE=$(python -c 'import site; print(site.USER_BASE)')
+else
+    MY_PYTHON_USER_BASE=$(python3 -c 'import site; print(site.USER_BASE)')
+fi
+
 [[ -n ${MY_PYTHON_USER_BASE} ]] && export PATH=${MY_PYTHON_USER_BASE}/bin:${PATH}
 
 if [[ -r $(which virtualenvwrapper.sh) ]]; then
     export WORKON_HOME=${XDG_CONFIG_HOME}/virtualenvs
-    # export PROJECT_HOME=/srv/projects
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true

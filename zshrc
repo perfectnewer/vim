@@ -8,7 +8,7 @@ autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
 source ${HOME}/Documents/mconfig/sh/custom_bashrc
 
-ZSH_THEME="ys"
+ZSH_THEME="ys"  # robbyrussell
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -26,6 +26,7 @@ source $ZSH/oh-my-zsh.sh
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/linuxbrew-bottles"
 export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/config
 export NPM_CONFIG_CACHE=${XDG_CACHE_HOME}/npm
 
@@ -84,5 +85,8 @@ command -v vg >/dev/null 2>&1 && eval "$(vg eval --shell zsh)"
 alias typora="open -a typora"
 alias rmt=rmtrash.sh
 alias brewi="brew install -v --build-from-source"
+alias server="ssh server"
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+export PATH="${HOME}/.cargo/bin:${PATH}"

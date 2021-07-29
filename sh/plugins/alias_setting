@@ -17,22 +17,24 @@ function _rmpyc() {
 }
 alias rmpyc='_rmpyc'
 
-function _pip() {
-    [[ -z "${VIRTUAL_ENV}" ]] && [[ "$@" =~ ^"install" ]]\
-        && echo -e "\033[0;38;5;130m"'installing python packages install site.USER_BASE dir'"\033[0;38;5;30m"\
-        && __USER='--user '
-    echo "pip $@ ${__USER}" | $SHELL
-    unset __USER
-}
-alias pip=_pip
-function _pip3() {
-    [[ -z "${VIRTUAL_ENV}" ]] && [[ "$@" =~ ^"install" ]]\
-        && echo -e "\033[0;38;5;130m"'installing python packages install site.USER_BASE dir'"\033[0;38;5;30m"\
-        && __USER='--user '
-    echo "pip3 $@ ${__USER}" | $SHELL
-    unset __USER
-}
-alias pip3=_pip3
+# if [[ -z "${PYENV_VERSION}" ]]; then
+#     function _pip() {
+#         [[ -z "${VIRTUAL_ENV}" ]] && [[ "$@" =~ ^"install" ]]\
+#             && echo -e "\033[0;38;5;130m"'installing python packages install site.USER_BASE dir'"\033[0;38;5;30m"\
+#             && __USER='--user '
+#         echo "pip $@ ${__USER}" | $SHELL
+#         unset __USER
+#     }
+#     alias pip=_pip
+#     function _pip3() {
+#         [[ -z "${VIRTUAL_ENV}" ]] && [[ "$@" =~ ^"install" ]]\
+#             && echo -e "\033[0;38;5;130m"'installing python packages install site.USER_BASE dir'"\033[0;38;5;30m"\
+#             && __USER='--user '
+#         echo "pip3 $@ ${__USER}" | $SHELL
+#         unset __USER
+#     }
+#     alias pip3=_pip3
+# fi
 
 # alias mkvirtualenvs='mkvirtualenv --system-site-packages'
 # FIXME betterway
