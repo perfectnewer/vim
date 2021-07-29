@@ -37,28 +37,35 @@ function install_config {
            ln -s -i "${SRC}" "${TARGET}"
         fi
     done
+
+    yarn config set registry https://registry.npm.taobao.org/
+    npm config set registry https://registry.npm.taobao.org/
     set -x
 }
 
 function install_pyenv_nvim {
-  export PYENV_ROOT=${HOME}/.config/pyenv
-  if command -v curl > /dev/null ; then
-    wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer -O - | bash
+  if [[ "$(which pyenv)"y == "y" ]]; then
+      export PYENV_ROOT=${HOME}/.config/pyenv
+      if command -v curl > /dev/null ; then
+        wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer -O - | bash
+      else
+        curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+      fi
+      if [ ! -d ${PYENV_ROOT}/plugins/pyenv-virtualenv ] ; then
+        git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
+      fi
+      pyenv=${PYENV_ROOT}/bin/pyenv
   else
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-  fi
-  if [ ! -d ${PYENV_ROOT}/plugins/pyenv-virtualenv ] ; then
-    git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
+      pyenv="pyenv"
   fi
 
-  pyenv=${PYENV_ROOT}/bin/pyenv
-  v=3.7.7 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
-  v=2.7.17 && wget http://mirrors.sohu.com/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
+  v=3.7.9 && wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
+  v=2.7.18 && wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ${PYENV_ROOT}/cache/ && eval ${pyenv} install $v
 
-  eval ${pyenv} virtualenv 2.7.17 neovim2
-  eval ${pyenv} virtualenv 3.7.7 neovim3
-  ${PYENV_ROOT}/versions/neovim2/bin/pip install neovim flake8 jedi
-  ${PYENV_ROOT}/versions/neovim3/bin/pip install neovim flake8 jedi
+  eval ${pyenv} virtualenv 2.7.18 neovim2
+  eval ${pyenv} virtualenv 3.7.9 neovim3
+  $(${pyenv} prefix neovim2)/bin/pip install neovim flake8 jedi
+  $(${pyenv} prefix neovim3)/bin/pip install neovim flake8 jedi
   export NPM_CONFIG_USERCONFIG=${HOME}/.config/npm/config
   export NPM_CONFIG_CACHE=${HOME}/.config/npm
   sudo npm install -g neovim
@@ -71,8 +78,6 @@ elif [ "$OS"y == "Linux"y ]; then
 fi
 
 function my_install {
-  echo 'init first'
-  init
   echo 'start install'
   INSTALL_SOFT=install_$1
   ${INSTALL_SOFT} $([[ $# -gt 1 ]] && echo $@ | cut -d' ' -f 2-)
@@ -80,16 +85,23 @@ function my_install {
 }
 
 function install_all {
+  echo 'init first'
+  init
   for component in config commandline brew pip zsh zsh_env search_tool pyenv_nvim; do
     my_install ${component}
   done
 }
 
 if [ -n "$1" ];then
-    for i in $@; do
-        echo "install $i"
-        my_install $i
-    done
+    case $1 in
+      "init" ) init ;;
+      * )
+        for i in $@; do
+            echo "install $i"
+            my_install $i
+        done
+        ;;
+    esac
 else
   read -p "install all?" yn
   case $yn in

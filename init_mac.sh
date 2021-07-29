@@ -4,7 +4,7 @@ function install_brew {
   export HOMEBREW_NO_AUTO_UPDATE=1
   export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bottles"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  /usr/local/bin/brew install --build-from-source node npm
+  /usr/local/bin/brew install --build-from-source node npm yarn
 }
 
 function init {

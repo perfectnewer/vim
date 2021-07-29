@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 function init() {
-  sudo apt install -y neovim git build-essential golang nodejs npm clang ssh
-  sudo apt install -y zlib readline libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev \
+  sudo apt install -y git build-essential clang openssh-server
+  sudo apt install -y neovim
+  sudo apt install -y golang
+  sudo apt install -y nodejs npm yarnpkg
+  # for build python
+  sudo apt install -y libffi-dev libreadline-dev lib64readline-dev libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev \
       	libreadline-gplv2-dev libsqlite3-dev tk-dev libbz2-dev
 
 }
@@ -45,5 +49,5 @@ function install_docker() {
    $(lsb_release -cs) stable"
   sudo apt update -y
   sudo apt install -y docker-ce docker-ce-cli containerd.io
-  sudo usermod -aG docker your-use
+  sudo usermod -aG docker $USER
 }
