@@ -23,6 +23,7 @@ if s:pyenv_py3_prefix[-1:] == "\n"
 endif
 let g:python_host_prog = s:pyenv_py2_prefix . '/bin/python'
 let g:python3_host_prog = s:pyenv_py3_prefix . '/bin/python'
+let g:venv_python_executable = ''
 "python with virtualenv support
 if $PYENV_VIRTUAL_ENV != ""
 	let s:path = expand('<sfile>:p:h')

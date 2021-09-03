@@ -23,30 +23,39 @@ set signcolumn=yes
 " this is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
 
-let g:coc_global_extensions=['coc-json', 'coc-snippets', 'coc-vimlsp', 'coc-git',
-	\ 'coc-lists', 'coc-explorer', 'coc-pairs', 'coc-pyright', 'coc-bookmark']  "  'coc-jedi',
+let g:coc_global_extensions=['coc-snippets', 'coc-vimlsp', 'coc-git',
+	\ 'coc-lists', 'coc-explorer', 'coc-pairs', 'coc-pyright']  " 'coc-bookmark', 'coc-jedi',
 
 " config for coc-settings
 
 let s:v=system('python -c "import sys; print(sys.version_info.major)"')
-
-let s:venv_python=$XDG_CONFIG_HOME.'/pyenv/versions/neovim3'
+let s:pyenv_root=substitute(system('pyenv root'), '\n\+$', '', '')
+let s:pyneovim_path=s:pyenv_root .'/versions/neovim3'
 if s:v == 2
-    let s:venv_python=$XDG_CONFIG_HOME.'/pyenv/versions/neovim2'
+    let s:pyneovim_path=s:pyenv_root .'/versions/neovim2'
 endif
 
-    " \ 'jediPath': s:venv_python . '/lib/python3.7/site-packages/jedi',
 call coc#config('python', {
-    \ 'pythonPath': s:venv_python . '/bin/python',
-    \ 'python.venvFolders': $XDG_CONFIG_HOME.'/pyenv/versions/',
     \ 'setLinter': 'flake8',
+    \ 'linting.flake8Path': s:pyneovim_path . '/bin/flake8',
     \ 'linting.flake8Enabled': v:true,
     \ 'linting.flake8Args': ['max-line-length = 120', 'ignore = E226,E302,E41,W391'],
-    \ 'linting.flake8Path': s:venv_python . '/bin/flake8',
+    \ 'linting.pylintPath': s:pyneovim_path . '/bin/pylint',
     \ 'linting.pylintEnabled': v:true,
-    \ 'linting.pylintPath':  s:venv_python . '/bin/pylint',
     \})
-call coc#config('languageserver.python.command', s:venv_python . '/bin/python')
+
+let s:curdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let s:activate_this = join(readfile(s:curdir . '/activate_env.py', "b"), "\n")
+call coc#config('python.linting.pylintArgs', ['--init-hook', s:activate_this])
+" call coc#config('python.linting.pylintArgs', ['--init-hook', 'import pylint_venv; pylint_venv.inithook(force_venv_activation=True)'])
+
+   " \ 'jediPath': s:pyneovim_path . '/lib/python3.7/site-packages/jedi',
+call coc#config('languageserver.python.command', s:pyneovim_path . '/bin/python')
+if s:v == 2
+    call coc#config('pyright.enable', v:false)
+else
+    call coc#config('languageserver.python.filetypes', [])
+endif
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
