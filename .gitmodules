@@ -1,3 +1,3 @@
 [submodule "vim"]
 	path = vim
-	url = git@github.com:perfectnewer/vim.git
+	url = git@gitee.com:perfectnewer/vim.git
