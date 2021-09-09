@@ -1,3 +1,9 @@
 ssh/*
 oh-my-zsh/
-*/**/.DS_Store
+.swp
+.netrwhist
+tag*
+plugged
+start
+sessions
+**/**/.DS_store
