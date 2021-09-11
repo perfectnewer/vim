@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export GOPATH=${HOME}/go
-export PATH=${PATH}:${HOME}/goroot/bin:${HOME}/go/bin
-export GOPROXY=https://mirrors.aliyun.com/goproxy/
