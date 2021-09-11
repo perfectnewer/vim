@@ -11,6 +11,9 @@ let s:curdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 " load config
 exec 'source ' .s:curdir. '/plugins.cfg.vim'
 exec 'source ' .s:curdir. '/misc.cfg.vim'
-for fpath in split(globpath(expand(s:curdir.'/conf'), '*.vim'), '\n')
+let s:cfg_files = split(globpath(expand(s:curdir.'/conf'), '*.vim'), '\n')
+call sort(s:cfg_files)
+
+for fpath in s:cfg_files
   exec 'source' . fnameescape(fpath)
 endfor

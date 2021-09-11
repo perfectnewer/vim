@@ -28,16 +28,19 @@ let g:coc_global_extensions=['coc-snippets', 'coc-vimlsp', 'coc-git',
 
 " config for coc-settings
 
-let s:v=system('python -c "import sys; print(sys.version_info.major)"')
-let s:pyenv_root=substitute(system('pyenv root'), '\n\+$', '', '')
-if s:v == 2
-    let s:pyneovim_path=s:pyenv_root .'/versions/neovim2'
+if g:system_py_version == 2
+    let s:pyneovim_path = g:python_host_prog
+
+    call coc#config('languageserver.python.command', s:pyneovim_path . '/bin/python')
+    call coc#config('pyright.enable', v:false)
 else
-    let s:pyneovim_path=s:pyenv_root .'/versions/neovim3'
+    let s:pyneovim_path = g:python3_host_prog
+
+    call coc#config('languageserver.python.filetypes', [])
 endif
 
 call coc#config('python', {
-    \ 'venvPath	': s:pyenv_root . '/versions',
+    \ 'venvPath	': g:pyenv_root . '/versions',
     \ 'setLinter': 'flake8',
     \ 'linting.flake8Path': s:pyneovim_path . '/bin/flake8',
     \ 'linting.flake8Enabled': v:true,
@@ -52,12 +55,6 @@ call coc#config('python.linting.pylintArgs', ['--init-hook', s:activate_this])
 " call coc#config('python.linting.pylintArgs', ['--init-hook', 'import pylint_venv; pylint_venv.inithook(force_venv_activation=True)'])
 
    " \ 'jediPath': s:pyneovim_path . '/lib/python3.7/site-packages/jedi',
-if s:v == 2
-    call coc#config('languageserver.python.command', s:pyneovim_path . '/bin/python')
-    call coc#config('pyright.enable', v:false)
-else
-    call coc#config('languageserver.python.filetypes', [])
-endif
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
