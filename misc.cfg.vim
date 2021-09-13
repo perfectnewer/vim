@@ -13,13 +13,14 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.sh,*.md
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.md
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
-autocmd BufRead *.vim
+autocmd BufRead *.sh,*.vim
     \ setlocal expandtab | setlocal tabstop=4 |
     \ setlocal softtabstop=4 | setlocal shiftwidth=4
+
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
 imap jk <ESC>
