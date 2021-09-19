@@ -29,12 +29,12 @@ let g:coc_global_extensions=['coc-snippets', 'coc-vimlsp', 'coc-git',
 " config for coc-settings
 
 if g:system_py_version == 2
-    let s:pyneovim_path = g:python_host_prog
+    let s:pyneovim_path = g:pyenv_py2_prefix
 
     call coc#config('languageserver.python.command', s:pyneovim_path . '/bin/python')
     call coc#config('pyright.enable', v:false)
 else
-    let s:pyneovim_path = g:python3_host_prog
+    let s:pyneovim_path = g:pyenv_py3_prefix
 
     call coc#config('languageserver.python.filetypes', [])
 endif
