@@ -37,6 +37,8 @@ nmap <leader>tk :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nmap <leader>tc :tabclose <cr>
 nmap <leader>tt :tabnew term://zsh <cr> i
+nnoremap <silent> <leader>e  :NvimTreeFocus<CR>
+nnoremap <leader>v <cmd>CHADopen<cr>
 
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
@@ -44,13 +46,16 @@ set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ 
 " colorscheme monokai_pro
 " colorscheme solarized
 " colorscheme violet
-colorscheme NeoSolarized
+" colorscheme NeoSolarized
+let g:solarized_termcolors=256
+colorscheme solarized
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '18'
 	set background=light
 else
 	set background=dark
 endif
+set background=dark
 
 """ basic end
 

@@ -34,7 +34,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdcommenter'
 
 " https://github.com/neoclide/coc-python
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 " Plug 'numirias/semshi',   {'do': ':UpdateRemotePlugins'}
 " Plug 'plasticboy/vim-markdown'
@@ -43,7 +43,15 @@ Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 " Plug 'tmhedberg/SimpylFold'
 Plug 'ashfinal/vim-colors-violet'
 " need 5.0 +
-" Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
+" Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
+Plug 'kkharji/lspsaga.nvim', { 'branch': 'main' }  " = 'nvim6.0' or 'nvim51' } -- for specific version
+Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+" Plug 'yamatsum/nvim-nonicons'
+" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+
+Plug 'github/copilot.vim'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
