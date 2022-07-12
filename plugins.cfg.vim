@@ -18,9 +18,9 @@ Plug 'honza/vim-snippets'
 " Plugin 'Shougo/neosnippet-snippets'
 
 " Plug 'junegunn/vim-easy-align'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'jistr/vim-nerdtree-tabs'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'junegunn/fzf', { 'do': '{ -> fzf#install() }' }
 Plug 'junegunn/fzf.vim'
@@ -48,8 +48,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kkharji/lspsaga.nvim', { 'branch': 'main' }  " = 'nvim6.0' or 'nvim51' } -- for specific version
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'yamatsum/nvim-nonicons'
-" Plug 'kyazdani42/nvim-tree.lua'
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 
 Plug 'github/copilot.vim'
 

@@ -38,7 +38,6 @@ nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nmap <leader>tc :tabclose <cr>
 nmap <leader>tt :tabnew term://zsh <cr> i
 nnoremap <silent> <leader>e  :NvimTreeFocus<CR>
-nnoremap <leader>v <cmd>CHADopen<cr>
 
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]

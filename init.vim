@@ -26,19 +26,25 @@ local saga = require 'lspsaga'
 -- kind[type_number][2] = icon -- see lua/lspsaga/lspkind.lua
 
 -- use default config
-saga.init_lsp_saga()
+saga.init_lsp_saga({
+})
 
+require("nvim-tree").setup({
+  open_on_setup = true,
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "t", action = "tabnew" },
+        { key = "v", action = "vsplit" },
+        { key = "E", action = "split" },
+      },
+    },
+  },
+})
 -- require("nvim-tree").setup({
 --   sort_by = "case_sensitive",
---   view = {
---     adaptive_size = true,
---     mappings = {
---       list = {
---         { key = "u", action = "dir_up" },
---       },
---     },
---   },
---   renderer = {
+--   renderer =
 --     group_empty = true,
 --   },
 --   filters = {
