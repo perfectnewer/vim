@@ -18,6 +18,7 @@ for fpath in s:cfg_files
   exec 'source' . fnameescape(fpath)
 endfor
 
+set completeopt=menu,menuone,noselect
 lua << EOF
 local saga = require 'lspsaga'
 

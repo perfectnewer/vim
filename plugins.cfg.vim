@@ -42,17 +42,30 @@ Plug 'fatih/vim-go'
 Plug 'Yggdroot/indentLine',        {'for': ['python', 'go']}
 " Plug 'tmhedberg/SimpylFold'
 Plug 'ashfinal/vim-colors-violet'
+
 " need 5.0 +
 Plug 'neovim/nvim-lspconfig'
 " Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
 Plug 'kkharji/lspsaga.nvim', { 'branch': 'main' }  " = 'nvim6.0' or 'nvim51' } -- for specific version
+
+" main one
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+" 9000+ Snippets
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+" lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+" Need to **configure separately**
+Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+" Plug 'hrsh7th/nvim-cmp'
+
+
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'yamatsum/nvim-nonicons'
 Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
-
-Plug 'github/copilot.vim'
-
+" Plug 'github/copilot.vim'
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
