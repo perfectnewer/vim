@@ -72,3 +72,4 @@ require("nvim-tree").setup({
   },
 })
 EOF
+let g:coq_settings = { 'auto_start': v:true }
