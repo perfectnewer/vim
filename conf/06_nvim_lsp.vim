@@ -17,7 +17,8 @@ local on_attach = function(client, bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'gdt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', bufopts)
+  vim.keymap.set('n', 'gt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', bufopts)
+  vim.keymap.set('n', 'gs', '<cmd>split | lua vim.lsp.buf.definition()<CR>', bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -69,13 +70,14 @@ local function get_python_path(workspace)
   return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
 
-require'lspconfig'.pyright.setup{
+require'lspconfig'.pyright.setup(require('coq').lsp_ensure_capabilities({
     on_attach = on_attach,
     flags = lsp_flags,
     on_init = function(client)
         client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
     end,
-}
+  })
+)
 require('lspconfig')['rust_analyzer'].setup{
     on_attach = on_attach,
     flags = lsp_flags,

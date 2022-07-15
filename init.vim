@@ -37,8 +37,9 @@ require("nvim-tree").setup({
     mappings = {
       list = {
         { key = "t", action = "tabnew" },
-        { key = "v", action = "vsplit" },
-        { key = "E", action = "split" },
+        { key = "E", action = "vsplit" },
+        { key = "s", action = "split" },
+        { key = "C-h", action = "" },
       },
     },
   },
@@ -72,4 +73,35 @@ require("nvim-tree").setup({
   },
 })
 EOF
-let g:coq_settings = { 'auto_start': v:true }
+
+lua << EOF
+vim.g.coq_settings = {
+    auto_start = true,
+    clients = {
+        lsp = {
+            resolve_timeout = 0.2,
+        },
+    },
+}
+EOF
+
+lua << EOF
+  local tele = require('telescope')
+  tele.setup({
+    defaults = {
+    },
+    pickers = {
+      find_files = {
+        cwd = vim.env.HOME,
+      }
+    },
+    extensions = {
+      -- ...
+    },
+  })
+  tele.load_extension('fzf')
+EOF
+map <C-p> :Telescope find_files<CR>
+map <leader>g :Telescope git_files<CR>
+map <leader>t :Telescope 
+nnoremap <leader>tg :lua require('telescope.builtin').live_grep()<CR>

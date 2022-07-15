@@ -22,8 +22,11 @@ Plug 'honza/vim-snippets'
 " Plug 'jistr/vim-nerdtree-tabs'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 
-Plug 'junegunn/fzf', { 'do': '{ -> fzf#install() }' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': '{ -> fzf#install() }' }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 " https://github.com/iamcco/markdown-preview.nvim
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'majutsushi/tagbar'
