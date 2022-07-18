@@ -80,6 +80,7 @@ vim.g.coq_settings = {
     clients = {
         lsp = {
             resolve_timeout = 0.2,
+            weight_adjust = 1,
         },
     },
 }
