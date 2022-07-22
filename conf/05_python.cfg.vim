@@ -9,7 +9,7 @@ autocmd BufNewFile
 
 autocmd FileType python
     \ setlocal expandtab | setlocal tabstop=4 | setlocal softtabstop=4 | setlocal shiftwidth=4 |
-    \ setlocal fileformat=unix | setlocal formatprg=autopep8 | setlocal colorcolumn=120 |
+    \ setlocal fileformat=unix | setlocal formatprg=autopep8 | setlocal colorcolumn=78 |
     \ nnoremap <LocalLeader>i :!isort %<CR><CR>
 
 let g:system_py_version = system('python -c "import sys; print(sys.version_info.major)"')

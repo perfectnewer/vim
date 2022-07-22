@@ -13,11 +13,11 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.md
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.md,*.vim,*.lua
     \ setlocal expandtab | setlocal tabstop=2 |
     \ setlocal softtabstop=2 | setlocal shiftwidth=2
 
-autocmd BufRead *.sh,*.vim
+autocmd BufRead *.sh
     \ setlocal expandtab | setlocal tabstop=4 |
     \ setlocal softtabstop=4 | setlocal shiftwidth=4
 

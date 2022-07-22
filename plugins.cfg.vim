@@ -68,7 +68,6 @@ Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'yamatsum/nvim-nonicons'
 Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
-" Plug 'github/copilot.vim'
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
@@ -76,6 +75,18 @@ Plug 'kyazdani42/nvim-tree.lua'
 " ncm2
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/DrawIt'
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'}
+
+" nvim-treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
+Plug 'rcarriga/nvim-notify'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'windwp/nvim-spectre'
+
 
 call plug#end()
