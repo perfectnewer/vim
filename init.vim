@@ -80,12 +80,11 @@ EOF
 
 lua << EOF
 vim.g.coq_settings = {
-    auto_start = true,
-    clients = {
-        lsp = {
-            resolve_timeout = 0.2,
-            weight_adjust = 1,
-        },
+  auto_start = true,
+  clients = {
+    lsp = {
+      resolve_timeout = 0.2,
+      weight_adjust = 1,
     },
   },
   display = {
