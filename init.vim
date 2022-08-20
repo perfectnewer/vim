@@ -1,180 +1,114 @@
 " https://vimawesome.com/
 
 set nu
-" set termguicolors
+set termguicolors
+set completeopt=menu,menuone,noselect
+set mouse=nvih
+set laststatus=2
+set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
 
-let $NVIM_COC_LOG_LEVEL = 'debug'
+" set foldmethod=syntax
+" set foldmethod=indent
+" set foldlevelstart=1
+noremap <expr> <space><space> (foldlevel(line('.'))>0) ? "za" : "}"
+
+autocmd InsertLeave * se nocul  " 用浅色高亮当前行
+autocmd InsertEnter * se cul    " 用浅色高亮当前行
+" colorscheme monokai_pro
+" colorscheme solarized
+colorscheme violet
+" colorscheme NeoSolarized
+" let g:solarized_termcolors=256
+" colorscheme solarized
+let s:hour=strftime('%H')
+if s:hour >= '07' && s:hour <= '18'
+	set background=light
+else
+	set background=dark
+endif
+set background=dark
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.md,*.vim,*.lua
+    \ setlocal expandtab | setlocal tabstop=2 |
+    \ setlocal softtabstop=2 | setlocal shiftwidth=2
+
+autocmd BufRead *.sh
+    \ setlocal expandtab | setlocal tabstop=4 |
+    \ setlocal softtabstop=4 | setlocal shiftwidth=4
+
+"key mappings
+"""""""""""""""""""""""""""""""""""""""""""""""
+imap jk <ESC>
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-h> <C-W>h
+nmap <C-l> <C-W>l
+
+vmap <silent> * :call VisualSelection('f')<CR>
+vmap <silent> # :call VisualSelection('b')<CR>
+nmap <leader>tn :tabnew
+nmap <leader>tj :tabnext <cr>
+nmap <leader>tk :tabprevious <cr>
+nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nmap <leader>tc :tabclose <cr>
+nmap <leader>tt :tabnew term://zsh <cr> i
+nnoremap <silent> <leader>e  :NvimTreeFocus<CR>
+nnoremap <silent> <F9> :TagbarToggle<CR>
+
+
+lua << EOF
+local fn = vim.fn
+local install_path = fn.stdpath('config')..'/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.cmd [[packadd packer.nvim]]
+end
+EOF
+
+lua require('plugins')
+
 let s:curdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-
-" let s:path = expand('<sfile>:p:h')
-" exec 'source ' .s:path. '/plugins.cfg.vim'
-" load config
-exec 'source ' .s:curdir. '/plugins.cfg.vim'
-exec 'source ' .s:curdir. '/misc.cfg.vim'
 let s:cfg_files = split(globpath(expand(s:curdir.'/conf'), '*.vim'), '\n')
 call sort(s:cfg_files)
-
 for fpath in s:cfg_files
   exec 'source' . fnameescape(fpath)
 endfor
 
-set completeopt=menu,menuone,noselect
-lua << EOF
-vim.notify = require("notify")
+let g:vista_default_executive = 'nvim_lsp'
+let g:vista_executive_for = {
+  \ 'cpp': 'nvim_lsp',
+  \ 'php': 'nvim_lsp',
+  \ 'python': 'nvim_lsp',
+  \ 'lua': 'nvim_lsp',
+  \ }
 
-local saga = require 'lspsaga'
+" lua << EOF
+" 
+" local saga = require 'lspsaga'
+" 
+" -- change the lsp symbol kind
+" -- local kind = require('lspsaga.lspkind')
+" -- kind[type_number][2] = icon -- see lua/lspsaga/lspkind.lua
+" 
+" -- use default config
+" saga.init_lsp_saga({
+" })
+" 
+" EOF
+"
+" semshi
+" https://github.com/numirias/semshi/blob/master/README.md
 
--- change the lsp symbol kind
--- local kind = require('lspsaga.lspkind')
--- kind[type_number][2] = icon -- see lua/lspsaga/lspkind.lua
 
--- use default config
-saga.init_lsp_saga({
-})
-
-require("nvim-tree").setup({
-  open_on_setup = true,
-  sync_root_with_cwd = true,
-  view = {
-    adaptive_size = false,
-    width = 32,
-    mappings = {
-      list = {
-        { key = "t", action = "tabnew" },
-        { key = "E", action = "vsplit" },
-        { key = "s", action = "split" },
-        { key = "C-h", action = "" },
-      },
-    },
-  },
-  renderer = {
-    icons = {
-      webdev_colors = true,
-      git_placement = "before",
-      padding = " ",
-      symlink_arrow = " ➛ ",
-      show = {
-        file = true,
-        folder = false,
-        folder_arrow = true,
-        git = true,
-      },
-      glyphs = {
-        default = "",
-        symlink = "",
-        folder = {
-          arrow_closed = "",
-          arrow_open = "",
-          default = "",
-          open = "",
-          empty = "",
-          empty_open = "",
-          symlink = "",
-          symlink_open = "",
-        },
-      },
-    },
-  },
-})
-EOF
-
-lua << EOF
-vim.g.coq_settings = {
-  auto_start = true,
-  clients = {
-    lsp = {
-      resolve_timeout = 0.2,
-      weight_adjust = 1,
-    },
-  },
-  display = {
-    icons = {
-      mode =  'none'
-    }
-  },
-  keymap = {
-    jump_to_mark = 'c-n'
-  }
-}
-
-EOF
-
-lua << EOF
-  local actions = require('telescope.actions')
-  local tele = require('telescope')
-  tele.setup({
-    defaults = {
-    },
-    pickers = {
-      find_files = {
-      }
-    },
-    extensions = {
-      -- ...
-    },
-  })
-  tele.load_extension('fzf')
-EOF
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <silent> <leader>tl <cmd>Telescope live_grep<cr>
 nnoremap <silent> <leader>tg <cmd>Telescope git_files<cr>
 nnoremap <silent> <leader>tb <cmd>Telescope buffers<cr>
 nnoremap <silent> <leader>tt <cmd>Telescope help_tags<cr>
-
-lua << EOF
-require'nvim-treesitter.configs'.setup({
-  playground = {
-    enable = true,
-    disable = {},
-    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-    persist_queries = false, -- Whether the query persists across vim sessions
-    keybindings = {
-      toggle_query_editor = 'o',
-      toggle_hl_groups = 'i',
-      toggle_injected_languages = 't',
-      toggle_anonymous_nodes = 'a',
-      toggle_language_display = 'I',
-      focus_language = 'f',
-      unfocus_language = 'F',
-      update = 'R',
-      goto_node = '<cr>',
-      show_help = '?',
-    },
-  },
-    -- 启用增量选择
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      node_incremental = '<CR>',
-      node_decremental = '<BS>',
-      scope_incremental = '<TAB>',
-    }
-  },
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = false,
-    disable = {},
-  },
-  ensure_installed = {
-    "toml",
-    "json",
-    "yaml",
-    "python",
-    "rust",
-    "go",
-    "html"
-  },
-})
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
--- 默认不要折叠
--- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
-vim.wo.foldlevel = 1
-EOF
 
 nnoremap <leader>ss <cmd>lua require('spectre').open()<CR>
 "search current word
