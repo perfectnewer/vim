@@ -8,8 +8,7 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-require('packer').startup(
-function(use)
+require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use 'ashfinal/vim-colors-violet'
@@ -391,5 +390,9 @@ function(use)
   use 'honza/vim-snippets'
   use 'Shougo/neosnippet.vim'
   use 'Shougo/neosnippet-snippets'
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end
 )

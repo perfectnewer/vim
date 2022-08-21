@@ -14,19 +14,6 @@ noremap <expr> <space><space> (foldlevel(line('.'))>0) ? "za" : "}"
 
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行
-" colorscheme monokai_pro
-" colorscheme solarized
-colorscheme violet
-" colorscheme NeoSolarized
-" let g:solarized_termcolors=256
-" colorscheme solarized
-let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '18'
-	set background=light
-else
-	set background=dark
-endif
-set background=dark
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -64,12 +51,13 @@ lua << EOF
 local fn = vim.fn
 local install_path = fn.stdpath('config')..'/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
+  print("start install packer in ", install_path)
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  print("clone result ", packer_bootstrap)
   vim.cmd [[packadd packer.nvim]]
 end
+require('plugins')
 EOF
-
-lua require('plugins')
 
 let s:curdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let s:cfg_files = split(globpath(expand(s:curdir.'/conf'), '*.vim'), '\n')
@@ -77,6 +65,18 @@ call sort(s:cfg_files)
 for fpath in s:cfg_files
   exec 'source' . fnameescape(fpath)
 endfor
+
+" colorscheme monokai_pro
+" let g:solarized_termcolors=256
+" colorscheme NeoSolarized
+" colorscheme solarized
+colorscheme violet
+let s:hour=strftime('%H')
+if s:hour >= '07' && s:hour <= '18'
+	set background=light
+else
+	set background=dark
+endif
 
 let g:vista_default_executive = 'nvim_lsp'
 let g:vista_executive_for = {
