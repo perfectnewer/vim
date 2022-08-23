@@ -5,7 +5,7 @@ function map(mode, lhs, rhs, opts)
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.api.nvim_set_keymap.set(mode, lhs, rhs, options)
 end
 
 require('packer').startup(function(use)
@@ -15,13 +15,13 @@ require('packer').startup(function(use)
   use 'godlygeek/tabular'  -- line up text
 
   use({
-    "lukas-reineke/indent-blankline.nvim",
+    'lukas-reineke/indent-blankline.nvim',
     config = function()
       vim.opt.list = true
-      vim.opt.listchars:append "eol:↴"
-      -- vim.opt.listchars:append "space:⋅"
-      require("indent_blankline").setup({
-          space_char_blankline = " ",
+      vim.opt.listchars:append 'eol:↴'
+      -- vim.opt.listchars:append 'space:⋅'
+      require('indent_blankline').setup({
+          space_char_blankline = ' ',
           show_current_context = true,
           show_current_context_start = false,
           show_trailing_blankline_indent = false, 
@@ -40,7 +40,7 @@ require('packer').startup(function(use)
     },
     tag = 'nightly', -- optional, updated every week. (see issue #1193)
     config = function()
-      require("nvim-tree").setup({
+      require('nvim-tree').setup({
         open_on_setup = true,
         sync_root_with_cwd = true,
         view = {
@@ -48,19 +48,19 @@ require('packer').startup(function(use)
           width = 32,
           mappings = {
             list = {
-              { key = "t", action = "tabnew" },
-              { key = "E", action = "vsplit" },
-              { key = "s", action = "split" },
-              { key = "C-h", action = "" },
+              { key = 't', action = 'tabnew' },
+              { key = 'E', action = 'vsplit' },
+              { key = 's', action = 'split' },
+              { key = 'C-h', action = '' },
             },
           },
         },
         renderer = {
           icons = {
             webdev_colors = true,
-            git_placement = "before",
-            padding = " ",
-            symlink_arrow = " ➛ ",
+            git_placement = 'before',
+            padding = ' ',
+            symlink_arrow = ' ➛ ',
             show = {
               file = true,
               folder = false,
@@ -68,17 +68,17 @@ require('packer').startup(function(use)
               git = true,
             },
             glyphs = {
-              default = "",
-              symlink = "",
+              default = '',
+              symlink = '',
               folder = {
-                arrow_closed = "",
-                arrow_open = "",
-                default = "",
-                open = "",
-                empty = "",
-                empty_open = "",
-                symlink = "",
-                symlink_open = "",
+                arrow_closed = '',
+                arrow_open = '',
+                default = '',
+                open = '',
+                empty = '',
+                empty_open = '',
+                symlink = '',
+                symlink_open = '',
               },
             },
           },
@@ -110,8 +110,8 @@ require('packer').startup(function(use)
             fuzzy = true,                    -- false will only do exact matching
             override_generic_sorter = true,  -- override the generic sorter
             override_file_sorter = true,     -- override the file sorter
-            case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                             -- the default case_mode is "smart_case"
+            case_mode = 'smart_case',        -- or 'ignore_case' or 'respect_case'
+                                             -- the default case_mode is 'smart_case'
           }
         },
       })
@@ -124,7 +124,7 @@ require('packer').startup(function(use)
     'rcarriga/nvim-notify',
     requires = {'nvim-treesitter/playground'},
     config = function()
-      vim.notify = require("notify")
+      vim.notify = require('notify')
     end,
   }
 
@@ -200,17 +200,18 @@ require('packer').startup(function(use)
         indent = {
           enable = false,
           disable = {
-            "python",
+            'python',
           },
         },
         ensure_installed = {
-          "toml",
-          "json",
-          "yaml",
-          "python",
-          "rust",
-          "go",
-          "html"
+          'toml',
+          'json',
+          'yaml',
+          'python',
+          'rust',
+          'go',
+          'html',
+          'lua'
         },
       })
       vim.wo.foldmethod = 'expr'
@@ -231,32 +232,34 @@ require('packer').startup(function(use)
   }
 
   use({
-    "glepnir/lspsaga.nvim",
-    branch = "main",
-    requires = {'neovim/nvim-lspconfig'},
+    'glepnir/lspsaga.nvim',
+    branch = 'main',
+    requires = {
+      'neovim/nvim-lspconfig',
+      'ms-jpq/coq_nvim',
+    },
     config = function()
-      -- vim.lsp.set_log_level("debug")
+      -- vim.lsp.set_log_level('debug')
       local opts = { noremap=true, silent=true }
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
       -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
       -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
-      local saga = require("lspsaga")
+      local saga = require('lspsaga')
       saga.init_lsp_saga({
           -- your configuration
       })
 
-      map('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
-      map("n", "[d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
-      map("n", "]d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-      local action = require("lspsaga.action")
+      vim.keymap.set('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
+      vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
+      vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { silent = true })
+      local action = require('lspsaga.action')
       -- Only jump to error
-      map("n", "[E", function()
-        require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+      vim.keymap.set('n', '[E', function()
+        require('lspsaga.diagnostic').goto_prev({ severity = vim.diagnostic.severity.ERROR })
       end, { silent = true })
-      map("n", "]E", function()
-        require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+      vim.keymap.set('n', ']E', function()
+        require('lspsaga.diagnostic').goto_next({ severity = vim.diagnostic.severity.ERROR })
       end, { silent = true })
 
       -- Use an on_attach function to only map the following keys
@@ -275,12 +278,12 @@ require('packer').startup(function(use)
         vim.keymap.set('n', 'ge', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', bufopts)
         -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 
-        map("n", "K", "<cmd>Lspsaga hover_doc<CR>", bufopts)
-        map("n", "gs", "<Cmd>Lspsaga signature_help<CR>", bufopts)
+        vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', bufopts)
+        vim.keymap.set('n', 'gs', '<Cmd>Lspsaga signature_help<CR>', bufopts)
         -- Rename
-        map("n", "gr", "<cmd>Lspsaga rename<CR>", bufopts)
+        vim.keymap.set('n', 'gr', '<cmd>Lspsaga rename<CR>', bufopts)
         -- Definition preview
-        map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", bufopts)
+        vim.keymap.set('n', 'gd', '<cmd>Lspsaga preview_definition<CR>', bufopts)
 
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
         vim.keymap.set('n', 'gk', vim.lsp.buf.signature_help, bufopts)
@@ -345,17 +348,19 @@ require('packer').startup(function(use)
           flags = lsp_flags,
           -- Server-specific settings...
           settings = {
-            ["rust-analyzer"] = {}
+            ['rust-analyzer'] = {}
           }
       }
 
+      require'lspconfig'.sumneko_lua.setup{}
     end,
+    ft = {'python', 'lua', 'go'},
   })
 
   use {
     'simrat39/symbols-outline.nvim',
     config = function()
-      require("symbols-outline").setup()
+      require('symbols-outline').setup()
       map('n', '<Leader>ol', ':SymbolsOutline <CR>', {silent = true})
     end,
     disable = true
@@ -394,9 +399,9 @@ require('packer').startup(function(use)
   use 'jbyuki/venn.nvim'
   use {
     'kdheepak/lazygit.nvim',
-    config = function()
-      map('n', '<Leader>lg', '<cmd>LazyGit<CR>', { silent = true })
-    end
+    -- config = function()
+    --  map('n', '<Leader>lg', '<cmd>LazyGit<CR>', { silent = true })
+    -- end
   }
 
   use {
@@ -406,11 +411,11 @@ require('packer').startup(function(use)
 
   use {
     'iamcco/markdown-preview.nvim',
-    run = function() vim.fn["mkdp#util#install"]() end,
+    run = function() vim.fn['mkdp#util#install']() end,
     setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_filetypes = { 'markdown' }
     end,
-    ft = { "markdown" },
+    ft = { 'markdown' },
   }
 
   use 'SirVer/ultisnips'
