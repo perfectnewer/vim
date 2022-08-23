@@ -352,7 +352,9 @@ require('packer').startup(function(use)
           }
       }
 
-      require'lspconfig'.sumneko_lua.setup{}
+      require'lspconfig'.sumneko_lua.setup{
+        cmd = {vim.fn.stdpath('config')..'/lua-language-server/bin/lua-language-server'}
+      }
     end,
     ft = {'python', 'lua', 'go'},
   })
