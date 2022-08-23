@@ -6,6 +6,7 @@ set completeopt=menu,menuone,noselect
 set mouse=nvih
 set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
+set clipboard+=unnamedplus
 
 " set foldmethod=syntax
 " set foldmethod=indent
@@ -72,11 +73,12 @@ endfor
 " colorscheme solarized
 colorscheme violet
 let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '18'
-	set background=light
-else
-	set background=dark
-endif
+" if s:hour >= '07' && s:hour <= '18'
+" 	set background=light
+" else
+" 	set background=dark
+" endif
+set background=dark
 
 let g:vista_default_executive = 'nvim_lsp'
 let g:vista_executive_for = {

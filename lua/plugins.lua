@@ -153,6 +153,7 @@ require('packer').startup(function(use)
         }
       }
     end,
+    ft = {'python', 'lua', 'go'}
   }
 
   -- Tree-sitter is a parser generator tool and an incremental parsing
@@ -237,9 +238,26 @@ require('packer').startup(function(use)
       -- vim.lsp.set_log_level("debug")
       local opts = { noremap=true, silent=true }
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+      -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+      -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+      local saga = require("lspsaga")
+      saga.init_lsp_saga({
+          -- your configuration
+      })
+
+      map('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
+      map("n", "[d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+      map("n", "]d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+      local action = require("lspsaga.action")
+      -- Only jump to error
+      map("n", "[E", function()
+        require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+      end, { silent = true })
+      map("n", "]E", function()
+        require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+      end, { silent = true })
 
       -- Use an on_attach function to only map the following keys
       -- after the language server attaches to the current buffer
@@ -255,7 +273,15 @@ require('packer').startup(function(use)
         vim.keymap.set('n', 'gt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', bufopts)
         vim.keymap.set('n', 'gs', '<cmd>split | lua vim.lsp.buf.definition()<CR>', bufopts)
         vim.keymap.set('n', 'ge', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', bufopts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+
+        map("n", "K", "<cmd>Lspsaga hover_doc<CR>", bufopts)
+        map("n", "gs", "<Cmd>Lspsaga signature_help<CR>", bufopts)
+        -- Rename
+        map("n", "gr", "<cmd>Lspsaga rename<CR>", bufopts)
+        -- Definition preview
+        map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", bufopts)
+
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
         vim.keymap.set('n', 'gk', vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -263,7 +289,7 @@ require('packer').startup(function(use)
         vim.keymap.set('n', '<space>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, bufopts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+        -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
@@ -322,11 +348,7 @@ require('packer').startup(function(use)
             ["rust-analyzer"] = {}
           }
       }
-        local saga = require("lspsaga")
 
-        saga.init_lsp_saga({
-            -- your configuration
-        })
     end,
   })
 
@@ -336,7 +358,7 @@ require('packer').startup(function(use)
       require("symbols-outline").setup()
       map('n', '<Leader>ol', ':SymbolsOutline <CR>', {silent = true})
     end,
-    disable = false
+    disable = true
   }
 
   use {
@@ -370,7 +392,10 @@ require('packer').startup(function(use)
   }
 
   use 'jbyuki/venn.nvim'
-  use 'kdheepak/lazygit.nvim'
+  use {
+    'kdheepak/lazygit.nvim',
+    keys = {'n', '<Leader>lg', ':LazyGit<CR>'}
+  }
 
   use {
     'ray-x/go.nvim',
