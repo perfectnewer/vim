@@ -92,7 +92,7 @@ require('packer').startup(function(use)
     requires = {
       {'nvim-lua/plenary.nvim'},
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-     { "kdheepak/lazygit.nvim" },
+      {'kdheepak/lazygit.nvim'},
     },
     config = function()
       local actions = require('telescope.actions')
@@ -394,7 +394,9 @@ require('packer').startup(function(use)
   use 'jbyuki/venn.nvim'
   use {
     'kdheepak/lazygit.nvim',
-    keys = {'n', '<Leader>lg', ':LazyGit<CR>'}
+    config = function()
+      map('n', '<Leader>lg', '<cmd>LazyGit<CR>', { silent = true })
+    end
   }
 
   use {
