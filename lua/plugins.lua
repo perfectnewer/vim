@@ -233,10 +233,12 @@ require('packer').startup(function(use)
 
   use({
     'glepnir/lspsaga.nvim',
+    after = {'ms-jpq/coq_nvim', branch = 'coq'},
     branch = 'main',
     requires = {
       'neovim/nvim-lspconfig',
-      'ms-jpq/coq_nvim',
+      {'ms-jpq/coq_nvim', branch = 'coq'},
+      {'ms-jpq/coq.artifacts', branch = 'artifacts'},
     },
     config = function()
       -- vim.lsp.set_log_level('debug')
@@ -352,9 +354,24 @@ require('packer').startup(function(use)
           }
       }
 
-      require'lspconfig'.sumneko_lua.setup{
-        cmd = {vim.fn.stdpath('config')..'/lua-language-server/bin/lua-language-server'}
-      }
+      require'lspconfig'.sumneko_lua.setup(require('coq').lsp_ensure_capabilities({
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {'vim'},
+            },
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+          },
+        },
+        cmd = {
+          vim.fn.stdpath('config')..'/lua-language-server/bin/lua-language-server'
+        }
+      }))
     end,
     ft = {'python', 'lua', 'go'},
   })
