@@ -231,9 +231,10 @@ require('packer').startup(function(use)
     }
   }
 
+  use 'neovim/nvim-lspconfig'
+
   use({
     'glepnir/lspsaga.nvim',
-    after = {'ms-jpq/coq_nvim', branch = 'coq'},
     branch = 'main',
     requires = {
       'neovim/nvim-lspconfig',
@@ -251,6 +252,9 @@ require('packer').startup(function(use)
       saga.init_lsp_saga({
           -- your configuration
       })
+
+      vim.keymap.set("n", "<Leader>ot", "<cmd>Lspsaga open_floaterm zsh<CR>", { silent = true })
+      vim.keymap.set("t", "<Leader>ot", "<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>", { silent = true })
 
       vim.keymap.set('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
       vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
@@ -281,14 +285,14 @@ require('packer').startup(function(use)
         -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 
         vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', bufopts)
-        vim.keymap.set('n', 'gs', '<Cmd>Lspsaga signature_help<CR>', bufopts)
+        vim.keymap.set('n', 'Ks', '<Cmd>Lspsaga signature_help<CR>', bufopts)
         -- Rename
         vim.keymap.set('n', 'gr', '<cmd>Lspsaga rename<CR>', bufopts)
         -- Definition preview
-        vim.keymap.set('n', 'gd', '<cmd>Lspsaga preview_definition<CR>', bufopts)
+        vim.keymap.set('n', 'Kd', '<cmd>Lspsaga preview_definition<CR>', bufopts)
 
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', 'gk', vim.lsp.buf.signature_help, bufopts)
+        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        -- vim.keymap.set('n', 'gk', vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wl', function()
@@ -372,6 +376,7 @@ require('packer').startup(function(use)
           vim.fn.stdpath('config')..'/lua-language-server/bin/lua-language-server'
         }
       }))
+      vim.cmd('COQnow')
     end,
     ft = {'python', 'lua', 'go'},
   })
