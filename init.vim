@@ -73,12 +73,11 @@ endfor
 " colorscheme solarized
 colorscheme violet
 let s:hour=strftime('%H')
-" if s:hour >= '07' && s:hour <= '18'
-" 	set background=light
-" else
-" 	set background=dark
-" endif
-set background=dark
+if s:hour >= '07' && s:hour <= '18'
+	set background=light
+else
+	set background=dark
+endif
 
 let g:vista_default_executive = 'nvim_lsp'
 let g:vista_executive_for = {
