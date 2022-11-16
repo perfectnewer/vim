@@ -71,7 +71,10 @@ endfor
 " let g:solarized_termcolors=256
 " colorscheme NeoSolarized
 " colorscheme solarized
-colorscheme violet
+" colorscheme violet
+" colorscheme dawnfox
+colorscheme melange
+
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '18'
 	set background=light

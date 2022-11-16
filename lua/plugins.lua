@@ -14,6 +14,8 @@ require('packer').startup(function(use)
   use 'ashfinal/vim-colors-violet'
   use 'godlygeek/tabular'  -- line up text
 
+  use "savq/melange"
+
   use({
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -257,9 +259,8 @@ require('packer').startup(function(use)
       vim.keymap.set("t", "<Leader>ot", "<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>", { silent = true })
 
       vim.keymap.set('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
-      vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
-      vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { silent = true })
-      local action = require('lspsaga.action')
+      vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
+      vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { silent = true })
       -- Only jump to error
       vim.keymap.set('n', '[E', function()
         require('lspsaga.diagnostic').goto_prev({ severity = vim.diagnostic.severity.ERROR })
