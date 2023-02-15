@@ -44,7 +44,8 @@ nmap <leader>tk :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nmap <leader>tc :tabclose <cr>
 nmap <leader>tt :tabnew term://zsh <cr> i
-nnoremap <silent> <leader>e  :NvimTreeFocus<CR>
+nnoremap <silent> <leader>f :NvimTreeToggle<CR>
+nnoremap <slient> <leader>ff :NvimTreeFindFile<CR>
 nnoremap <silent> <F9> :TagbarToggle<CR>
 
 
@@ -70,13 +71,16 @@ endfor
 " colorscheme monokai_pro
 " let g:solarized_termcolors=256
 " colorscheme NeoSolarized
-" colorscheme solarized
 " colorscheme violet
 " colorscheme dawnfox
+" colorscheme melange
+" colorscheme nightfox
+
+set termguicolors
 colorscheme melange
 
 let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '18'
+if s:hour >= '07' && s:hour <= '17'
 	set background=light
 else
 	set background=dark
@@ -109,7 +113,8 @@ let g:vista_executive_for = {
 
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
-nnoremap <silent> <leader>tl <cmd>Telescope live_grep<cr>
+" nnoremap <silent> <leader>tl <cmd>Telescope live_grep<cr>
+nnoremap <silent> <leader>tl <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>
 nnoremap <silent> <leader>tg <cmd>Telescope git_files<cr>
 nnoremap <silent> <leader>tb <cmd>Telescope buffers<cr>
 nnoremap <silent> <leader>tt <cmd>Telescope help_tags<cr>
