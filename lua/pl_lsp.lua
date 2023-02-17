@@ -55,7 +55,7 @@ local function register(use)
       vim.keymap.set("n", "<Leader>ot", "<cmd>Lspsaga open_floaterm zsh<CR>", { silent = true })
       vim.keymap.set("t", "<Leader>ot", "<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>", { silent = true })
 
-      vim.keymap.set('n', '<Leader>ol', ':LSoutlineToggle <CR>', {silent = true})
+      vim.keymap.set('n', '<Leader>ol', '<cmd>Lspsaga outline <CR>', {silent = true})
       vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
       vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { silent = true })
       -- Only jump to error
@@ -156,7 +156,7 @@ local function register(use)
           }
       }
 
-      require'lspconfig'.sumneko_lua.setup(require('coq').lsp_ensure_capabilities({
+      require'lspconfig'.lua_ls.setup(require('coq').lsp_ensure_capabilities({
         on_attach = on_attach,
         settings = {
           Lua = {
@@ -189,7 +189,7 @@ local function register(use)
           space_char_blankline = ' ',
           show_current_context = true,
           show_current_context_start = false,
-          show_trailing_blankline_indent = false, 
+          show_trailing_blankline_indent = false,
           show_end_of_line = true,
       })
     end,
