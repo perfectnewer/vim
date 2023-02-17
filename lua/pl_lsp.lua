@@ -1,4 +1,3 @@
-
 local function register(use)
   use 'neovim/nvim-lspconfig'
 
@@ -49,7 +48,7 @@ local function register(use)
       -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
       local saga = require('lspsaga')
-      saga.init_lsp_saga({
+      saga.setup({
           -- your configuration
       })
 
@@ -206,4 +205,4 @@ end
 
 return {
   register = register
-  }
+}

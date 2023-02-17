@@ -22,6 +22,7 @@ require('packer').startup(function(use)
   use {'Vimjas/vim-python-pep8-indent', ft='python'}
 
   require("pl_nvim_tree").register(use)
+  require("pl_treesitter").register(use)
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -70,73 +71,6 @@ require('packer').startup(function(use)
   -- library.
 
   use "mfussenegger/nvim-dap"
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    requires = {
-      {'theHamsta/nvim-dap-virtual-text'},
-    },
-    run = function()
-      require('nvim-treesitter.install').update({ with_sync = true })
-    end,
-    config = function()
-      require("nvim-dap-virtual-text").setup({})
-      require'nvim-treesitter.configs'.setup({
-        playground = {
-          enable = true,
-          disable = {},
-          updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-          persist_queries = false, -- Whether the query persists across vim sessions
-          keybindings = {
-            toggle_query_editor = 'o',
-            toggle_hl_groups = 'i',
-            toggle_injected_languages = 't',
-            toggle_anonymous_nodes = 'a',
-            toggle_language_display = 'I',
-            focus_language = 'f',
-            unfocus_language = 'F',
-            update = 'R',
-            goto_node = '<cr>',
-            show_help = '?',
-          },
-        },
-          -- 启用增量选择
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = '<CR>',
-            node_incremental = '<CR>',
-            node_decremental = '<BS>',
-            scope_incremental = '<TAB>',
-          }
-        },
-        highlight = {
-          enable = true,
-          disable = {},
-        },
-        indent = {
-          enable = false,
-          disable = {
-            'python',
-          },
-        },
-        ensure_installed = {
-          'toml',
-          'json',
-          'yaml',
-          'python',
-          'rust',
-          'go',
-          'html',
-          'lua'
-        },
-      })
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-      -- 默认不要折叠
-      -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
-      vim.wo.foldlevel = 1
-    end,
-  }
 
   -- A search panel for neovim.
   -- Spectre find the enemy and replace them with dark power.
@@ -187,33 +121,7 @@ require('packer').startup(function(use)
   }
 
   require("pl_lsp").register(use)
-
-  use {
-    'jbyuki/venn.nvim',
-    config = function()
-      -- venn.nvim: enable or disable keymappings
-      function _G.Toggle_venn()
-          local venn_enabled = vim.inspect(vim.b.venn_enabled)
-          if venn_enabled == "nil" then
-              vim.b.venn_enabled = true
-              vim.cmd[[setlocal ve=all]]
-              -- draw a line on HJKL keystokes
-              vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-              vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-              vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-              vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-              -- draw a box by pressing "f" with visual selection
-              vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-          else
-              vim.cmd[[setlocal ve=]]
-              vim.cmd[[mapclear <buffer>]]
-              vim.b.venn_enabled = nil
-          end
-      end
-      -- toggle keymappings for venn using <leader>v
-      vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
-    end,
-  }
+  require("pl_venn").register(use)
 
   use {
     'kdheepak/lazygit.nvim',
