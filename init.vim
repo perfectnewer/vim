@@ -70,14 +70,14 @@ endfor
 
 " colorscheme monokai_pro
 " let g:solarized_termcolors=256
-" colorscheme NeoSolarized
+colorscheme NeoSolarized
 " colorscheme violet
 " colorscheme dawnfox
 " colorscheme melange
 " colorscheme nightfox
 
 set termguicolors
-colorscheme melange
+" "colorscheme melange
 
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '17'
@@ -94,19 +94,6 @@ let g:vista_executive_for = {
   \ 'lua': 'nvim_lsp',
   \ }
 
-" lua << EOF
-" 
-" local saga = require 'lspsaga'
-" 
-" -- change the lsp symbol kind
-" -- local kind = require('lspsaga.lspkind')
-" -- kind[type_number][2] = icon -- see lua/lspsaga/lspkind.lua
-" 
-" -- use default config
-" saga.init_lsp_saga({
-" })
-" 
-" EOF
 "
 " semshi
 " https://github.com/numirias/semshi/blob/master/README.md
