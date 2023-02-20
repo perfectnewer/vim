@@ -28,6 +28,7 @@ autocmd BufRead *.sh
     \ setlocal expandtab | setlocal tabstop=4 |
     \ setlocal softtabstop=4 | setlocal shiftwidth=4
 
+autocmd BufRead *.go setlocal tabstop=4
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
 imap jk <ESC>
@@ -69,15 +70,15 @@ for fpath in s:cfg_files
 endfor
 
 " colorscheme monokai_pro
-" let g:solarized_termcolors=256
-colorscheme NeoSolarized
 " colorscheme violet
 " colorscheme dawnfox
-" colorscheme melange
 " colorscheme nightfox
 
 set termguicolors
-" "colorscheme melange
+" colorscheme NeoSolarized
+" colorscheme melange
+" colorscheme molokai
+colorscheme gruvbox
 
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '17'

@@ -41,6 +41,7 @@ local function register(use)
       {'ms-jpq/coq.artifacts', branch = 'artifacts'},
     },
     config = function()
+      vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
       -- vim.lsp.set_log_level('debug')
       local opts = { noremap=true, silent=true }
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)

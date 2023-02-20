@@ -15,7 +15,9 @@ require('packer').startup(function(use)
   --- colors
   use 'ashfinal/vim-colors-violet'
   use 'overcache/NeoSolarized'
+  use "fatih/molokai"
   use "savq/melange"
+  use "morhetz/gruvbox"
 
   use 'godlygeek/tabular'  -- line up text
 
@@ -145,6 +147,7 @@ require('packer').startup(function(use)
   }
 
 
+  use "mhinz/vim-startify"
   if packer_bootstrap then
     require('packer').sync()
   end
