@@ -45,8 +45,8 @@ nmap <leader>tk :tabprevious <cr>
 nmap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nmap <leader>tc :tabclose <cr>
 nmap <leader>tt :tabnew term://zsh <cr> i
-nnoremap <silent> <leader>f :NvimTreeToggle<CR>
-nnoremap <slient> <leader>ff :NvimTreeFindFile<CR>
+nnoremap <silent> <leader>ft :NvimTreeToggle<CR>
+nnoremap <silent> <leader>ff :NvimTreeFindFile<CR>
 nnoremap <silent> <F9> :TagbarToggle<CR>
 
 
