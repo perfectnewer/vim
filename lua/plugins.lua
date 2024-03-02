@@ -19,19 +19,30 @@ require('packer').startup(function(use)
   use "savq/melange"
   use "morhetz/gruvbox"
 
-  use 'godlygeek/tabular'  -- line up text
+  use 'godlygeek/tabular' -- line up text
 
-  use {'Vimjas/vim-python-pep8-indent', ft='python'}
+  use { 'Vimjas/vim-python-pep8-indent', ft = 'python' }
 
   require("pl_nvim_tree").register(use)
   require("pl_treesitter").register(use)
 
+  use({
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      vim.opt.list = true
+      vim.opt.listchars:append 'eol:↴'
+      -- vim.opt.listchars:append 'space:⋅'
+      require('ibl').setup()
+    end,
+    ft = { 'python', 'go', 'lua', 'js' }
+  })
+
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
     requires = {
-      {'nvim-lua/plenary.nvim'},
-      {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-      {'kdheepak/lazygit.nvim'},
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim',    run = 'make' },
+      { 'kdheepak/lazygit.nvim' },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
@@ -47,11 +58,11 @@ require('packer').startup(function(use)
         extensions = {
           -- ...
           fzf = {
-            fuzzy = true,                    -- false will only do exact matching
-            override_generic_sorter = true,  -- override the generic sorter
-            override_file_sorter = true,     -- override the file sorter
-            case_mode = 'smart_case',        -- or 'ignore_case' or 'respect_case'
-                                             -- the default case_mode is 'smart_case'
+            fuzzy = true,                   -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true,    -- override the file sorter
+            case_mode = 'smart_case',       -- or 'ignore_case' or 'respect_case'
+            -- the default case_mode is 'smart_case'
           }
         },
       })
@@ -63,7 +74,7 @@ require('packer').startup(function(use)
 
   use {
     'rcarriga/nvim-notify',
-    requires = {'nvim-treesitter/playground'},
+    requires = { 'nvim-treesitter/playground' },
     config = function()
       -- vim.notify = require('notify')
     end,
@@ -79,7 +90,7 @@ require('packer').startup(function(use)
   use {
     'windwp/nvim-spectre',
     requires = {
-      {'nvim-lua/plenary.nvim'},
+      { 'nvim-lua/plenary.nvim' },
     }
   }
 
@@ -87,16 +98,16 @@ require('packer').startup(function(use)
     'simrat39/symbols-outline.nvim',
     config = function()
       require('symbols-outline').setup()
-      map('n', '<Leader>ol', ':SymbolsOutline <CR>', {silent = true})
+      map('n', '<Leader>ol', ':SymbolsOutline <CR>', { silent = true })
     end,
     disable = true
   }
 
   use {
-  -- View and search LSP symbols, tags in Vim/NeoVim
+    -- View and search LSP symbols, tags in Vim/NeoVim
     'liuchengxu/vista.vim',
     config = function()
-      map('n', '<Leader>ol', ':Vista <CR>', {silent = true})
+      map('n', '<Leader>ol', ':Vista <CR>', { silent = true })
     end,
     disable = true
   }
@@ -106,7 +117,7 @@ require('packer').startup(function(use)
     requires = {
       'nvim-lua/plenary.nvim'
     },
-    config =  function()
+    config = function()
       vim.o.updatetime = 300
       vim.o.incsearch = false
       vim.wo.signcolumn = 'yes'
@@ -117,7 +128,7 @@ require('packer').startup(function(use)
   use {
     'echasnovski/mini.nvim',
     branch = 'stable',
-    config = function ()
+    config = function()
       require('mini.pairs').setup()
     end
   }
@@ -134,7 +145,7 @@ require('packer').startup(function(use)
 
   use {
     'ray-x/go.nvim',
-    requires = {'ray-x/guihua.lua'},
+    requires = { 'ray-x/guihua.lua' },
   }
 
   use {

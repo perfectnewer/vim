@@ -4,9 +4,26 @@ local function register(use)
   use 'folke/lsp-colors.nvim'
 
   use {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v3.x',
+    requires = {
+      --- Uncomment the two plugins below if you want to manage the language servers from neovim
+      -- {'williamboman/mason.nvim'},
+      -- {'williamboman/mason-lspconfig.nvim'},
+
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'L3MON4D3/LuaSnip' },
+    }
+  }
+
+  use {
     'ms-jpq/coq_nvim', branch = 'coq',
     requires = {
-      { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
+      { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
       { 'ms-jpq/coq.thirdparty', branch = '3p' },
     },
     config = function()
@@ -37,7 +54,7 @@ local function register(use)
     branch = 'main',
     requires = {
       'neovim/nvim-lspconfig',
-      { 'ms-jpq/coq_nvim', branch = 'coq' },
+      { 'ms-jpq/coq_nvim',      branch = 'coq' },
       { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
     },
     config = function()
@@ -70,7 +87,7 @@ local function register(use)
       -- after the language server attaches to the current buffer
       local on_attach = function(client, bufnr)
         -- Enable completion triggered by <c-x><c-o>
-        vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
+        vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format({async = false})]]
         vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
         -- Mappings.
@@ -120,6 +137,28 @@ local function register(use)
         on_attach = on_attach,
         flags = lsp_flags,
       }
+      local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      require('lspconfig').lua_ls.setup({
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = lsp_capabilities,
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT'
+            },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = {
+                vim.env.VIMRUNTIME,
+              }
+            }
+          }
+        }
+      })
 
       local util = require('lspconfig/util')
       local path = util.path
@@ -174,38 +213,21 @@ local function register(use)
               library = vim.api.nvim_get_runtime_file("", true),
             },
           },
-        },
-        cmd = {
-          vim.fn.stdpath('config') .. '/lua-language-server/bin/lua-language-server'
         }
+        -- ,
+        -- cmd = {
+        --   vim.fn.stdpath('config') .. '/lua-language-server/bin/lua-language-server'
+        -- }
       }))
       vim.cmd('COQnow')
     end,
     ft = { 'python', 'lua', 'go' },
   })
 
-  use({
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      vim.opt.list = true
-      vim.opt.listchars:append 'eol:↴'
-      -- vim.opt.listchars:append 'space:⋅'
-      require('indent_blankline').setup({
-        space_char_blankline = ' ',
-        show_current_context = true,
-        show_current_context_start = false,
-        show_trailing_blankline_indent = false,
-        show_end_of_line = true,
-      })
-    end,
-    ft = { 'python', 'go', 'lua', 'js' }
-  })
-
   use 'SirVer/ultisnips'
   use 'honza/vim-snippets'
   use 'Shougo/neosnippet.vim'
   use 'Shougo/neosnippet-snippets'
-
 end
 
 return {

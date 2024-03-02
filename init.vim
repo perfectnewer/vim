@@ -28,7 +28,7 @@ autocmd BufRead *.sh
     \ setlocal expandtab | setlocal tabstop=4 |
     \ setlocal softtabstop=4 | setlocal shiftwidth=4
 
-autocmd BufRead *.go setlocal tabstop=4
+autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shiftwidth=4
 "key mappings
 """""""""""""""""""""""""""""""""""""""""""""""
 imap jk <ESC>
