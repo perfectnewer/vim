@@ -8,7 +8,6 @@ function module.register(use)
     },
     config = function()
       local function open_nvim_tree(data)
-
         -- buffer is a real file on the disk
         local real_file = vim.fn.filereadable(data.file) == 1
 
@@ -29,21 +28,30 @@ function module.register(use)
       -- set termguicolors to enable highlight groups
       vim.opt.termguicolors = true
       -- OR setup with some options
+      local function my_on_attach(bufnr)
+        local api = require "nvim-tree.api"
+
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
+        -- default mappings
+        api.config.mappings.default_on_attach(bufnr)
+
+        -- custom mappings
+        vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
+        vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+        vim.keymap.set('n', 'E', api.node.open.vertical, opts('Open: Vertical Split'))
+        vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: Horizontal Split'))
+        vim.keymap.set('n', 't', api.node.open.tab, opts('Open: New Tab'))
+      end
       require("nvim-tree").setup({
+        on_attach = my_on_attach,
         sync_root_with_cwd = true,
         sort_by = "case_sensitive",
         view = {
           adaptive_size = true,
           width = 32,
-          mappings = {
-            list = {
-              { key = "u", action = "dir_up" },
-              { key = 't', action = 'tabnew' },
-              { key = 'E', action = 'vsplit' },
-              { key = 's', action = 'split' },
-              { key = 'C-h', action = '' },
-            },
-          },
         },
         renderer = {
           group_empty = true,
@@ -55,42 +63,6 @@ function module.register(use)
     end,
     tag = 'v1.1' -- optional, updated every week. (see issue #1193)
   }
-
-  -- use {
-  --   config = function()
-  --     require('nvim-tree').setup({
-  --       renderer = {
-  --         icons = {
-  --           webdev_colors = true,
-  --           git_placement = 'before',
-  --           padding = ' ',
-  --           symlink_arrow = ' ➛ ',
-  --           show = {
-  --             file = true,
-  --             folder = false,
-  --             folder_arrow = true,
-  --             git = true,
-  --           },
-  --           glyphs = {
-  --             default = '',
-  --             symlink = '',
-  --             folder = {
-  --               arrow_closed = '',
-  --               arrow_open = '',
-  --               default = '',
-  --               open = '',
-  --               empty = '',
-  --               empty_open = '',
-  --               symlink = '',
-  --               symlink_open = '',
-  --             },
-  --           },
-  --         },
-  --       },
-  --     })
-  --   end,
-  --   ft = {"---"},
-  -- }
 end
 
 return module
