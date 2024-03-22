@@ -180,10 +180,10 @@ local function register(use)
       end
 
       -- only show above warnings
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
       require 'lspconfig'.pyright.setup(require('coq').lsp_ensure_capabilities({
-        --  capabilities = capabilities,
+        capabilities = capabilities,
         on_attach = on_attach,
         flags = lsp_flags,
         on_init = function(client)
