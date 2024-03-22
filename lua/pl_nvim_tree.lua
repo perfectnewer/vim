@@ -53,7 +53,7 @@ function module.register(use)
         },
       })
     end,
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    tag = 'v1.1' -- optional, updated every week. (see issue #1193)
   }
 
   -- use {
