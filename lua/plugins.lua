@@ -91,6 +91,7 @@ require('packer').startup(function(use)
     'windwp/nvim-spectre',
     requires = {
       { 'nvim-lua/plenary.nvim' },
+      { 'folke/trouble.nvim' },
     }
   }
 
