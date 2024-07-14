@@ -404,12 +404,15 @@ require('lazy').setup({
                 version = 'LuaJIT'
               },
               diagnostics = {
+                -- Get the language server to recognize the `vim` global
                 globals = { 'vim' },
               },
               workspace = {
                 library = {
                   vim.env.VIMRUNTIME,
                 }
+                -- Make the server aware of Neovim runtime files
+                -- library = vim.api.nvim_get_runtime_file('', true),
               }
             }
           }
@@ -437,6 +440,8 @@ require('lazy').setup({
         -- only show above warnings
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+        local pyrightpath = vim.fn.system({"pyenv", "prefix", "neovim3"})
+        local pyrightcmd = {pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio"}
         require 'lspconfig'.pyright.setup(require('coq').lsp_ensure_capabilities({
           capabilities = capabilities,
           on_attach = on_attach,
@@ -444,36 +449,18 @@ require('lazy').setup({
           on_init = function(client)
             client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
           end,
-        })
-        )
-        require('lspconfig')['rust_analyzer'].setup {
+          cmd = pyrightcmd,
+        }))
+
+        require('lspconfig')['rust_analyzer'].setup({
           on_attach = on_attach,
           flags = lsp_flags,
           -- Server-specific settings...
           settings = {
             ['rust-analyzer'] = {}
           }
-        }
+        })
 
-        require 'lspconfig'.lua_ls.setup(require('coq').lsp_ensure_capabilities({
-          on_attach = on_attach,
-          settings = {
-            Lua = {
-              diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-              },
-              workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true),
-              },
-            },
-          }
-          -- ,
-          -- cmd = {
-          --   vim.fn.stdpath('config') .. '/lua-language-server/bin/lua-language-server'
-          -- }
-        }))
         vim.cmd('COQnow')
       end,
       ft = { 'python', 'lua', 'go' },
@@ -636,8 +623,19 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter', tag = 'v0.9.2',
       dependencies  = {
         {'theHamsta/nvim-dap-virtual-text'},
+        {
+          "nvim-treesitter/playground",
+          cmd = {
+            "TSPlaygroundToggle",
+            "TSHighlightCapturesUnderCursor",
+          },
+          keys = {
+            { "<F2>", "<cmd>TSHighlightCapturesUnderCursor<cr>", desc = "Show highlight group under cursor" },
+          },
+        },
       },
-      build = ':TSUpdate', 
+      version = nil,
+      build = ':TSUpdate',
       config = function()
         require('nvim-dap-virtual-text').setup({})
         require'nvim-treesitter.configs'.setup({
