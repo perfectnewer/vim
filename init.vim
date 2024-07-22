@@ -163,7 +163,8 @@ require('lazy').setup({
       lazy = false,
     },
 
-    { 'mfussenegger/nvim-dap' },
+    { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
+
     {
       "folke/trouble.nvim",
       opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -548,11 +549,7 @@ require('lazy').setup({
         "ray-x/guihua.lua",
         "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter",
-        {"mfussenegger/nvim-dap"},
         {"rcarriga/nvim-dap-ui"},
-        "leoluz/nvim-dap-go",
-        "nvim-neotest/nvim-nio",
-        "theHamsta/nvim-dap-virtual-text",
       },
       config = function()
         local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -563,7 +560,6 @@ require('lazy').setup({
             -- other setups
           },
         })
-        require('dap-go').setup()
       end,
       event = {"CmdlineEnter"},
       ft = {"go", 'gomod'},
