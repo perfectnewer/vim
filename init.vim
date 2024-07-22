@@ -80,12 +80,22 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 -- https://lazy.folke.io/spec/examples
 require('lazy').setup({
+  opts = { open_cmd = "noswapfile vnew" },
   spec = {
-    { 'ashfinal/vim-colors-violet' },
     { 'overcache/NeoSolarized' },
-    { 'fatih/molokai' },
     { 'savq/melange' },
     { 'morhetz/gruvbox' },
+    {
+      'ray-x/starry.nvim',
+      config = function()
+        local config = {
+          style = {
+            name = 'mariana',
+          },
+        }
+        require('starry').setup(config)
+      end,
+    },
 
     { 'godlygeek/tabular' }, -- line up text
 
@@ -305,6 +315,26 @@ require('lazy').setup({
     { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
 
     {
+      'ray-x/navigator.lua', branch = 'neovim_0.9',
+      requires = {
+          { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' },
+          { 'neovim/nvim-lspconfig' },
+      },
+    },
+
+    {
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {
+        library = {
+          -- See the configuration section for more details
+          -- Load luvit types when the `vim.uv` word is found
+          { path = "luvit-meta/library", words = { "vim%.uv" } },
+        },
+      },
+    },
+
+    {
       'glepnir/lspsaga.nvim',
       branch = 'main',
       dependencies = {
@@ -341,6 +371,10 @@ require('lazy').setup({
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         local on_attach = function(client, bufnr)
+          require('navigator.lspclient.mapping').setup({client=client, bufnr=bufnr}) -- setup navigator keymaps here,
+          require("navigator.dochighlight").documentHighlight(bufnr)
+          require('navigator.codeAction').code_action_prompt(bufnr)
+
           -- Enable completion triggered by <c-x><c-o>
           vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format({async = false})]]
           vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -499,14 +533,37 @@ require('lazy').setup({
     },
 
     {
-      "ray-x/go.nvim", tab = "v0.2.1",
+      "nvim-neotest/neotest",
+      dependencies = {
+        "nvim-neotest/nvim-nio",
+        "nvim-lua/plenary.nvim",
+        "antoinemadec/FixCursorHold.nvim",
+        "nvim-treesitter/nvim-treesitter"
+      }
+    },
+
+    {
+      "ray-x/go.nvim",
       dependencies = {  -- optional packages
         "ray-x/guihua.lua",
         "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter",
+        {"mfussenegger/nvim-dap"},
+        {"rcarriga/nvim-dap-ui"},
+        "leoluz/nvim-dap-go",
+        "nvim-neotest/nvim-nio",
+        "theHamsta/nvim-dap-virtual-text",
       },
       config = function()
-        require("go").setup()
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        require('go').setup({
+          -- other setups ....
+          lsp_cfg = {
+            capabilities = capabilities,
+            -- other setups
+          },
+        })
+        require('dap-go').setup()
       end,
       event = {"CmdlineEnter"},
       ft = {"go", 'gomod'},
@@ -515,7 +572,7 @@ require('lazy').setup({
 
     {
       'iamcco/markdown-preview.nvim',
-      run = function() vim.fn['mkdp#util#install']() end,
+      build = function() vim.fn['mkdp#util#install']() end,
       setup = function()
         vim.g.mkdp_filetypes = { 'markdown' }
       end,
@@ -702,7 +759,7 @@ require('lazy').setup({
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { 'habamax' } },
+  install = { colorscheme = { 'mariana' } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
@@ -725,7 +782,8 @@ set termguicolors
 " colorscheme NeoSolarized
 " colorscheme melange
 " colorscheme molokai
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme mariana
 
 let s:hour=strftime('%H')
 if s:hour >= '07' && s:hour <= '17'
