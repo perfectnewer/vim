@@ -99,19 +99,6 @@ require('lazy').setup({
 
     { 'godlygeek/tabular' }, -- line up text
 
-    { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
-
-    {
-      'lukas-reineke/indent-blankline.nvim',
-      config = function()
-        vim.opt.list = true
-        vim.opt.listchars:append 'eol:↴'
-        -- vim.opt.listchars:append 'space:⋅'
-        require('ibl').setup()
-      end,
-      ft = { 'python', 'go', 'lua', 'js' }
-    },
-
     {
       'nvim-telescope/telescope.nvim', branch = '0.1.x',
       dependencies = {
@@ -267,32 +254,54 @@ require('lazy').setup({
     { 'honza/vim-snippets' },
     { 'Shougo/neosnippet.vim' },
     { 'Shougo/neosnippet-snippets' },
-    { 'neovim/nvim-lspconfig' },
-    { 'folke/lsp-colors.nvim' },
-    {
-      'VonHeikemen/lsp-zero.nvim',
-      branch = 'v3.x',
-      dependencies = {
-        --- Uncomment the two plugins below if you want to manage the language servers from neovim
-        -- {'williamboman/mason.nvim'},
-        -- {'williamboman/mason-lspconfig.nvim'},
 
-        -- LSP Support
-        { 'neovim/nvim-lspconfig' },
-        -- Autocompletion
-        { 'hrsh7th/nvim-cmp' },
-        { 'hrsh7th/cmp-nvim-lsp' },
-        { 'L3MON4D3/LuaSnip' },
-      }
+    {
+      'nvimdev/indentmini.nvim',
+      event = 'BufEnter',
+      config = function()
+          require('indentmini').setup()
+      end,
+      ft = { 'python', 'go', 'lua', 'js' }
+    },
+
+    -- LSP Support
+    { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
+    { 'hrsh7th/nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+
+    {
+      'ray-x/navigator.lua', branch = 'neovim_0.9',
+      requires = {
+          { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' },
+          -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
+      },
     },
 
     {
-      'ms-jpq/coq_nvim', branch = 'coq',
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {
+        library = {
+          -- See the configuration section for more details
+          -- Load luvit types when the `vim.uv` word is found
+          { path = "luvit-meta/library", words = { "vim%.uv" } },
+        },
+      },
+    },
+
+    { 'folke/lsp-colors.nvim' },
+
+    {
+      'nvimdev/lspsaga.nvim',
+      branch = 'main',
       dependencies = {
-        { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
+        -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
+        { 'ms-jpq/coq_nvim',      branch = 'coq' },
+        { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
         { 'ms-jpq/coq.thirdparty', branch = '3p' },
       },
       config = function()
+        -- for coq
         vim.g.coq_settings = {
           auto_start = true,
           clients = {
@@ -310,41 +319,8 @@ require('lazy').setup({
             jump_to_mark = 'c-n'
           }
         }
-      end,
-      -- ft = {'python', 'lua', 'go'}
-    },
-    { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
 
-    {
-      'ray-x/navigator.lua', branch = 'neovim_0.9',
-      requires = {
-          { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' },
-          { 'neovim/nvim-lspconfig' },
-      },
-    },
-
-    {
-      "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files
-      opts = {
-        library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
-          { path = "luvit-meta/library", words = { "vim%.uv" } },
-        },
-      },
-    },
-
-    {
-      'glepnir/lspsaga.nvim',
-      branch = 'main',
-      dependencies = {
-        'neovim/nvim-lspconfig',
-        { 'ms-jpq/coq_nvim',      branch = 'coq' },
-        { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
-      },
-      config = function()
-        -- vim.lsp.set_log_level('debug')
+        vim.lsp.set_log_level('debug')
         local opts = { noremap = true, silent = true }
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
         -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -361,13 +337,6 @@ require('lazy').setup({
         vim.keymap.set('n', '<Leader>ol', '<cmd>Lspsaga outline <CR>', { silent = true })
         vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', { silent = true })
         vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { silent = true })
-        -- Only jump to error
-        vim.keymap.set('n', '[E', function()
-          require('lspsaga.diagnostic').goto_prev({ severity = vim.diagnostic.severity.ERROR })
-        end, { silent = true })
-        vim.keymap.set('n', ']E', function()
-          require('lspsaga.diagnostic').goto_next({ severity = vim.diagnostic.severity.ERROR })
-        end, { silent = true })
 
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
@@ -500,6 +469,7 @@ require('lazy').setup({
       end,
       ft = { 'python', 'lua', 'go' },
     },
+
     {
       'jbyuki/venn.nvim',
       config = function()
@@ -523,9 +493,13 @@ require('lazy').setup({
             end
         end
         -- toggle keymappings for venn using <leader>v
-        vim.api.nvim_set_keymap('n', '<leader>v', ':lua Toggle_venn()<CR>', { noremap = true})
+        vim.api.nvim_set_keymap()
       end,
+      keys = {
+        {'<LEADER>v', '<CMD>lua Toggle_venn()<CR>', desc = "Venn ascii draw"},
+      },
     },
+
     {
       'kdheepak/lazygit.nvim',
       -- config = function()
@@ -560,6 +534,7 @@ require('lazy').setup({
             -- other setups
           },
         })
+        require('dap').set_log_level('TRACE')
       end,
       event = {"CmdlineEnter"},
       ft = {"go", 'gomod'},
@@ -673,7 +648,7 @@ require('lazy').setup({
     },
 
     {
-      'nvim-treesitter/nvim-treesitter', tag = 'v0.9.2',
+      'nvim-treesitter/nvim-treesitter',
       dependencies  = {
         {'theHamsta/nvim-dap-virtual-text'},
         {
