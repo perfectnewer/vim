@@ -101,15 +101,6 @@ local Plugins = {
   { 'hrsh7th/cmp-nvim-lsp' },
 
   {
-    'ray-x/navigator.lua',
-    branch = 'neovim_0.9',
-    requires = {
-      { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' },
-      -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
-    },
-  },
-
-  {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {

@@ -4,13 +4,19 @@ return {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
   keys = {
-    { '<leader>ft', '<cmd>Neotree toggle<cr>', desc = 'NeoTree', mode = { 'n', 'v', 'x' } },
+    { '<leader>ft', function() require('nvim-tree-api').tree.toggle() end, desc = 'NeoTree', mode = { 'n', 'v', 'x' } },
   },
   -- lazy-load on a command
   -- cmd = 'VimEnter',
   -- load cmp on InsertEnter
   event = { 'BufEnter' },
-  config = function()
+  init = function()
+    -- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
     local function open_nvim_tree(data)
       -- buffer is a real file on the disk
       local real_file = vim.fn.filereadable(data.file) == 1
@@ -27,10 +33,8 @@ return {
       require('nvim-tree.api').tree.toggle({ focus = false })
     end
     vim.api.nvim_create_autocmd({ 'VimEnter' }, { callback = open_nvim_tree })
-    -- vim.g.loaded_netrw = 1
-    -- vim.g.loaded_netrwPlugin = 1
-    -- set termguicolors to enable highlight groups
-    vim.opt.termguicolors = true
+  end,
+  config = function()
     -- OR setup with some options
     local function my_on_attach(bufnr)
       local api = require 'nvim-tree.api'
