@@ -81,6 +81,7 @@ return {
         'vim',
         'vimdoc',
         'javascript',
+        'markdown',
       },
     })
     vim.wo.foldmethod = 'expr'

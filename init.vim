@@ -66,6 +66,10 @@ nnoremap <silent> <F9> :TagbarToggle<CR>
 
 lua << EOF
 
+local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
+local pyrightcmd = pyrightpath:gsub("\n", "") .. "/bin/python"
+vim.g.python3_host_prog = pyrightcmd
+
 -- Colors are applied automatically based on user-defined highlight groups.
 -- There is no default value.
 vim.cmd.highlight('IndentLine guifg=#123456')

@@ -4,7 +4,7 @@ return {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
   keys = {
-    { '<leader>ft', function() require('nvim-tree-api').tree.toggle() end, desc = 'NeoTree', mode = { 'n', 'v', 'x' } },
+    { '<leader>ft', function() require('nvim-tree.api').tree.toggle({ focus = true }) end, desc = 'NeoTree', mode = { 'n', 'v', 'x' } },
   },
   -- lazy-load on a command
   -- cmd = 'VimEnter',
@@ -12,11 +12,11 @@ return {
   event = { 'BufEnter' },
   init = function()
     -- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
 
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
+    -- optionally enable 24-bit colour
+    vim.opt.termguicolors = true
     local function open_nvim_tree(data)
       -- buffer is a real file on the disk
       local real_file = vim.fn.filereadable(data.file) == 1
