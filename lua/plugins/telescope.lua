@@ -54,20 +54,20 @@ Plugin.config = function()
   local tele = require('telescope')
   tele.setup({
     defaults = {
-              path_display = { 'smart' },
-        layout_strategy = 'flex',
-        layout_config = {
-          prompt_position = 'top',
-        },
+      path_display = { 'smart' },
+      layout_strategy = 'flex',
+      layout_config = {
+        prompt_position = 'top',
+      },
     },
     pickers = {
       find_files = {
       }
     },
     extensions = {
-              ['ui-select'] = {
-          require('telescope.themes').get_dropdown({}),
-        },
+      ['ui-select'] = {
+        require('telescope.themes').get_dropdown({}),
+      },
       -- ...
       fzf = {
         fuzzy = true,                   -- false will only do exact matching
@@ -81,8 +81,7 @@ Plugin.config = function()
   tele.load_extension('fzf')
   tele.load_extension('lazygit')
   tele.load_extension('live_grep_args')
-      tele.load_extension('ui-select')
-
+  tele.load_extension('ui-select')
 end
 
 return Plugin

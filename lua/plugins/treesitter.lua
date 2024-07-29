@@ -13,6 +13,7 @@ return {
       },
     },
   },
+  enable       = true,
   version      = nil,
   build        = ':TSUpdate',
   config       = function()
@@ -47,7 +48,7 @@ return {
         }
       },
       highlight = {
-        enable = true,
+        enable = false,
         disable = {},
       },
       indent = {
@@ -90,4 +91,5 @@ return {
     -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
     vim.wo.foldlevel = 1
   end,
+  ft           = { 'python', 'go', 'lua', 'js' }
 }

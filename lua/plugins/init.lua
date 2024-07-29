@@ -2,9 +2,9 @@
 -- as soon as you need to add options to a plugin consider making a dedicated file.
 
 local Plugins = {
-  { 'overcache/NeoSolarized' },
-  { 'savq/melange' },
-  { 'morhetz/gruvbox' },
+  -- { 'overcache/NeoSolarized' },
+  -- { 'savq/melange' },
+  -- { 'morhetz/gruvbox' },
   { 'godlygeek/tabular' }, -- line up text
 
   { 'SirVer/ultisnips' },
@@ -19,7 +19,6 @@ local Plugins = {
       vim.g.mkdp_filetypes = { 'markdown' }
     end,
     ft = { 'markdown' },
-    lazy = true,
   },
   {
     'kdheepak/lazygit.nvim',
@@ -35,8 +34,10 @@ local Plugins = {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter"
-    }
+    },
+    cond = false,
   },
+
   {
     'rcarriga/nvim-notify',
     dependencies = { 'nvim-treesitter/playground' },
@@ -48,15 +49,15 @@ local Plugins = {
 
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
 
-
-  -- A search panel for neovim.
-  -- Spectre find the enemy and replace them with dark power.
   {
-    'windwp/nvim-spectre',
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'folke/trouble.nvim' },
-    }
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({
+        --- options, see Configuration section below ...
+        --- there are no required options atm...
+      });
+    end,
+    cond = false,
   },
 
   -- {
@@ -85,16 +86,19 @@ local Plugins = {
     branch = 'stable',
     config = function()
       require('mini.pairs').setup()
-    end
+    end,
+    enable = false,
   },
 
   {
     'nvimdev/indentmini.nvim',
-    event = 'BufEnter',
+    -- event = 'BufEnter',
     config = function()
       require('indentmini').setup()
     end,
-    ft = { 'python', 'go', 'lua', 'js' }
+    ft = { 'python', 'go', 'lua', 'js' },
+    enable = false,
+    cond = false,
   },
 
   { 'hrsh7th/nvim-cmp' },
@@ -115,6 +119,16 @@ local Plugins = {
   { 'folke/lsp-colors.nvim' },
 
   { 'tpope/vim-repeat' },
+
+  -- {
+  --   'uloco/bluloco.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   dependencies = { 'rktjmp/lush.nvim' },
+  --   config = function()
+  --     -- your optional config goes here, see below.
+  --   end,
+  -- },
 }
 
 return Plugins

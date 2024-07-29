@@ -7,7 +7,7 @@ return {
     { '<leader>ft', function() require('nvim-tree.api').tree.toggle({ focus = true }) end, desc = 'NeoTree', mode = { 'n', 'v', 'x' } },
   },
   -- lazy-load on a command
-  -- cmd = 'VimEnter',
+  cmd = 'VimEnter',
   -- load cmp on InsertEnter
   event = { 'BufEnter' },
   init = function()
@@ -69,5 +69,5 @@ return {
       },
     })
   end,
-  tag = 'v1.4' -- optional, updated every week. (see issue #1193)
+  tag = 'v1.5' -- optional, updated every week. (see issue #1193)
 }

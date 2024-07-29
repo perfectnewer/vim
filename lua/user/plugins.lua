@@ -1,9 +1,21 @@
 local lazy = {}
 
+function lazy.check_out(out)
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+
 function lazy.install(path)
   if not (vim.uv or vim.loop).fs_stat(path) then
     print('Installing lazy.nvim....')
-    vim.fn.system({
+    local out = vim.fn.system({
       'git',
       'clone',
       '--filter=blob:none',
@@ -11,7 +23,9 @@ function lazy.install(path)
       '--branch=stable', -- latest stable release
       path,
     })
-    vim.fn.system({ "brew", "install", "fd" })
+    lazy.check_out(out)
+    out = vim.fn.system({ "brew", "install", "fd" })
+    lazy.check_out(out)
     print('Done.')
   end
 
@@ -33,11 +47,16 @@ end
 
 lazy.path = vim.fs.joinpath(vim.fn.stdpath('data'), 'lazy', 'lazy.nvim')
 lazy.opts = {
+  defaults = {
+    lazy = true,
+  },
   ui = {
     border = 'rounded',
   },
   install = {
     missing = true, -- install missing plugins on startup.
+    -- try to load one of these colorschemes when starting an installation during startup
+    colorscheme = { "bluloco" },
   },
   change_detection = {
     enabled = false, -- check for config file changes

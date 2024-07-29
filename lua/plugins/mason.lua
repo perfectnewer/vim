@@ -1,10 +1,11 @@
 local Plugin = { 'williamboman/mason.nvim' }
 
-Plugin.lazy = false
-
 -- See :help mason-settings
 Plugin.opts = {
-  ui = { border = 'rounded' }
+  ui = { border = 'rounded' },
+  log_level = vim.log.levels.ERROR,
 }
+Plugin.ft = { 'python', 'lua', 'go', 'bash', 'markdown' }
+Plugin.enable = true
 
 return Plugin
