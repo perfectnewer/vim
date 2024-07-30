@@ -83,5 +83,6 @@ Plugin.config = function()
   tele.load_extension('live_grep_args')
   tele.load_extension('ui-select')
 end
+Plugin.lazy = fasle
 
 return Plugin

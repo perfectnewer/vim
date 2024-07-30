@@ -62,7 +62,9 @@ end
 
 -- load('user.settings')
 -- load('user.commands')
-load('user.keymaps').common()
+local keymaps = load('user.keymaps')
+keymaps.common()
+keymaps.telescope()
 require('user.plugins')
 
 vim.opt.termguicolors = true

@@ -54,6 +54,7 @@ local Plugins = {
         --- there are no required options atm...
       });
     end,
+    cmd = { "GrugFar" },
   },
 
   -- {

@@ -6,12 +6,12 @@ local mapset = function(mode, lhs, rhs, desc)
 end
 
 _M.telescope = function()
-  mapset("<C-p>", "<cmd>Telescope find_files<cr>", "Telescope find_files")
+  mapset("n", "<C-p>", "<cmd>Telescope find_files<cr>", "Telescope find_files")
   -- mapset("<silent> <leader>tl", "<cmd>Telescope live_grep<cr>", "Telescope live_grep")
-  mapset("<silent> <leader>tl", require("telescope").extensions.live_grep_args.live_grep_args, "Telescope live_grep")
-  mapset("<silent> <leader>tg", "<cmd>Telescope git_files<cr>", "git_files")
-  mapset("<silent> <leader>tb", "<cmd>Telescope buffers<cr>", "Telescope buffers")
-  mapset("<silent> <leader>tt", "<cmd>Telescope help_tags<cr>", "help_tags")
+  mapset("n", "<silent> <leader>tl", require("telescope").extensions.live_grep_args.live_grep_args, "Telescope live_grep")
+  mapset("n", "<silent> <leader>tg", "<cmd>Telescope git_files<cr>", "git_files")
+  mapset("n", "<silent> <leader>tb", "<cmd>Telescope buffers<cr>", "Telescope buffers")
+  mapset("n", "<silent> <leader>tt", "<cmd>Telescope help_tags<cr>", "help_tags")
 end
 
 _M.common = function()

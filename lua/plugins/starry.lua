@@ -1,7 +1,7 @@
 local Plugin = {
   'ray-x/starry.nvim',
   config = function()
-    local style = "Mariana" -- "earlysummer"
+    local style = "mariana" -- "earlysummer"
     local config = {
       style = {
         name = style,
