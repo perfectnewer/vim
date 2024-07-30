@@ -25,8 +25,9 @@ Plugin.dependencies = {
 }
 
 Plugin.cmd = { 'LspInfo', 'LspInstall', 'LspUnInstall' }
-Plugin.event = { 'BufReadPre', 'BufNewFile' }
-Plugin.ft = { 'python', 'lua', 'go', 'bash', 'markdown' }
+-- Plugin.event = { 'BufReadPre *.py|*.pyi|*.lua|*.go|*.gomod|*.sh|*.md',
+--   'BufNewFile *.py|*.pyi|*.lua|*.go|*.gomod|*.sh|*.md' }
+Plugin.ft = { 'python', 'lua', 'go', 'bash', 'markdown', 'vim' }
 
 function Plugin.init()
   -- See :help vim.diagnostic.config()
@@ -59,7 +60,7 @@ function Plugin.init()
 
   -- for coq
   vim.g.coq_settings = {
-    auto_start = false,
+    auto_start = true,
     clients = {
       lsp = {
         resolve_timeout = 0.2,

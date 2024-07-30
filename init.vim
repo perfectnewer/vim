@@ -65,6 +65,13 @@ end
 load('user.keymaps').common()
 require('user.plugins')
 
+vim.opt.termguicolors = true
+if ( vim.g.colorscheme ~= nil ) then
+  vim.cmd.colorscheme(vim.g.colorscheme)
+else
+  vim.cmd.colorscheme("monokai")
+end
+
 EOF
 
 
@@ -75,25 +82,12 @@ EOF
 "   exec 'source' . fnameescape(fpath)
 " endfor
 
-" colorscheme monokai_pro
-" colorscheme violet
-" colorscheme dawnfox
-" colorscheme nightfox
-
-set termguicolors
-" colorscheme NeoSolarized
-" colorscheme melange
-" colorscheme molokai
-" colorscheme gruvbox
-" colorscheme mariana
-" colorscheme bluloco
-
-let s:hour=strftime('%H')
-if s:hour >= '07' && s:hour <= '17'
-	set background=light
-else
-	set background=dark
-endif
+" let s:hour=strftime('%H')
+" if s:hour >= '07' && s:hour <= '17'
+" 	set background=light
+" else
+" 	set background=dark
+" endif
 
 let g:vista_default_executive = 'nvim_lsp'
 let g:vista_executive_for = {

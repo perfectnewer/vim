@@ -17,7 +17,7 @@ return {
     })
     require('dap').set_log_level('TRACE')
   end,
-  event = { "CmdlineEnter" },
+  -- event = { "CmdlineEnter *.go|*.gomod" },  -- event or filetype
   ft = { "go", 'gomod' },
   build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   enable = true,

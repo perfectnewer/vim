@@ -48,11 +48,11 @@ return {
         }
       },
       highlight = {
-        enable = false,
+        enable = true,
         disable = {},
       },
       indent = {
-        enable = false,
+        enable = true,
         disable = {
           -- 'python',
         },
@@ -86,10 +86,10 @@ return {
       },
     })
     vim.wo.foldmethod = 'expr'
-    vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     -- 默认不要折叠
     -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
-    vim.wo.foldlevel = 1
+    vim.wo.foldlevel = 2
   end,
-  ft           = { 'python', 'go', 'lua', 'js' }
+  ft           = { 'python', 'go', 'lua', 'js', 'bash', 'vim' }
 }

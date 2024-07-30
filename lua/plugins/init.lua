@@ -2,9 +2,6 @@
 -- as soon as you need to add options to a plugin consider making a dedicated file.
 
 local Plugins = {
-  -- { 'overcache/NeoSolarized' },
-  -- { 'savq/melange' },
-  -- { 'morhetz/gruvbox' },
   { 'godlygeek/tabular' }, -- line up text
 
   { 'SirVer/ultisnips' },
@@ -35,7 +32,6 @@ local Plugins = {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter"
     },
-    cond = false,
   },
 
   {
@@ -50,6 +46,7 @@ local Plugins = {
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
 
   {
+    -- Find And Replace plugin for neovim
     'MagicDuck/grug-far.nvim',
     config = function()
       require('grug-far').setup({
@@ -57,7 +54,6 @@ local Plugins = {
         --- there are no required options atm...
       });
     end,
-    cond = false,
   },
 
   -- {
@@ -82,12 +78,14 @@ local Plugins = {
   },
 
   {
+    -- some usefull functions
     'echasnovski/mini.nvim',
     branch = 'stable',
     config = function()
       require('mini.pairs').setup()
     end,
     enable = false,
+    cond = false,
   },
 
   {
