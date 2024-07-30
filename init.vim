@@ -43,9 +43,17 @@ autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shi
 
 lua << EOF
 
-local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
-local pyrightcmd = pyrightpath:gsub("\n", "") .. "/bin/python"
-vim.g.python3_host_prog = pyrightcmd
+for _, venv in ipairs({"neovim2", "neovim3"}) do
+  local pypath = vim.system({ "pyenv", "prefix", "neovim3" }):wait()
+  if ( pypath["code"] == 0 ) then
+    local pycmd = pypath["stdout"]:gsub("\n", "") .. "/bin/python"
+    if venv == "neovim3" then
+      vim.g.python3_host_prog = pycmd
+    else
+      vim.g.python_host_prog = pycmd
+    end
+  end
+end
 
 -- Colors are applied automatically based on user-defined highlight groups.
 -- There is no default value.
@@ -64,7 +72,6 @@ end
 -- load('user.commands')
 local keymaps = load('user.keymaps')
 keymaps.common()
-keymaps.telescope()
 require('user.plugins')
 
 vim.opt.termguicolors = true

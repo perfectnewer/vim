@@ -47,6 +47,7 @@ Plugin.init = function()
     once = true,
     desc = 'lazy-loaded telescope-file-browser.nvimw',
   })
+  require("user.keymaps").telescope()
 end
 
 Plugin.config = function()
