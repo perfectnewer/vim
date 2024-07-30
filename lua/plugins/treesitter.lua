@@ -14,7 +14,7 @@ return {
     },
   },
   enable       = true,
-  version      = nil,
+  -- version      = nil,
   build        = ':TSUpdate',
   config       = function()
     require('nvim-dap-virtual-text').setup({})

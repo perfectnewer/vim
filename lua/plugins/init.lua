@@ -9,6 +9,9 @@ local Plugins = {
   { 'Shougo/neosnippet.vim' },
   { 'Shougo/neosnippet-snippets' },
   { 'mhinz/vim-startify' },
+  { "ellisonleao/gruvbox.nvim",  priority = 1000, config = true },
+  { 'navarasu/onedark.nvim' },
+  { "shaunsingh/solarized.nvim" },
   {
     'iamcco/markdown-preview.nvim',
     build = function() vim.fn['mkdp#util#install']() end,
@@ -39,8 +42,10 @@ local Plugins = {
     dependencies = { 'nvim-treesitter/playground' },
     config = function()
       vim.notify = require('notify')
+      vim.notify.setup({ render = "compact" })
     end,
     lazy = false,
+    cond = false,
   },
 
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
@@ -79,14 +84,29 @@ local Plugins = {
   },
 
   {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true
+    -- use opts = {} for passing setup options
+    -- this is equalent to setup({}) function
+  },
+
+  { "jiangmiao/auto-pairs", cond = false },
+
+  {
     -- some usefull functions
     'echasnovski/mini.nvim',
     branch = 'stable',
     config = function()
-      require('mini.pairs').setup()
+      -- require('mini.pairs').setup()
+      require('mini.surround').setup()
+      require('mini.tabline').setup()
+      require('mini.trailspace').setup()
+      require('mini.notify').setup()
+      require('mini.indentscope').setup()
     end,
-    enable = false,
-    cond = false,
+    enable = true,
+    cond = true,
   },
 
   {

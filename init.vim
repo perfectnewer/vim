@@ -1,7 +1,5 @@
 " https://vimawesome.com/
 
-set nu
-set termguicolors
 set completeopt=menu,menuone,noselect
 set mouse=nvih
 set laststatus=2
@@ -43,6 +41,13 @@ autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shi
 
 lua << EOF
 
+vim.opt.termguicolors = true
+vim.opt.number = true
+
+if vim.fn.has("gui_running") then
+  vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h14:w500"
+end
+
 for _, venv in ipairs({"neovim2", "neovim3"}) do
   local pypath = vim.system({ "pyenv", "prefix", "neovim3" }):wait()
   if ( pypath["code"] == 0 ) then
@@ -56,7 +61,7 @@ for _, venv in ipairs({"neovim2", "neovim3"}) do
 end
 
 -- Colors are applied automatically based on user-defined highlight groups.
--- There is no default value.
+-- There is no default value
 vim.cmd.highlight('IndentLine guifg=#123456')
 -- Current indent line highlight
 vim.cmd.highlight('IndentLineCurrent guifg=#123456')
@@ -74,11 +79,10 @@ local keymaps = load('user.keymaps')
 keymaps.common()
 require('user.plugins')
 
-vim.opt.termguicolors = true
 if ( vim.g.colorscheme ~= nil ) then
   vim.cmd.colorscheme(vim.g.colorscheme)
 else
-  vim.cmd.colorscheme("monokai")
+  vim.cmd.colorscheme("gruvbox")
 end
 
 EOF
@@ -109,4 +113,3 @@ let g:vista_executive_for = {
 "
 " semshi
 " https://github.com/numirias/semshi/blob/master/README.md
-
