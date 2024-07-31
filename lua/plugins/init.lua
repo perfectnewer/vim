@@ -14,8 +14,9 @@ local Plugins = {
   { "shaunsingh/solarized.nvim" },
   {
     'iamcco/markdown-preview.nvim',
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = function() vim.fn['mkdp#util#install']() end,
-    setup = function()
+    init = function()
       vim.g.mkdp_filetypes = { 'markdown' }
     end,
     ft = { 'markdown' },
