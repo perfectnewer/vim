@@ -69,5 +69,8 @@ return {
       },
     })
   end,
-  tag = 'v1.5' -- optional, updated every week. (see issue #1193)
+  tag = 'v1.5', -- optional, updated every week. (see issue #1193)
+  cond = function()
+    return vim.g.gui_vimr ~= 1
+  end,
 }

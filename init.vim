@@ -45,13 +45,17 @@ vim.opt.termguicolors = true
 vim.opt.number = true
 
 if vim.fn.has("gui_running") then
-  vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h14:w500"
+  if vim.g.gui_vimr == 1 then
+    --    vim.g.gui_vimr
+  else
+    vim.opt.guifont = "JetBrainsMono\\ Nerd\\ Font\\ Mono:h14:w500"
+  end
 end
 
 for _, venv in ipairs({"neovim2", "neovim3"}) do
-  local pypath = vim.system({ "pyenv", "prefix", "neovim3" }):wait()
-  if ( pypath["code"] == 0 ) then
-    local pycmd = pypath["stdout"]:gsub("\n", "") .. "/bin/python"
+  local pypath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
+  if ( vim.v.shell_error == 0 ) then
+    local pycmd = pypath:gsub("\n", "") .. "/bin/python"
     if venv == "neovim3" then
       vim.g.python3_host_prog = pycmd
     else
