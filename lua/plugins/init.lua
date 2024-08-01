@@ -4,6 +4,7 @@
 local Plugins = {
   { 'godlygeek/tabular' }, -- line up text
 
+  -- basic
   { 'SirVer/ultisnips' },
   { 'honza/vim-snippets' },
   { 'Shougo/neosnippet.vim' },
@@ -12,6 +13,14 @@ local Plugins = {
   { "ellisonleao/gruvbox.nvim",  priority = 1000, config = true },
   { 'navarasu/onedark.nvim' },
   { "shaunsingh/solarized.nvim" },
+  {
+    "nvimtools/hydra.nvim",
+    config = function()
+      require("hydra")
+    end,
+    lazy = false
+  },
+
   {
     'iamcco/markdown-preview.nvim',
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
