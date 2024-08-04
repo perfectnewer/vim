@@ -13,6 +13,7 @@ return {
       },
     },
   },
+  lazy         = false,
   enable       = true,
   -- version      = nil,
   build        = ':TSUpdate',
@@ -91,5 +92,5 @@ return {
     -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
     vim.wo.foldlevel = 2
   end,
-  ft           = { 'python', 'go', 'lua', 'js', 'bash', 'vim' }
+  ft           = { 'python', 'go', 'lua', 'js', 'bash', 'vim', 'html', 'ts' }
 }

@@ -54,7 +54,7 @@ lazy.opts = {
     border = 'rounded',
   },
   install = {
-    missing = true, -- install missing plugins on startup.
+    missing = false, -- install missing plugins on startup.
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "bluloco" },
   },

@@ -27,7 +27,7 @@ Plugin.dependencies = {
 Plugin.cmd = { 'LspInfo', 'LspInstall', 'LspUnInstall' }
 -- Plugin.event = { 'BufReadPre *.py|*.pyi|*.lua|*.go|*.gomod|*.sh|*.md',
 --   'BufNewFile *.py|*.pyi|*.lua|*.go|*.gomod|*.sh|*.md' }
-Plugin.ft = { 'python', 'lua', 'go', 'bash', 'markdown', 'vim' }
+Plugin.ft = { 'python', 'lua', 'go', 'bash', 'markdown', 'vim', 'ts', 'js', 'html' }
 
 function Plugin.init()
   -- See :help vim.diagnostic.config()
@@ -77,7 +77,7 @@ function Plugin.init()
     }
   }
 
-  vim.lsp.set_log_level('debug')
+  vim.lsp.set_log_level('warn')
 end
 
 function Plugin.config()
