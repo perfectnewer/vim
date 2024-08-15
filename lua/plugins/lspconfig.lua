@@ -58,24 +58,23 @@ function Plugin.init()
 		{ border = 'rounded' }
 	)
 
-	-- for coq
-	vim.g.coq_settings = {
-		auto_start = true,
-		clients = {
-			lsp = {
-				resolve_timeout = 0.2,
-				weight_adjust = 1,
-			},
-		},
-		display = {
-			icons = {
-				mode = 'none'
-			}
-		},
-		keymap = {
-			jump_to_mark = 'c-n'
-		}
-	}
+  -- for coq
+  vim.g.coq_settings = {
+    auto_start = true,
+    clients = {
+      lsp = {
+        resolve_timeout = 0.2,
+        weight_adjust = 1,
+      },
+      buffers = {
+        match_syms = true
+      }
+    },
+    keymap = {
+      recommended = false,
+      jump_to_mark = '<c-f>',
+    }
+  }
 
 	vim.lsp.set_log_level('warn')
 end
@@ -98,12 +97,21 @@ function Plugin.config()
 	})
 	require('mason-lspconfig').setup()
 
-	local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-	local lspconfig = require('lspconfig')
-	local default_opts = require('coq').lsp_ensure_capabilities({
-		capabilities = lsp_capabilities,
-		on_attach = user.on_attach,
-	})
+  local cmp = require('cmp')
+  local cmp_select = {behavior = cmp.SelectBehavior.Select}
+  cmp.setup({
+    mapping = {
+      ['<CR>'] = cmp.mapping.confirm({select = false}),
+      ['<s-tab>'] = cmp.mapping.select_prev_item(cmp_select),
+      ['<tab>'] = cmp.mapping.select_next_item(cmp_select),
+    }
+  })
+  local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local lspconfig = require('lspconfig')
+  local default_opts = require('coq').lsp_ensure_capabilities({
+    capabilities = lsp_capabilities,
+    on_attach = user.on_attach,
+  })
 
 	local handlers = {
 		-- See :help mason-lspconfig-dynamic-server-setup
