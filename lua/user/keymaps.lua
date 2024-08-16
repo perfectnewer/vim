@@ -15,7 +15,7 @@ _M.telescope = function()
 end
 
 _M.common = function()
-  mapset("n", "<space><space>", -- Toggle all folds
+  mapset("n", "<leader><space>", -- Toggle all folds
     function()
       local get_opt = vim.api.nvim_win_get_option
       local set_opt = vim.api.nvim_win_set_option
