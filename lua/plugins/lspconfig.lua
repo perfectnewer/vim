@@ -3,25 +3,29 @@ local user = {}
 
 Plugin.tag = 'v0.1.8'
 Plugin.dependencies = {
-	{ 'hrsh7th/cmp-nvim-lsp' },
-	{ 'williamboman/mason.nvim' },
-	{ 'williamboman/mason-lspconfig.nvim' },
-	{
-		'nvimdev/lspsaga.nvim',
-		branch = 'main',
-		dependencies = {
-			-- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
-			{ 'ms-jpq/coq_nvim',       branch = 'coq' },
-			{ 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
-			{ 'ms-jpq/coq.thirdparty', branch = '3p' },
-		},
-	},
-	"ray-x/navigator.lua",
-	requires = {
-		{ "ray-x/guihua.lua",               run = "cd lua/fzy && make" },
-		{ "neovim/nvim-lspconfig" },
-		{ "nvim-treesitter/nvim-treesitter" },
-	}
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'williamboman/mason.nvim' },
+  { 'williamboman/mason-lspconfig.nvim' },
+  {
+    'nvimdev/lspsaga.nvim',
+    branch = 'main',
+    dependencies = {
+      -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
+      { 'ms-jpq/coq_nvim',       branch = 'coq' },
+      { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
+      { 'ms-jpq/coq.thirdparty', branch = '3p' },
+    },
+  },
+  "ray-x/navigator.lua",
+  requires = {
+    { "ray-x/guihua.lua",               run = "cd lua/fzy && make" },
+    { "neovim/nvim-lspconfig" },
+    { "nvim-treesitter/nvim-treesitter" },
+  },
+  { "jay-babu/mason-nvim-dap.nvim" },
+  { "mfussenegger/nvim-dap" },
+  { "mfussenegger/nvim-dap-python" },
+  { "rcarriga/nvim-dap-ui" },
 }
 
 Plugin.cmd = { 'LspInfo', 'LspInstall', 'LspUnInstall' }
@@ -80,28 +84,49 @@ function Plugin.init()
 end
 
 function Plugin.config()
-	require('mason').setup({ ui = { border = 'single' } })
-	-- See :help mason-lspconfig-settings
-	-- https://github.com/williamboman/mason-lspconfig.nvim
-	require('mason-lspconfig').setup({
-		ensure_installed = {
-			'gopls',
-			'lua_ls',
-			'marksman',
-			'vimls',
-			'pyright',
-			'rust_analyzer',
-			'bashls',
-			'yamlls',
-		},
-	})
-	require('mason-lspconfig').setup()
+  require('mason').setup({ ui = { border = 'single' } })
+  require("mason-nvim-dap").setup({
+    ensure_installed = { "python", "delve" },
+    handlers = {
+      function(config)
+        -- all sources with no handler get passed here
+
+        -- Keep original functionality
+        require('mason-nvim-dap').default_setup(config)
+      end,
+      python = function(config)
+        config.adapters = {
+          type = "executable",
+          command = "/home/simon/.pyenv/versions/neovim3/bin/python",
+          args = {
+            "-m",
+            "debugpy.adapter",
+          },
+        }
+        require('mason-nvim-dap').default_setup(config) -- don't forget this!
+      end,
+    },
+  })
+  -- See :help mason-lspconfig-settings
+  -- https://github.com/williamboman/mason-lspconfig.nvim
+  require('mason-lspconfig').setup({
+    ensure_installed = {
+      'gopls',
+      'lua_ls',
+      'marksman',
+      'vimls',
+      'pyright',
+      'rust_analyzer',
+      'bashls',
+      'yamlls',
+    },
+  })
 
   local cmp = require('cmp')
-  local cmp_select = {behavior = cmp.SelectBehavior.Select}
+  local cmp_select = { behavior = cmp.SelectBehavior.Select }
   cmp.setup({
     mapping = {
-      ['<CR>'] = cmp.mapping.confirm({select = false}),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
       ['<s-tab>'] = cmp.mapping.select_prev_item(cmp_select),
       ['<tab>'] = cmp.mapping.select_next_item(cmp_select),
     }
@@ -128,8 +153,8 @@ function Plugin.config()
 			local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
 			local opts = {
 				on_init = function(client)
-					client.config.settings.python.pythonPath = user.get_python_path(client.config
-						.root_dir)
+					client.config.settings.python.pythonPath = user.get_python_path(client.config.root_dir)
+          user.set_dap_pypath(client.config.root_dir)
 				end,
 				cmd = pyrightcmd,
 			}
@@ -249,6 +274,78 @@ function user.get_python_path(workspace)
 
 	-- Fallback to system Python.
 	return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
+end
+
+-- https://miguelcrespo.co/posts/how-to-debug-like-a-pro-using-neovim/
+function user.set_dap_pypath(workspace)
+  require('dap-python').setup("/home/simon/.pyenv/versions/neovim3/bin/python") -- earlier so setup the various defaults ready to be replaced
+  require("dapui").setup()
+  require('dap.ext.vscode').load_launchjs(nil, {})
+  local dap, dapui = require("dap"), require("dapui")
+  -- Open automatically when a new debug session is created
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+  vim.keymap.set('n', '<F5>', require 'dap'.continue)
+  vim.keymap.set('n', '<F10>', require 'dap'.step_over)
+  vim.keymap.set('n', '<F11>', require 'dap'.step_into)
+  vim.keymap.set('n', '<F12>', require 'dap'.step_out)
+  vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint)
+  local pypath = user.get_python_path(workspace)
+  -- local dap = require("dap")
+  -- dap.adapters.python = {
+  --     type = 'executable',
+  --     command = pypath,
+  --     args = {'-m', 'debugpy.adapter'}
+  -- }
+  -- dap.configurations.python = {
+  --     {
+  --         type = 'python';
+  --         request = 'launch';
+  --         name = "Launch file";
+  --         program = "${file}";
+  --         pythonPath = pypath,
+  --     },
+  --     {
+  --         type = 'python',
+  --         request = 'launch',
+  --         name = 'DAP Django',
+  --         program = vim.loop.cwd() .. '/manage.py',
+  --         args = {'runserver', '--noreload'},
+  --         justMyCode = true,
+  --         django = true,
+  --         console = "integratedTerminal",
+  --     },
+  --     {
+  --         type = 'python';
+  --         request = 'attach';
+  --         name = 'Attach remote';
+  --         connect = function()
+  --             return {
+  --                 host = '127.0.0.1',
+  --                 port = 5678
+  --             }
+  --         end;
+  --     },
+  --     {
+  --         type = 'python';
+  --         request = 'launch';
+  --         name = 'Launch file with arguments';
+  --         program = '${file}';
+  --         args = function()
+  --             local args_string = vim.fn.input('Arguments: ')
+  --             return vim.split(args_string, " +")
+  --         end;
+  --         console = "integratedTerminal",
+  --         pythonPath = pypath,
+  --     }
+  -- }
 end
 
 return Plugin

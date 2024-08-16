@@ -41,6 +41,8 @@ autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shi
 
 lua << EOF
 
+# vim.cmd('verbose map')
+
 vim.opt.termguicolors = true
 vim.opt.number = true
 
@@ -48,7 +50,7 @@ if vim.fn.has("gui_running") then
   if vim.g.gui_vimr == 1 then
     --    vim.g.gui_vimr
   else
-    vim.opt.guifont = "JetBrainsMono\\ Nerd\\ Font\\ Mono:h14:w500"
+    vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h14"
   end
 end
 
