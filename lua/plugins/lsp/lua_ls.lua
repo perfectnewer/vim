@@ -1,25 +1,17 @@
 local M = {}
 function M.setup()
   return {
-    settings = {
-      Lua = {
-        workspace = {
-          checkThirdParty = false
-        },
-        telemetry = {
-          enable = false
-        },
-      },
-    },
+    settings = { Lua = {} },
     on_init = function(client)
       local join = vim.fs.joinpath
-      local path = client.workspace_folders[1].name
-
-      -- Don't do anything if there is project local config
-      if vim.uv.fs_stat(join(path, '.luarc.json'))
-          or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
-      then
-        return
+      if client.workspace_folders ~= nil then
+        local path = client.workspace_folders[1].name
+        -- Don't do anything if there is project local config
+        if vim.uv.fs_stat(join(path, '.luarc.json'))
+            or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
+        then
+          return
+        end
       end
 
       -- Apply neovim specific settings

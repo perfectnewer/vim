@@ -62,6 +62,11 @@ _M.venn = function(enable)
   end
 end
 
+_M.lspsaga = function()
+  vim.keymap.set('n', '<Leader>ot', '<cmd>Lspsaga term_toggle<CR>', { silent = true })
+  vim.keymap.set('t', '<Leader>ot', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>', { silent = true })
+end
+
 _M.enable = false
 
 return _M

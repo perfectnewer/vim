@@ -14,14 +14,6 @@ local Plugins = {
   { 'navarasu/onedark.nvim' },
   { "shaunsingh/solarized.nvim" },
   {
-    "nvimtools/hydra.nvim",
-    config = function()
-      require("hydra")
-    end,
-    lazy = false
-  },
-
-  {
     'iamcco/markdown-preview.nvim',
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = function() vim.fn['mkdp#util#install']() end,
@@ -142,7 +134,7 @@ local Plugins = {
         -- Load luvit types when the `vim.uv` word is found
         { path = "luvit-meta/library", words = { "vim%.uv" } },
         "lazy.nvim",
-        { path = "nvim-dap-ui", types = true },
+        { path = "nvim-dap-ui",        types = true },
       },
     },
   },

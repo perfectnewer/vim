@@ -6,23 +6,12 @@ set laststatus=2
 set statusline=%t%m%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %=%{&ff}:[%04l,%03v][%3p%%]
 set clipboard+=unnamedplus
 
-
-" autocmd InsertLeave * se nocul  " 用浅色高亮当前行
-" autocmd InsertEnter * se cul    " 用浅色高亮当前行
+autocmd InsertLeave * se nocul  " 用浅色高亮当前行
+autocmd InsertEnter * se cul    " 用浅色高亮当前行
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-autocmd BufRead *.js,*.html,*.rb,*.yaml,*.yml,*.json,*.md,vim,lua,vue
-    \ setlocal expandtab | setlocal tabstop=2 |
-    \ setlocal softtabstop=2 | setlocal shiftwidth=2
-
-autocmd BufRead *.sh
-    \ setlocal expandtab | setlocal tabstop=4 |
-    \ setlocal softtabstop=4 | setlocal shiftwidth=4
-
-autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shiftwidth=4
 
 "--
 "- Resources:
@@ -41,10 +30,23 @@ autocmd BufRead *.go setlocal tabstop=4 | setlocal softtabstop=0 noexpandtab shi
 
 lua << EOF
 
-# vim.cmd('verbose map')
+-- vim.cmd('verbose map')
 
 vim.opt.termguicolors = true
 vim.opt.number = true
+-- vim.opt.listchars='tab:>-'
+vim.opt.listchars = {
+  eol = '⤶',
+  trail = '✚',
+  extends = '◀',
+  precedes = '▶',
+  -- tab = '␉·',
+  tab = '❤␉',
+  nbsp = '⎵',
+  -- space = '❤',
+  -- set listchars=eol:⏎,,trail:␠,nbsp:
+}
+vim.opt.list = true
 
 if vim.fn.has("gui_running") then
   if vim.g.gui_vimr == 1 then
@@ -55,7 +57,7 @@ if vim.fn.has("gui_running") then
 end
 
 for _, venv in ipairs({"neovim2", "neovim3"}) do
-  local pypath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
+  local pypath = vim.fn.system({ "pyenv", "prefix", venv })
   if ( vim.v.shell_error == 0 ) then
     local pycmd = pypath:gsub("\n", "") .. "/bin/python"
     if venv == "neovim3" then
@@ -79,11 +81,12 @@ local load = function(mod)
   return require(mod)
 end
 
--- load('user.settings')
 -- load('user.commands')
 local keymaps = load('user.keymaps')
 keymaps.common()
-require('user.plugins')
+local settings = load('user.settings')
+settings.autocmd()
+local plugins = load('user.plugins')
 
 if ( vim.g.colorscheme ~= nil ) then
   vim.cmd.colorscheme(vim.g.colorscheme)
