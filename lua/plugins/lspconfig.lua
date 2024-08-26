@@ -16,7 +16,23 @@ Plugin.dependencies = {
       { 'ms-jpq/coq.thirdparty', branch = '3p' },
     },
   },
-  "ray-x/navigator.lua",
+  {
+    "ray-x/navigator.lua",
+    requires = {
+      { "ray-x/guihua.lua",               run = "cd lua/fzy && make" },
+      { "neovim/nvim-lspconfig" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    config = function()
+      require("navigator").setup({
+        mason = true,
+        on_attach = user.on_attach,
+        lsp = {
+          disable_lsp = "all",
+        },
+      })
+    end,
+  },
   requires = {
     { "ray-x/guihua.lua",               run = "cd lua/fzy && make" },
     { "neovim/nvim-lspconfig" },
