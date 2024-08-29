@@ -3,9 +3,9 @@ Plugin.cmd = { "Telescope" }
 Plugin.branch = "0.1.x"
 Plugin.dependencies = {
   { "nvim-lua/plenary.nvim" },
-  { "nvim-telescope/telescope-fzf-native.nvim",    build = "make" },
+  { "nvim-telescope/telescope-fzf-native.nvim",     build = "make" },
   { "kdheepak/lazygit.nvim" },
-  { "nvim-telescope/telescope-live-grep-args.nvim" },
+  { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.1", },
   {
     "BurntSushi/ripgrep",
     build = function()
@@ -55,12 +55,20 @@ end
 Plugin.config = function()
   local actions = require("telescope.actions")
   local tele = require("telescope")
+  local lga_actions = require("telescope-live-grep-args.actions")
   tele.setup({
     defaults = {
       path_display = { "smart" },
       layout_strategy = "flex",
       layout_config = {
         prompt_position = "top",
+      },
+      mapping = {
+        i = {
+          ["<C-k>"] = lga_actions.quote_prompt(),
+          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+          ["<C-h>"] = "which_key",
+        },
       },
     },
     pickers = {
@@ -86,7 +94,7 @@ Plugin.config = function()
   tele.load_extension("live_grep_args")
   tele.load_extension("ui-select")
 end
-Plugin.lazy = fasle
+Plugin.lazy = false
 Plugin.hydra = function()
   local Hydra = require("hydra")
   local cmd = require("hydra.keymap-util").cmd
@@ -121,7 +129,8 @@ Plugin.hydra = function()
     body = "<C-p>",
     heads = {
       { "f",       cmd "Telescope find_files" },
-      { "g",       cmd "Telescope live_grep" },
+      -- { "g",       cmd "Telescope live_grep" },
+      { "g",       require("telescope").extensions.live_grep_args.live_grep_args },
       { "o",       cmd "Telescope oldfiles",                  { desc = "recently opened files" } },
       { "h",       cmd "Telescope help_tags",                 { desc = "vim help" } },
       { "m",       cmd "MarksListBuf",                        { desc = "marks" } },
@@ -134,6 +143,8 @@ Plugin.hydra = function()
       { ";",       cmd "Telescope command_history",           { desc = "command-line history" } },
       { "c",       cmd "Telescope commands",                  { desc = "execute command" } },
       { "u",       cmd "silent! %foldopen! | UndotreeToggle", { desc = "undotree" } },
+      { "M",       cmd "Telescope man_pages",                 { desc = "man pages" } },
+      { "K",       cmd "Telescope quickfix",                  { desc = "quickfix" } },
       { "<Enter>", cmd "Telescope",                           { exit = true, desc = "list all pickers" } },
       { "<Esc>",   nil,                                       { exit = true, nowait = true } },
     }

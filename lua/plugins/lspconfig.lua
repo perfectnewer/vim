@@ -103,6 +103,7 @@ function Plugin.config()
   require('mason').setup({ ui = { border = 'single' } })
   require("mason-nvim-dap").setup({
     ensure_installed = { "python", "delve" },
+    automatic_installation = true,
     handlers = {
       function(config)
         -- all sources with no handler get passed here
