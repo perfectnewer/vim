@@ -63,17 +63,8 @@ Plugin.config = function()
       layout_config = {
         prompt_position = "top",
       },
-      mapping = {
-        i = {
-          ["<C-k>"] = lga_actions.quote_prompt(),
-          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-          ["<C-h>"] = "which_key",
-        },
-      },
     },
     pickers = {
-      find_files = {
-      }
     },
     extensions = {
       ["ui-select"] = {
@@ -86,11 +77,28 @@ Plugin.config = function()
         override_file_sorter = true,    -- override the file sorter
         case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
+      },
+      live_grep_args = {
+        auto_quoting = true, -- enable/disable auto-quoting
+        -- define mappings, e.g.
+        mappings = { -- extend mappings
+          i = {
+            ["<C-k>"] = lga_actions.quote_prompt(),
+            ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+            -- freeze the current list and start a fuzzy search in the frozen list
+            ["<C-r>"] = actions.to_fuzzy_refine,
+            ["<C-h>"] = "which_key",
+          },
+        },
+        -- ... also accepts theme settings, for example:
+        -- theme = "dropdown", -- use dropdown theme
+        -- theme = { }, -- use own theme spec
+        -- layout_config = { mirror=true }, -- mirror preview pane
       }
     },
   })
   tele.load_extension("fzf")
-  tele.load_extension("lazygit")
+  -- tele.load_extension("lazygit")
   tele.load_extension("live_grep_args")
   tele.load_extension("ui-select")
 end
