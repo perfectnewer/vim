@@ -200,7 +200,16 @@ function Plugin.config()
   -- only show above warnings
   -- lsp_capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
 
-  -- require("navigator").setup({ mason = true, })
+  require("navigator").setup({
+    mason = true,
+    default_mapping = true,
+    keymaps = {
+      { key = '<m-k>', func = vim.lsp.buf.signature_help, desc = 'signature_help' },
+    },
+    lsp = {
+      lsp_disable = 'all',
+    }
+  })
 
   --        local opts = { noremap = true, silent = true }
   --        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
@@ -212,8 +221,6 @@ function user.on_attach(client, bufnr)
   require('navigator.lspclient.mapping').setup({ client = client, bufnr = bufnr }) -- setup navigator keymaps here,
   require("navigator.dochighlight").documentHighlight(bufnr)
   require('navigator.codeAction').code_action_prompt(bufnr)
-
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local bufmap = function(mode, lhs, rhs, desc)
     local opts = { noremap = true, silent = true, buffer = bufnr, desc = desc }
@@ -236,25 +243,19 @@ function user.on_attach(client, bufnr)
 
   -- You can search each function in the help page.
   -- For example :help vim.lsp.buf.hover()
-
-  bufmap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover documentation')
-  bufmap('n', 'Kd', '<cmd>Lspsaga preview_definition<CR>', 'Previous documentation')
+  bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename symbol')
+  bufmap({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', 'Format buffer')
   bufmap('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
   bufmap('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
   bufmap('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation')
   bufmap('n', 'go', vim.lsp.buf.type_definition, 'Go to type definition')
   bufmap('n', 'gr', vim.lsp.buf.references, 'Go to reference')
-  bufmap('n', 'gs', '<cmd>Lspsaga signature_help<CR>', 'Show function signature')
-  bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename symbol')
-  bufmap({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', 'Format buffer')
-  bufmap('n', '<LocalLeader>ca', '<cmd>Lspsaga code_action<cr>', 'Execute code action')
   bufmap('n', 'gl', vim.diagnostic.open_float, 'Show line diagnostic')
-  bufmap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Previous diagnostic')
-  bufmap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Next diagnostic')
-  bufmap('n', '<Leader>ol', '<cmd>Lspsaga outline<CR>', 'Open outline')
   bufmap('n', 'gt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', 'tab open definition')
   bufmap('n', 'gs', '<cmd>split | lua vim.lsp.buf.definition()<CR>', 'split open definition')
   bufmap('n', 'ge', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', 'vsplit open definition')
+  bufmap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover documentation')
+  bufmap('n', '<Leader>ol', '<cmd>Lspsaga outline<CR>', 'Open outline')
 end
 
 function user.get_python_path(workspace)
