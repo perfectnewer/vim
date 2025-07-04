@@ -4,8 +4,9 @@ local user = {}
 Plugin.tag = 'v0.1.8'
 Plugin.dependencies = {
   { 'hrsh7th/cmp-nvim-lsp' },
-  { 'williamboman/mason.nvim' },
-  { 'williamboman/mason-lspconfig.nvim' },
+  { 'mason-org/mason.nvim',           tag = "v2.0.0" },
+  { 'mason-org/mason-lspconfig.nvim', tag = "v2.0.0" },
+  -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
   {
     'nvimdev/lspsaga.nvim',
     branch = 'main',
@@ -38,7 +39,7 @@ Plugin.dependencies = {
     { "neovim/nvim-lspconfig" },
     { "nvim-treesitter/nvim-treesitter" },
   },
-  { "jay-babu/mason-nvim-dap.nvim" },
+  { "jay-babu/mason-nvim-dap.nvim",   branch = "main" },
   { "mfussenegger/nvim-dap" },
   { "mfussenegger/nvim-dap-python" },
   { "rcarriga/nvim-dap-ui" },
@@ -100,7 +101,66 @@ function Plugin.init()
 end
 
 function Plugin.config()
+  local cmp = require('cmp')
+  local cmp_select = { behavior = cmp.SelectBehavior.Select }
+  cmp.setup({
+    mapping = {
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      ['<s-tab>'] = cmp.mapping.select_prev_item(cmp_select),
+      ['<tab>'] = cmp.mapping.select_next_item(cmp_select),
+    }
+  })
+  local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local lspconfig = require('lspconfig')
+  local default_opts = require('coq').lsp_ensure_capabilities({
+    capabilities = lsp_capabilities,
+    on_attach = user.on_attach,
+  })
+
+  local handlers = {
+    ['gopls'] = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+        .make_client_capabilities())
+      require('go').setup({
+        -- other setups ....
+        lsp_cfg = {
+          capabilities = capabilities,
+          -- other setups
+        },
+        lsp_on_attach = user.on_attach,
+      })
+      require('dap').set_log_level('TRACE')
+    end
+  }
+
+  local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
+  local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
+  local opts = {
+    on_init = function(client)
+      client.config.settings.python.pythonPath = user.get_python_path(client.config
+        .root_dir)
+      user.set_dap_pypath(client.config.root_dir)
+    end,
+    cmd = pyrightcmd,
+  }
+  vim.lsp.config("*", default_opts)
+  vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_opts, opts))
+  vim.lsp.config("lua_ls", vim.tbl_extend("force", default_opts, require('plugins.lsp.lua_ls').setup()))
+
   require('mason').setup({ ui = { border = 'single' } })
+  require('mason-lspconfig').setup({
+    ensure_installed = {
+      'gopls',
+      'lua_ls',
+      'marksman',
+      'vimls',
+      'pyright',
+      'rust_analyzer',
+      'bashls',
+      'yamlls',
+    },
+    automatic_enable = false,
+  })
   require("mason-nvim-dap").setup({
     ensure_installed = { "python", "delve" },
     automatic_installation = true,
@@ -126,77 +186,7 @@ function Plugin.config()
   })
   -- See :help mason-lspconfig-settings
   -- https://github.com/williamboman/mason-lspconfig.nvim
-  require('mason-lspconfig').setup({
-    ensure_installed = {
-      'gopls',
-      'lua_ls',
-      'marksman',
-      'vimls',
-      'pyright',
-      'rust_analyzer',
-      'bashls',
-      'yamlls',
-    },
-  })
 
-  local cmp = require('cmp')
-  local cmp_select = { behavior = cmp.SelectBehavior.Select }
-  cmp.setup({
-    mapping = {
-      ['<CR>'] = cmp.mapping.confirm({ select = false }),
-      ['<s-tab>'] = cmp.mapping.select_prev_item(cmp_select),
-      ['<tab>'] = cmp.mapping.select_next_item(cmp_select),
-    }
-  })
-  local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-  local lspconfig = require('lspconfig')
-  local default_opts = require('coq').lsp_ensure_capabilities({
-    capabilities = lsp_capabilities,
-    on_attach = user.on_attach,
-  })
-
-  local handlers = {
-    -- See :help mason-lspconfig-dynamic-server-setup
-    function(server)
-      -- See :help lspconfig-setup
-      lspconfig[server].setup(default_opts)
-    end,
-    ['lua_ls'] = function()
-      local opts = vim.tbl_extend("force", default_opts, require('plugins.lsp.lua_ls').setup())
-      lspconfig.lua_ls.setup(opts)
-    end,
-    ['pyright'] = function()
-      local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
-      local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
-      local opts = {
-        on_init = function(client)
-          client.config.settings.python.pythonPath = user.get_python_path(client.config
-            .root_dir)
-          user.set_dap_pypath(client.config.root_dir)
-        end,
-        cmd = pyrightcmd,
-      }
-      lspconfig.pyright.setup(vim.tbl_deep_extend("force", default_opts, opts))
-    end,
-    ['gopls'] = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-        .make_client_capabilities())
-      require('go').setup({
-        -- other setups ....
-        lsp_cfg = {
-          capabilities = capabilities,
-          -- other setups
-        },
-        lsp_on_attach = user.on_attach,
-      })
-      require('dap').set_log_level('TRACE')
-    end
-  }
-  require('mason-lspconfig').setup_handlers(handlers)
-
-  local saga = require('lspsaga').setup({
-    -- your configuration
-  })
   -- only show above warnings
   -- lsp_capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
 
@@ -220,7 +210,7 @@ end
 function user.on_attach(client, bufnr)
   require('navigator.lspclient.mapping').setup({ client = client, bufnr = bufnr }) -- setup navigator keymaps here,
   require("navigator.dochighlight").documentHighlight(bufnr)
-  require('navigator.codeAction').code_action_prompt(bufnr)
+  require('navigator.codeAction').code_action_prompt(client, bufnr)
 
   local bufmap = function(mode, lhs, rhs, desc)
     local opts = { noremap = true, silent = true, buffer = bufnr, desc = desc }

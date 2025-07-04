@@ -1,4 +1,4 @@
-local Plugin = { 'williamboman/mason.nvim' }
+local Plugin = { 'mason-org/mason.nvim', tag = "v2.0.0" }
 
 -- See :help mason-settings
 Plugin.opts = {

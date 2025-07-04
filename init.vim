@@ -30,6 +30,11 @@ endif
 
 lua << EOF
 
+local version = vim.version()
+if version.major == 0 and version.minor < 11 then
+    vim.api.nvim_err_writeln("Error: Neovim version must be ≥ 0.11 (current: "..version.major.."."..version.minor..")")
+    return  -- 停止后续配置加载
+end
 -- vim.cmd('verbose map')
 
 vim.opt.termguicolors = true
@@ -40,8 +45,8 @@ vim.opt.listchars = {
   trail = '✚',
   extends = '◀',
   precedes = '▶',
-  -- tab = '␉·',
-  tab = '❤␉',
+  tab = '␉·',
+  -- tab = '❤␉',
   nbsp = '⎵',
   -- space = '❤',
   -- set listchars=eol:⏎,,trail:␠,nbsp:

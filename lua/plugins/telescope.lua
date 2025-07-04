@@ -50,6 +50,10 @@ Plugin.init = function()
   })
   -- require("user.keymaps").telescope()
   Plugin.hydra()
+  vim.keymap.set("n", "<space>fb", function()
+    require("telescope").extensions.file_browser.file_browser()
+  end)
+
 end
 
 Plugin.config = function()
@@ -101,6 +105,7 @@ Plugin.config = function()
   -- tele.load_extension("lazygit")
   tele.load_extension("live_grep_args")
   tele.load_extension("ui-select")
+  tele.load_extension("file_browser")
 end
 Plugin.lazy = false
 Plugin.hydra = function()
