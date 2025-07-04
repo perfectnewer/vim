@@ -3,6 +3,7 @@ Plugin.cmd = { "Telescope" }
 Plugin.branch = "0.1.x"
 Plugin.dependencies = {
   { "nvim-lua/plenary.nvim" },
+  { "telescope-file-browser.nvim" },
   { "nvim-telescope/telescope-fzf-native.nvim",     build = "make" },
   { "kdheepak/lazygit.nvim" },
   { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.1", },

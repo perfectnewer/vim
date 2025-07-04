@@ -19,6 +19,7 @@ Plugin.dependencies = {
   },
   {
     "ray-x/navigator.lua",
+    branch = "nvim_0.11",
     requires = {
       { "ray-x/guihua.lua",               run = "cd lua/fzy && make" },
       { "neovim/nvim-lspconfig" },
@@ -39,7 +40,7 @@ Plugin.dependencies = {
     { "neovim/nvim-lspconfig" },
     { "nvim-treesitter/nvim-treesitter" },
   },
-  { "jay-babu/mason-nvim-dap.nvim",   branch = "main" },
+  { "jay-babu/mason-nvim-dap.nvim", branch = "main" },
   { "mfussenegger/nvim-dap" },
   { "mfussenegger/nvim-dap-python" },
   { "rcarriga/nvim-dap-ui" },
@@ -159,7 +160,7 @@ function Plugin.config()
       'bashls',
       'yamlls',
     },
-    automatic_enable = false,
+    automatic_enable = true,
   })
   require("mason-nvim-dap").setup({
     ensure_installed = { "python", "delve" },
