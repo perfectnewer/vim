@@ -3,7 +3,10 @@ Plugin.cmd = { "Telescope" }
 Plugin.branch = "0.1.x"
 Plugin.dependencies = {
   { "nvim-lua/plenary.nvim" },
-  { "telescope-file-browser.nvim" },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
   { "nvim-telescope/telescope-fzf-native.nvim",     build = "make" },
   { "kdheepak/lazygit.nvim" },
   { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.1", },
@@ -54,7 +57,6 @@ Plugin.init = function()
   vim.keymap.set("n", "<space>fb", function()
     require("telescope").extensions.file_browser.file_browser()
   end)
-
 end
 
 Plugin.config = function()
@@ -86,7 +88,7 @@ Plugin.config = function()
       live_grep_args = {
         auto_quoting = true, -- enable/disable auto-quoting
         -- define mappings, e.g.
-        mappings = { -- extend mappings
+        mappings = {         -- extend mappings
           i = {
             ["<C-k>"] = lga_actions.quote_prompt(),
             ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
@@ -145,22 +147,22 @@ Plugin.hydra = function()
       { "f",       cmd "Telescope find_files" },
       -- { "g",       cmd "Telescope live_grep" },
       { "g",       require("telescope").extensions.live_grep_args.live_grep_args },
-      { "o",       cmd "Telescope oldfiles",                  { desc = "recently opened files" } },
-      { "h",       cmd "Telescope help_tags",                 { desc = "vim help" } },
-      { "m",       cmd "MarksListBuf",                        { desc = "marks" } },
+      { "o",       cmd "Telescope oldfiles",                                     { desc = "recently opened files" } },
+      { "h",       cmd "Telescope help_tags",                                    { desc = "vim help" } },
+      { "m",       cmd "MarksListBuf",                                           { desc = "marks" } },
       { "k",       cmd "Telescope keymaps" },
       { "O",       cmd "Telescope vim_options" },
       { "r",       cmd "Telescope resume" },
-      { "p",       cmd "Telescope projects",                  { desc = "projects" } },
-      { "/",       cmd "Telescope current_buffer_fuzzy_find", { desc = "search in file" } },
-      { "?",       cmd "Telescope search_history",            { desc = "search history" } },
-      { ";",       cmd "Telescope command_history",           { desc = "command-line history" } },
-      { "c",       cmd "Telescope commands",                  { desc = "execute command" } },
-      { "u",       cmd "silent! %foldopen! | UndotreeToggle", { desc = "undotree" } },
-      { "M",       cmd "Telescope man_pages",                 { desc = "man pages" } },
-      { "K",       cmd "Telescope quickfix",                  { desc = "quickfix" } },
-      { "<Enter>", cmd "Telescope",                           { exit = true, desc = "list all pickers" } },
-      { "<Esc>",   nil,                                       { exit = true, nowait = true } },
+      { "p",       cmd "Telescope projects",                                     { desc = "projects" } },
+      { "/",       cmd "Telescope current_buffer_fuzzy_find",                    { desc = "search in file" } },
+      { "?",       cmd "Telescope search_history",                               { desc = "search history" } },
+      { ";",       cmd "Telescope command_history",                              { desc = "command-line history" } },
+      { "c",       cmd "Telescope commands",                                     { desc = "execute command" } },
+      { "u",       cmd "silent! %foldopen! | UndotreeToggle",                    { desc = "undotree" } },
+      { "M",       cmd "Telescope man_pages",                                    { desc = "man pages" } },
+      { "K",       cmd "Telescope quickfix",                                     { desc = "quickfix" } },
+      { "<Enter>", cmd "Telescope",                                              { exit = true, desc = "list all pickers" } },
+      { "<Esc>",   nil,                                                          { exit = true, nowait = true } },
     }
   })
 end
