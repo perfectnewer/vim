@@ -7,16 +7,19 @@ Plugin.dependencies = {
   { 'mason-org/mason.nvim',           tag = "v2.0.0" },
   { 'mason-org/mason-lspconfig.nvim', tag = "v2.0.0" },
   -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
-  {
-    'nvimdev/lspsaga.nvim',
-    branch = 'main',
-    dependencies = {
-      -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
-      { 'ms-jpq/coq_nvim',       branch = 'coq' },
-      { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
-      { 'ms-jpq/coq.thirdparty', branch = '3p' },
-    },
-  },
+  -- {
+  --   'nvimdev/lspsaga.nvim',
+  --   branch = 'main',
+  --   dependencies = {
+  --     -- { 'neovim/nvim-lspconfig', tag = 'v0.1.8' },
+  --     { 'ms-jpq/coq_nvim',       branch = 'coq' },
+  --     { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
+  --     { 'ms-jpq/coq.thirdparty', branch = '3p' },
+  --   },
+  -- },
+   { 'ms-jpq/coq_nvim',       branch = 'coq' },
+   { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
+   { 'ms-jpq/coq.thirdparty', branch = '3p' },
   {
     "ray-x/navigator.lua",
     branch = "nvim_0.11",
@@ -118,22 +121,6 @@ function Plugin.config()
     on_attach = user.on_attach,
   })
 
-  local handlers = {
-    ['gopls'] = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-        .make_client_capabilities())
-      require('go').setup({
-        -- other setups ....
-        lsp_cfg = {
-          capabilities = capabilities,
-          -- other setups
-        },
-        lsp_on_attach = user.on_attach,
-      })
-      require('dap').set_log_level('TRACE')
-    end
-  }
-
   local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
   local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
   local opts = {
@@ -147,6 +134,35 @@ function Plugin.config()
   vim.lsp.config("*", default_opts)
   vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_opts, opts))
   vim.lsp.config("lua_ls", vim.tbl_extend("force", default_opts, require('plugins.lsp.lua_ls').setup()))
+
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+    .make_client_capabilities())
+  require('go').setup({
+    -- other setups ....
+    lsp_cfg = {
+      capabilities = capabilities,
+      -- other setups
+    },
+    lsp_on_attach = user.on_attach,
+  })
+  require('dap').set_log_level('TRACE')
+  -- local gopls_opts = {
+  --   on_init = function(client, init_result)
+  --     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+  --       .make_client_capabilities())
+  --     require('go').setup({
+  --       -- other setups ....
+  --       lsp_cfg = {
+  --         capabilities = capabilities,
+  --         -- other setups
+  --       },
+  --       lsp_on_attach = user.on_attach,
+  --     })
+  --     require('dap').set_log_level('TRACE')
+  --   end,
+  --   on_attach = user.on_attach,
+  -- }
+  -- vim.lsp.config("gopls", vim.tbl_extend("force", default_opts, gopls_opts))
 
   require('mason').setup({ ui = { border = 'single' } })
   require('mason-lspconfig').setup({
@@ -245,8 +261,8 @@ function user.on_attach(client, bufnr)
   bufmap('n', 'gt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', 'tab open definition')
   bufmap('n', 'gs', '<cmd>split | lua vim.lsp.buf.definition()<CR>', 'split open definition')
   bufmap('n', 'ge', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', 'vsplit open definition')
-  bufmap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover documentation')
-  bufmap('n', '<Leader>ol', '<cmd>Lspsaga outline<CR>', 'Open outline')
+  -- bufmap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover documentation')
+  -- bufmap('n', '<Leader>ol', '<cmd>Lspsaga outline<CR>', 'Open outline')
 end
 
 function user.get_python_path(workspace)
