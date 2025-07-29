@@ -89,6 +89,7 @@ end
 -- load('user.commands')
 local keymaps = load('user.keymaps')
 keymaps.common()
+keymaps.which_key()
 local settings = load('user.settings')
 settings.autocmd()
 local plugins = load('user.plugins')
