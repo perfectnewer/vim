@@ -17,9 +17,9 @@ Plugin.dependencies = {
   --     { 'ms-jpq/coq.thirdparty', branch = '3p' },
   --   },
   -- },
-   { 'ms-jpq/coq_nvim',       branch = 'coq' },
-   { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
-   { 'ms-jpq/coq.thirdparty', branch = '3p' },
+  { 'ms-jpq/coq_nvim',                branch = 'coq' },
+  { 'ms-jpq/coq.artifacts',           branch = 'artifacts' },
+  { 'ms-jpq/coq.thirdparty',          branch = '3p' },
   {
     "ray-x/navigator.lua",
     branch = "nvim_0.11",
@@ -123,13 +123,19 @@ function Plugin.config()
 
   local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
   local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
+  local util = require('lspconfig/util')
   local opts = {
-    on_init = function(client)
-      client.config.settings.python.pythonPath = user.get_python_path(client.config
-        .root_dir)
-      user.set_dap_pypath(client.config.root_dir)
+    before_init = function(params, config)
+      if config.root_dir == nil then
+        config.root_dir = util.root_pattern('pyproject.toml', '.git')(vim.fn.getcwd())
+      end
+    end,
+    on_init = function(client, init_result)
+      client.config.settings.python.pythonPath = user.get_python_path(client.config)
+      user.set_dap_pypath(client.config)
     end,
     cmd = pyrightcmd,
+    root_dir = util.root_pattern('pyproject.toml', '.git')(vim.fn.getcwd()),
   }
   vim.lsp.config("*", default_opts)
   vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_opts, opts))
@@ -265,18 +271,19 @@ function user.on_attach(client, bufnr)
   -- bufmap('n', '<Leader>ol', '<cmd>Lspsaga outline<CR>', 'Open outline')
 end
 
-function user.get_python_path(workspace)
-  local path = require('lspconfig/util').path
+function user.get_python_path(config)
+  local util = require('lspconfig/util')
   -- Use activated virtualenv.
   if vim.env.VIRTUAL_ENV then
-    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+    return util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
   end
 
+  local root_dir = util.root_pattern('pyproject.toml', '.git')(config.root_dir) or vim.fn.getcwd()
   -- Find and use virtualenv from pipenv in workspace directory.
-  local match = vim.fn.glob(path.join(workspace, 'Pipfile'))
+  local match = vim.fn.glob(util.path.join(root_dir, 'Pipfile'))
   if match ~= '' then
     local venv = vim.fn.trim(vim.fn.system('PIPENV_PIPFILE=' .. match .. ' pipenv --venv'))
-    return path.join(venv, 'bin', 'python')
+    return util.path.join(venv, 'bin', 'python')
   end
 
   -- Fallback to system Python.
@@ -284,7 +291,8 @@ function user.get_python_path(workspace)
 end
 
 -- https://miguelcrespo.co/posts/how-to-debug-like-a-pro-using-neovim/
-function user.set_dap_pypath(workspace)
+function user.set_dap_pypath(config)
+  _ = config
   require('dap-python').setup("/home/simon/.pyenv/versions/neovim3/bin/python") -- earlier so setup the various defaults ready to be replaced
   require("dapui").setup()
   require('dap.ext.vscode').load_launchjs(nil, {})
@@ -304,7 +312,7 @@ function user.set_dap_pypath(workspace)
   vim.keymap.set('n', '<F11>', require 'dap'.step_into)
   vim.keymap.set('n', '<F12>', require 'dap'.step_out)
   vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint)
-  local pypath = user.get_python_path(workspace)
+  -- local pypath = user.get_python_path(config)
   -- local dap = require("dap")
   -- dap.adapters.python = {
   --     type = 'executable',
