@@ -124,18 +124,25 @@ function Plugin.config()
   local pyrightpath = vim.fn.system({ "pyenv", "prefix", "neovim3" })
   local pyrightcmd = { pyrightpath:gsub("\n", "") .. "/bin/pyright-langserver", "--stdio" }
   local util = require('lspconfig/util')
+
+  -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#diagnosticTag
   local opts = {
     before_init = function(params, config)
+      params.capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
       if config.root_dir == nil then
         config.root_dir = util.root_pattern('pyproject.toml', '.git')(vim.fn.getcwd())
       end
-    end,
-    on_init = function(client, init_result)
-      client.config.settings.python.pythonPath = user.get_python_path(client.config)
-      user.set_dap_pypath(client.config)
+      config.settings.python.pythonPath = user.get_python_path(config)
+      user.set_dap_pypath(config)
     end,
     cmd = pyrightcmd,
     root_dir = util.root_pattern('pyproject.toml', '.git')(vim.fn.getcwd()),
+    analysis = {
+      autoSearchPaths = true,
+      diagnosticMode = "openFilesOnly",
+      useLibraryCodeForTypes = true,
+      -- disableDiagnostics = { "reportUnusedVariable" },
+    }
   }
   vim.lsp.config("*", default_opts)
   vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_opts, opts))
